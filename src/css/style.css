@@ -1,0 +1,29 @@
+header {
+    background-color: #6c5a49;
+    ; /* Set the background color */
+    color: #fff; /* Set the text color */
+    padding: 20px; /* Add padding for spacing */
+    text-align: center; /* Center-align the site name */
+    display: flex; /* Use flexbox to align items */
+    align-items: center; /* Center-align items vertically */
+}
+
+.logo img {
+    height: 150px; /* Adjust the height of the logo as needed */
+    width: auto; /* Ensure the logo scales proportionally */
+    margin-right: 100px; /* Add spacing between the logo and site name */
+}
+
+.container {
+    display: flex;
+}
+
+.navigation {
+    width: 30%; /* Adjust width as needed */
+}
+
+.results {
+    background-color: #6c5a49;
+    flex-grow: 1; /* Take up remaining space */
+    margin-left: 20px; /* Add some space between navigation and results */
+}
