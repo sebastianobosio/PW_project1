@@ -6,7 +6,7 @@
     <title>Ricerca targa</title>
     <link rel="stylesheet" href="../css/style.css">
     <script type="text/javascript" src="../js/jquery-3.7.1.js"></script>
-    <script src="../js/search_veicolo.js"></script>
+    <script src="../js/search_targa.js"></script>
 </head>
 <body>
     <?php include '../includes/header.php'; ?>

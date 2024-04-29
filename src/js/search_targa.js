@@ -20,11 +20,12 @@ $(document).ready(function() {
                 status: status
             },
             success: function(response) {
-                $('#searchResults').html(response);
+                console.log('Response:', response.data);
+                $('#searchResults').html(response.data);
             },
             error: function(xhr, status, error) {
-                // Handle errors
-                console.error(xhr.responseText);
+                console.error('Error', xhr.responseText);
+                $('#searchResults').html('<p>Error occurred while fetching data.</p>');
             }
         });
     });

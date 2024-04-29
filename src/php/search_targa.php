@@ -7,41 +7,50 @@ $targa = $_POST['targa'] ?? '';
 $telaio = $_POST['telaio'] ?? '';
 $status = $_POST['status'] ?? '';
 
-
-// Fai il check sullo status
+//status is both as default
 // Ricorda che per le relazioni 0:n è utile mostarre il numero di entità collegate
 // Construct the SQL query based on the provided criteria
-$sql = "SELECT * FROM Veicolo WHERE 1";
+$sql = "SELECT * FROM Targa WHERE 1";
+if ($status === 'active') {
+    $sql = "SELECT * FROM TargaAttiva WHERE 1)";
+} elseif ($status === 'returned') {
+    $sql = "SELECT * FROM TargaRestituita WHERE 1)";
+}
+
+if (!empty($targa)) {
+    $sql .= " AND numero = '$targa'";
+}
 
 if (!empty($telaio)) {
-    $sql .= " AND telaio = '$telaio'";
-}
-if (!empty($modello)) {
-    $sql .= " AND modello = '$modello'";
-}
-if (!empty($marca)) {
-    $sql .= " AND marca = '$marca'";
+    $sql .= " AND veicolo = '$telaio'";
 }
 
-// Execute the query
-$result = mysqli_query($conn, $sql);
 
-// Check if query was successful
-if ($result) {
-    // Prepare the HTML content for displaying search results
+try {
+    // Prepare and execute the query
+    $stmt = $conn->query($sql);
+
     $output = '<ul>';
-    while ($row = mysqli_fetch_assoc($result)) {
-        $output .= '<li>' . $row['telaio'] . ': ' . $row['marca'] . ' ' . $row['modello'] . '</li>';
+    // Process the result directly in the loop
+    foreach ($stmt as $row) {
+        // Do something with each row
+        $output .= '<li>' . $row['numero'] . ': ' . $row['veicolo'] . $row['dataEm'] . '</li>';
     }
     $output .= '</ul>';
 
-    // Return JSON response with search results
-    echo json_encode(['success' => true, 'message' => $output]);
-} else {
-    // Return JSON response with error message
-    echo json_encode(['success' => false, 'message' => 'Failed to execute query: ' . mysqli_error($conn)]);
-}
+    $response = array(
+        'success' => true,
+        'message' => 'Query executed successfully',
+        'data' => $output
+    );
 
-// Close database connection
-mysqli_close($conn);
+    echo json_encode($response);
+} catch (PDOException $e) {
+    // Handle errors
+    $response = array(
+        'success' => false,
+        'message' => 'Error executing query: ' . $e->getMessage()
+    );
+    echo json_encode($response);
+}
 ?>
