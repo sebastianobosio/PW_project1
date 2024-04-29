@@ -6,7 +6,7 @@
     <title>Ricerca veicolo</title>
     <link rel="stylesheet" href="../css/style.css">
     <script type="text/javascript" src="../js/jquery-3.7.1.js"></script>
-    <script src="../js/search_vehicle.js"></script>
+    <script src="../js/search_veicolo.js"></script>
 </head>
 <body>
     <?php include '../includes/header.php'; ?>
@@ -19,7 +19,7 @@
             <form id="searchForm">
                 <label for="telaio">Telaio:</label>
                 <input type="text" id="telaio" name="telaio">
-                <label for="model">Modello:</label>
+                <label for="modello">Modello:</label>
                 <input type="text" id="model" name="model">
                 <label for="marca">Marca:</label>
                 <input type="text" id="marca" name="marca">
