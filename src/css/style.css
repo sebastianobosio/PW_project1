@@ -1,29 +1,77 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
 header {
-    background-color: #6c5a49;
-    ; /* Set the background color */
-    color: #fff; /* Set the text color */
-    padding: 20px; /* Add padding for spacing */
-    text-align: center; /* Center-align the site name */
-    display: flex; /* Use flexbox to align items */
-    align-items: center; /* Center-align items vertically */
+    background-color: #8B4513; /* Brown */
+    color: white;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+}
+
+footer {
+    background-color: #8B4513; /* Brown */
+    color: white;
+    padding: 20px;
+    text-align: center;
+    bottom: 0;
+    width: 100%;
 }
 
 .logo img {
     height: 150px; /* Adjust the height of the logo as needed */
     width: auto; /* Ensure the logo scales proportionally */
-    margin-right: 100px; /* Add spacing between the logo and site name */
+}
+
+.site-name {
+    flex-grow: 1;
+    margin-left: 100px;
 }
 
 .container {
+    flex-grow: 1;
     display: flex;
+    flex-wrap: wrap;
 }
 
 .navigation {
-    width: 30%; /* Adjust width as needed */
+    width: 200px; /* Adjust width as needed */
+    background-color: #D2B48C; /* Light brown */
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.navigation-menu {
+    list-style-type: none;
+    padding: 0;
+}
+
+.navigation-menu li {
+    padding: 20px 20px;
+}
+
+.navigation-menu li a {
+    text-decoration: none;
+    color: black;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+.navigation-menu li a:hover {
+    color: #654321;
 }
 
 .results {
+    color: white;
     background-color: #6c5a49;
-    flex-grow: 1; /* Take up remaining space */
-    margin-left: 20px; /* Add some space between navigation and results */
+    flex: 1;
+    padding: 20px 50px; /* Add some space between navigation and results */
 }

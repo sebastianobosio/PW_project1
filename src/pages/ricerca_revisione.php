@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Motorizzazione</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Ricerca revisione</title>
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-    <?php include 'includes/header.php'; ?>
+    <?php include '../includes/header.php'; ?>
     <div class="container">
         <div class="navigation">
-            <?php include 'includes/navigation.php'; ?>
+            <?php include '../includes/navigation.php'; ?>
         </div>
         <div class="results">
             <!-- This is where the results will be displayed -->
@@ -25,4 +25,4 @@
         </div>
     </div>
 </body>
-<?php include 'includes/footer.php'; ?>
+<?php include '../includes/footer.php'; ?>
