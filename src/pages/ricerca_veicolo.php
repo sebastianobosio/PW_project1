@@ -17,14 +17,21 @@
         <div class="results">
             <!-- Search Form -->
             <form id="searchForm">
-                <label for="telaio">Telaio:</label>
-                <input type="text" id="telaio" name="telaio">
-                <label for="modello">Modello:</label>
-                <input type="text" id="modello" name="modello">
-                <label for="marca">Marca:</label>
-                <input type="text" id="marca" name="marca">
+                <div>
+                    <label for="telaio">Telaio:</label>
+                    <input type="text" id="telaio" name="telaio">
+                </div>
+                <div>
+                    <label for="modello">Modello:</label>
+                    <input type="text" id="modello" name="modello">
+                </div>
+                <div>
+                    <label for="marca">Marca:</label>
+                    <input type="text" id="marca" name="marca">
+                </div>
                 <button type="submit">Cerca</button>
             </form>
+
 
             <!-- Search Results -->
             <div id="searchResults"></div>

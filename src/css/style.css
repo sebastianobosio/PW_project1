@@ -75,3 +75,25 @@ footer {
     flex: 1;
     padding: 20px 50px; /* Add some space between navigation and results */
 }
+
+#searchForm {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+}
+
+#searchForm div {
+    flex-grow: 1; /* Each div takes equal space */
+    margin: 10px 5px; /* Adjust margin for spacing */
+}
+
+#searchForm div label {
+    display: block;
+    margin-bottom: 5px; /* Add margin below each label */
+}
+
+#searchForm button {
+    width: 100px;
+    flex-grow: 1; /* Make the button take full width */
+}
+

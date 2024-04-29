@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ricerca targa</title>
     <link rel="stylesheet" href="../css/style.css">
+    <script type="text/javascript" src="../js/jquery-3.7.1.js"></script>
+    <script src="../js/search_veicolo.js"></script>
 </head>
 <body>
     <?php include '../includes/header.php'; ?>
@@ -13,15 +15,25 @@
             <?php include '../includes/navigation.php'; ?>
         </div>
         <div class="results">
-            <!-- This is where the results will be displayed -->
-            <h1>Benvenuti</h1>
-            <h4>In questo sito è possible effettuare le seguenti operazioni</h4>
-            <ul>
-                <li>Cercare informazioni su un veicolo tramite la targa</li>
-                <li>Verificare lo stato di revisione di un veicolo</li>
-                <li>Visualizzare informazioni dettagliate su un veicolo e la sua storia</li>
-            </ul>
-            <p>Effettua queste ricerche navigando tra le pagine a lato</p>
+            <!-- Search Form -->
+            <form id="searchForm">
+                <label for="targa">Targa:</label>
+                <input type="text" id="targa" name="targa">
+                <br>
+                <label for="telaio">Telaio:</label>
+                <input type="text" id="telaio" name="telaio">
+                <br>
+                <label for="status">Stato:</label>
+                <select id="status" name="status">
+                    <option value="active">Active</option>
+                    <option value="returned">Returned</option>
+                    <option value="both">Both</option>
+                </select>
+                <br>
+                <button type="submit">Search</button>
+            </form>
+            <!-- Search Results -->
+            <div id="searchResults"></div>
         </div>
     </div>
 </body>
