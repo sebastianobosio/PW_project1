@@ -4,7 +4,7 @@ include '../includes/db_connection.php';
 
 // Retrieve search criteria from POST data
 $telaio = $_POST['telaio'] ?? '';
-$model = $_POST['model'] ?? '';
+$modello = $_POST['modello'] ?? '';
 $marca = $_POST['marca'] ?? '';
 
 // Construct the SQL query based on the provided criteria
@@ -13,8 +13,8 @@ $sql = "SELECT * FROM Veicolo WHERE 1";
 if (!empty($telaio)) {
     $sql .= " AND telaio = '$telaio'";
 }
-if (!empty($model)) {
-    $sql .= " AND modello = '$model'";
+if (!empty($modello)) {
+    $sql .= " AND modello = '$modello'";
 }
 if (!empty($marca)) {
     $sql .= " AND marca = '$marca'";

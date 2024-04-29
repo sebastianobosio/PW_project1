@@ -20,7 +20,7 @@
                 <label for="telaio">Telaio:</label>
                 <input type="text" id="telaio" name="telaio">
                 <label for="modello">Modello:</label>
-                <input type="text" id="model" name="model">
+                <input type="text" id="modello" name="modello">
                 <label for="marca">Marca:</label>
                 <input type="text" id="marca" name="marca">
                 <button type="submit">Cerca</button>
