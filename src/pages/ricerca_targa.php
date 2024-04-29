@@ -25,9 +25,9 @@
                 <br>
                 <label for="status">Stato:</label>
                 <select id="status" name="status">
-                    <option value="active">Active</option>
-                    <option value="returned">Returned</option>
-                    <option value="both">Both</option>
+                    <option value="active">Attiva</option>
+                    <option value="returned">Resituita</option>
+                    <option value="both" selected>Tutte</option>
                 </select>
                 <br>
                 <button type="submit">Search</button>

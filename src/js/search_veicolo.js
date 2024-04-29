@@ -20,11 +20,12 @@ $(document).ready(function() {
                 marca: marca
             },
             success: function(response) {
-                // Display search results
-                $('#searchResults').html(response.message);
+                console.log('Response:', response.data);
+                $('#searchResults').html(response.data);
             },
             error: function(xhr, status, error) {
-                console.error(xhr.responseText);
+                console.error('Error', xhr.responseText);
+                $('#searchResults').html('<p>Error occurred while fetching data.</p>');
             }
         });
     });

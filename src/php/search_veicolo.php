@@ -20,25 +20,31 @@ if (!empty($marca)) {
     $sql .= " AND marca = '$marca'";
 }
 
-// Execute the query
-$result = mysqli_query($conn, $sql);
+try {
+    // Prepare and execute the query
+    $stmt = $conn->query($sql);
 
-// Check if query was successful
-if ($result) {
-    // Prepare the HTML content for displaying search results
     $output = '<ul>';
-    while ($row = mysqli_fetch_assoc($result)) {
+    // Process the result directly in the loop
+    foreach ($stmt as $row) {
+        // Do something with each row
         $output .= '<li>' . $row['telaio'] . ': ' . $row['marca'] . ' ' . $row['modello'] . '</li>';
     }
     $output .= '</ul>';
 
-    // Return JSON response with search results
-    echo json_encode(['success' => true, 'message' => $output]);
-} else {
-    // Return JSON response with error message
-    echo json_encode(['success' => false, 'message' => 'Failed to execute query: ' . mysqli_error($conn)]);
-}
+    $response = array(
+        'success' => true,
+        'message' => 'Query executed successfully',
+        'data' => $output
+    );
 
-// Close database connection
-mysqli_close($conn);
+    echo json_encode($response);
+} catch (PDOException $e) {
+    // Handle errors
+    $response = array(
+        'success' => false,
+        'message' => 'Error executing query: ' . $e->getMessage()
+    );
+    echo json_encode($response);
+}
 ?>

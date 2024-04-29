@@ -20,9 +20,7 @@ $(document).ready(function() {
                 status: status
             },
             success: function(response) {
-                // Handle success
-                // You can display the search results here
-                console.log(response);
+                $('#searchResults').html(response);
             },
             error: function(xhr, status, error) {
                 // Handle errors
