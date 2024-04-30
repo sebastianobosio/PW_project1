@@ -20,16 +20,23 @@
             <!-- Search Form -->
             <form id="searchForm">
                 <div>
-                    <label for="telaio">Telaio:</label>
-                    <input type="text" id="telaio" name="telaio">
+                    <label for="numero">Numero:</label>
+                    <input type="text" id="numero" name="numero">
                 </div>
                 <div>
-                    <label for="modello">Modello:</label>
-                    <input type="text" id="modello" name="modello">
+                    <label for="targa">Targa:</label>
+                    <input type="text" id="targa" name="targa">
                 </div>
                 <div>
-                    <label for="marca">Marca:</label>
-                    <input type="text" id="marca" name="marca">
+                    <label for="dataRev">Data Revisione:</label>
+                    <input type="text" id="dataRev" name="dataRev">
+                </div>
+                <div>
+                    <select id="esito" name="esito">
+                            <option value="positive">Positivo</option>
+                            <option value="negative">Negativo</option>
+                            <option value="both" selected>Entrambi</option>
+                    </select>
                 </div>
                 <button type="submit">Cerca</button>
             </form>
