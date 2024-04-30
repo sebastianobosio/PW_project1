@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ricerca revisione</title>
     <link rel="stylesheet" href="../css/style.css">
+    <script type="text/javascript" src="../js/jquery-3.7.1.js"></script>
+    <script src="../js/search_revisione.js"></script>
+    <script src="../js/test.js"></script>
+    <script src="../js/active_page.js"></script>
 </head>
 <body>
     <?php include '../includes/header.php'; ?>
@@ -13,15 +17,26 @@
             <?php include '../includes/navigation.php'; ?>
         </div>
         <div class="results">
-            <!-- This is where the results will be displayed -->
-            <h1>Benvenuti</h1>
-            <h4>In questo sito è possible effettuare le seguenti operazioni</h4>
-            <ul>
-                <li>Cercare informazioni su un veicolo tramite la targa</li>
-                <li>Verificare lo stato di revisione di un veicolo</li>
-                <li>Visualizzare informazioni dettagliate su un veicolo e la sua storia</li>
-            </ul>
-            <p>Effettua queste ricerche navigando tra le pagine a lato</p>
+            <!-- Search Form -->
+            <form id="searchForm">
+                <div>
+                    <label for="telaio">Telaio:</label>
+                    <input type="text" id="telaio" name="telaio">
+                </div>
+                <div>
+                    <label for="modello">Modello:</label>
+                    <input type="text" id="modello" name="modello">
+                </div>
+                <div>
+                    <label for="marca">Marca:</label>
+                    <input type="text" id="marca" name="marca">
+                </div>
+                <button type="submit">Cerca</button>
+            </form>
+
+
+            <!-- Search Results -->
+            <div id="searchResults"></div>
         </div>
     </div>
 </body>

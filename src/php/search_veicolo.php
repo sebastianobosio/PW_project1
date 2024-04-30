@@ -28,7 +28,7 @@ try {
     // Process the result directly in the loop
     foreach ($stmt as $row) {
         // Do something with each row
-        $output .= '<li>' . $row['telaio'] . ': ' . $row['marca'] . ' ' . $row['modello'] . '</li>';
+        $output .= '<li>' . '<a href="#" class="telaioLink">' . $row['telaio'] . '</a>' . ': ' . $row['marca'] . ' ' . $row['modello'] . '</li>';
     }
     $output .= '</ul>';
 
