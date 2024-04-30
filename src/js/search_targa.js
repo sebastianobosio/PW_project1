@@ -20,8 +20,12 @@ $(document).ready(function() {
                 status: status
             },
             success: function(response) {
-                console.log('Response:', response.data);
-                $('#searchResults').html(response.data);
+                console.log('Response:', response.message);
+                if (response.success === true) {
+                    $('#searchResults').html(response.data);
+                } else {
+                    $('#searchResults').html('<p>Non sono state trovate corrispondenze</p>');
+                }
             },
             error: function(xhr, status, error) {
                 console.error('Error', xhr.responseText);

@@ -17,19 +17,22 @@
         <div class="results">
             <!-- Search Form -->
             <form id="searchForm">
-                <label for="targa">Targa:</label>
-                <input type="text" id="targa" name="targa">
-                <br>
-                <label for="telaio">Telaio:</label>
-                <input type="text" id="telaio" name="telaio">
-                <br>
-                <label for="status">Stato:</label>
-                <select id="status" name="status">
-                    <option value="active">Attiva</option>
-                    <option value="returned">Resituita</option>
-                    <option value="both" selected>Tutte</option>
-                </select>
-                <br>
+                <div>
+                    <label for="targa">Targa:</label>
+                    <input type="text" id="targa" name="targa">
+                </div>
+                <div>
+                    <label for="telaio">Telaio:</label>
+                    <input type="text" id="telaio" name="telaio">
+                </div>
+                <div>
+                    <label for="status">Stato:</label>
+                    <select id="status" name="status">
+                        <option value="active">Attiva</option>
+                        <option value="returned">Resituita</option>
+                        <option value="both" selected>Tutte</option>
+                    </select>
+                </div>
                 <button type="submit">Search</button>
             </form>
             <!-- Search Results -->
