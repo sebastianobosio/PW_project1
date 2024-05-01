@@ -32,6 +32,7 @@
                     <input type="text" id="dataRev" name="dataRev">
                 </div>
                 <div>
+                    <label for="esito">Esito:</label>
                     <select id="esito" name="esito">
                             <option value="positive">Positivo</option>
                             <option value="negative">Negativo</option>
