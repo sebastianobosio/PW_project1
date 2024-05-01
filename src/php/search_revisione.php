@@ -2,7 +2,7 @@
 // Include database connection
 include '../includes/db_connection.php';
 
-if ($_POST['action'] == 'read'){
+if ($_POST['action'] == 'read') {
     // Retrieve search criteria from POST data
     $numero = $_POST['numero'] ?? '';
     $targa = $_POST['targa'] ?? '';
@@ -44,16 +44,20 @@ if ($_POST['action'] == 'read'){
         }
 
         $output = '<ul>';
+
         // Process the result directly in the loop
         foreach ($stmt as $row) {
-            // Do something with each row
+            //Do something with each row
             if ($row['esito'] === 'negativo') {
-                $output .= '<li>' . 'Revisione ' . $row['numero'] . ' fatta il ' . $row['dataRev'] . ' alla targa ' . $row['targa'] . ', ha avuto esito ' . $row['esito'] . '. La motivazione: ' . $row['motivazione'] . '<button onclick="editRevision(' + $row['numero'] + ')">Edit</button>' . '<button onclick="deleteRevision(' + $row['numero'] + ')">Delete</button>' . '</li>';
+                //$output .= '<li>' . 'Revisione ' . $row['numero'] . ' fatta il ' . $row['dataRev'] . ' alla targa ' . $row['targa'] . ', ha avuto esito ' . $row['esito'] . '. La motivazione: ' . $row['motivazione'] . '<button onclick="editRevision(' + $row['numero'] + ')">Edit</button>' . '<button onclick="deleteRevision(' + $row['numero'] + ')">Delete</button>' . '</li>';
+                $output .= '<li data-id="' . $row['numero'] . '">' . 'Revisione ' . $row['numero'] . ' fatta il ' . $row['dataRev'] . ' alla targa ' . $row['targa'] . ', ha avuto esito ' . $row['esito'] . '. La motivazione: ' . $row['motivazione'] . '<button class="editBtn">Edit</button>' . '<button class="deleteBtn">Delete</button>' . '</li>';
             }
             else {
-                $output .= '<li>' . 'Revisione ' . $row['numero'] . ' fatta il ' . $row['dataRev'] . ' alla targa ' . $row['targa'] . ', ha avuto esito ' . $row['esito'] . '<button onclick="editRevision(' + $row['numero'] + ')">Edit</button>' . '<button onclick="deleteRevision(' + $row['numero'] + ')">Delete</button>' . '</li>';
+                $output .= '<li data-id="' . $row['numero'] . '">' . 'Revisione ' . $row['numero'] . ' fatta il ' . $row['dataRev'] . ' alla targa ' . $row['targa'] . ', ha avuto esito ' . $row['esito'] . '<button class="editBtn">Edit</button>' . '<button class="deleteBtn">Delete</button>' . '</li>';
+                //$output .= '<li>' . 'Revisione ' . $row['numero'] . ' fatta il ' . $row['dataRev'] . ' alla targa ' . $row['targa'] . ', ha avuto esito ' . $row['esito'] . '<button onclick="editRevision(' + $row['numero'] + ')">Edit</button>' . '<button onclick="deleteRevision(' + $row['numero'] + ')">Delete</button>' . '</li>';
             }
         }
+
         $output .= '</ul>';
 
         $response = array(
@@ -101,9 +105,31 @@ if($_POST['action'] == 'update') {
 if($_POST['action'] == 'delete') {
     $id = $_POST['id'];
 
-    $sql = "DELETE FROM products WHERE id='$id'";
-    $conn->query($sql);
-    echo "success";
+    $sql = "DELETE FROM Revisione WHERE numero='$id'";
+    try {
+        // Execute the query
+        $success = $conn->query($sql);
+        if ($success) {
+            $response = array(
+                'success' => true,
+                'message' => 'Query executed successfully',
+            );
+        } else {
+            $response = array(
+                'success' => false,
+                'message' => 'Query execution failed'
+            );
+        }
+
+        echo json_encode($response);
+    } catch (PDOException $e) {
+        // Handle errors
+        $response = array(
+            'success' => false,
+            'message' => 'Error executing query: ' . $e->getMessage()
+        );
+        echo json_encode($response);
+    }
 }
 
 ?>

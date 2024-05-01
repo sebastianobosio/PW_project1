@@ -58,21 +58,27 @@ $(document).ready(function() {
     });
 
     $(document).on('click', '.deleteBtn', function(){
-        var id = $(this).data('id');
-
-        $.ajax({
-            url: 'server.php',
-            method: 'POST',
-            data: {id: id, action: 'delete'},
-            success: function(response) {
-                if(response === 'success') {
-                    $('#productTable').empty();
-                    loadProducts();
+        var id = $(this).closest('li').data('id');
+        
+        handleAjaxRequest(
+            '../php/search_revisione.php',
+            'POST',
+            { action: 'delete', id: id},
+            function(response) {
+                console.log('Response:', response.message);
+                if (response.success === true) {
+                    $('#searchResults').html('<p>Elemento rimosso<p>');
+                    //Potrebbe essere intelligente separare la funzione per il read del db
+                    //loadProducts();
                 } else {
-                    alert('Failed to delete product');
+                    $('#searchResults').html('<p>Impossibile rimuovere il prodotto</p>');
                 }
+            },
+            function(xhr, status, error) {
+                console.error('Error', xhr.responseText);
+                $('#searchResults').html('<p>Error occurred while fetching data.</p>');
             }
-        });
+        );
     });
 });
 
