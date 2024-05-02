@@ -46,6 +46,49 @@
             <!-- Search Results -->
             <div id="searchResults"></div>
         </div>
+        <div class="addForm">
+            <h2>Add New Entry</h2>
+            <form id="addForm">
+                <label for="addTarga">Targa:</label>
+                <input type="text" id="addTarga" name="addTarga" required><br><br>
+                <label for="addDataRev">Data Revisione:</label>
+                <input type="date" id="addDataRev" name="addDataRev" required><br><br>
+                <label for="addEsito">Esito:</label>
+                <select id="addEsito" name="addEsito" required>
+                    <option value="">Select</option>
+                    <option value="positivo">Positivo</option>
+                    <option value="negativo">Negativo</option>
+                </select><br><br>
+                <div id="addMotivazioneDiv" style="display: none;">
+                    <label for="addMotivazione">Motivazione:</label>
+                    <input type="text" id="addMotivazione" name="addMotivazione">
+                </div>
+                <br>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+
+        <div class="editForm" style="display: none">
+            <h2>Edit Entry</h2>
+            <form id="editForm">
+                <label for="editTarga">Targa:</label>
+                <input type="text" id="editTarga" name="editTarga" required><br><br>
+                <label for="editDataRev">Data Revisione:</label>
+                <input type="date" id="editDataRev" name="editDataRev" required><br><br>
+                <label for="editEsito">Esito:</label>
+                <select id="editEsito" name="editEsito" required>
+                    <option value="">Select</option>
+                    <option value="positivo">Positivo</option>
+                    <option value="negativo">Negativo</option>
+                </select><br><br>
+                <div id="editMotivazioneDiv" style="display: none;">
+                    <label for="editMotivazioneDiv">Motivazione:</label>
+                    <input type="text" id="editMotivazioneDiv" name="editMotivazioneDiv">
+                </div>
+                <br>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
     </div>
 </body>
 <?php include '../includes/footer.php'; ?>

@@ -41,20 +41,61 @@ $(document).ready(function() {
 
     $('#addForm').submit(function(e){
         e.preventDefault();
-        var data = $(this).serialize() + '&action=create';
+        var formData = $(this).serialize() + '&action=create';
+        var numero = $('#numero').val();
+        var targa = $('#targa').val();
+        var dataRev = $('#dataRev').val();
+        var esito = $('#esito').val();
 
-        $.ajax({
-            url: 'server.php',
-            method: 'POST',
-            data: data,
-            success: function(response) {
-                if(response === 'success') {
-                    loadProducts();
+        handleAjaxRequest(
+            '../php/search_revisione.php',
+            'POST',
+            //{ action: 'delete', numero: numero, targa: targa, dataRev: dataRev, esito: esito },
+            formData,
+            function(response) {
+                console.log('Response:', response.message);
+                if (response.success === true) {
+                    $('#searchResults').html('<p>Istanza insserita correttamente</p>');
                 } else {
-                    alert('Failed to add product');
+                    $('#searchResults').html('<p>Non è stato possibile inserire la revisione</p>');
                 }
+            },
+            function(xhr, status, error) {
+                console.error('Error', xhr.responseText);
+                $('#searchResults').html('<p>Error occurred while fetching data.</p>');
             }
-        });
+        );
+
+    });
+
+    $('#editForm').submit(function(e){
+        e.preventDefault();
+        var id = $(this).closest('li').data('id');
+        var formData = $(this).serialize() + '&id=' + id + '&action=update';
+        var numero = $('#numero').val();
+        var targa = $('#targa').val();
+        var dataRev = $('#dataRev').val();
+        var esito = $('#esito').val();
+
+        handleAjaxRequest(
+            '../php/search_revisione.php',
+            'POST',
+            //{ action: 'delete', numero: numero, targa: targa, dataRev: dataRev, esito: esito },
+            formData,
+            function(response) {
+                console.log('Response:', response.message);
+                if (response.success === true) {
+                    $('#searchResults').html('<p>Istanza modificata correttamente</p>');
+                } else {
+                    $('#searchResults').html('<p>Non è stato possibile modificare la revisione</p>');
+                }
+            },
+            function(xhr, status, error) {
+                console.error('Error', xhr.responseText);
+                $('#searchResults').html('<p>Error occurred while fetching data.</p>');
+            }
+        );
+
     });
 
     $(document).on('click', '.deleteBtn', function(){
@@ -79,6 +120,49 @@ $(document).ready(function() {
                 $('#searchResults').html('<p>Error occurred while fetching data.</p>');
             }
         );
+    });
+
+    $(document).on('click', '.editBtn', function(){
+        var id = $(this).closest('li').data('id');
+        var listItem = $(this).closest('li');
+        var data = listItem.text().split('fatta il ')[1].split(' alla targa ')[0];
+        console.log(data);
+        var targa = listItem.text().split('targa ')[1].split(',')[0];
+        var esito = listItem.text().includes('esito positivo') ? 'positivo' : 'negativo';
+        var motivazione = '';
+        if (esito === 'negativo') {
+            motivazione = listItem.text().split('La motivazione: ')[1];
+        }
+
+        // Populate form with data
+        $('#editId').val(id);
+        $('#editData').val(data);
+        $('#editTarga').val(targa);
+        $('#editEsito').val(esito);
+        $('#editMotivazione').val(motivazione);
+
+        // Show motivazione field if esito is negativo
+        if (esito === 'negativo') {
+            $('#editMotivazioneDiv').show();
+        } else {
+            $('#editMotivazioneDiv').hide();
+        }
+
+        // Hide add form, show edit form
+        $('.addForm').hide();
+        $('.editForm').show();            
+    });
+
+    $('#addEsito').change(function(){
+        console.log("Change event detected");
+        console.log($(this).val());
+        if($(this).val() === 'negativo'){
+            $('#addMotivazioneDiv').show();
+            $('#addMotivazione').attr('required', true);
+        } else {
+            $('#addMotivazioneDiv').hide();
+            $('#addMotivazione').attr('required', false);
+        }
     });
 });
 
@@ -105,3 +189,4 @@ $(document).on('click', '.telaioLink', function(e) {
         }
     );
 });
+
