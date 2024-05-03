@@ -118,18 +118,16 @@ if($_POST['action'] == 'create') {
 
 // Update operation
 if($_POST['action'] == 'update') {
-    $id = $_POST['id'];
+    $id = $_POST['editId'];
     $targa = $_POST['editTarga'];
     $dataRev = $_POST['editDataRev'];
     $esito = $_POST['editEsito'];
     if ($esito === 'negativo') {
         $motivazione = $_POST['editMmotivazione'];
-        $sql = "UPDATE Revisione SET numero='$id', targa='$targa', dataRev='$dataRev', esito='$esito', motivazione='$motivazione' WHERE id='$id'";
+        $sql = "UPDATE Revisione SET numero='$id', targa='$targa', dataRev='$dataRev', esito='$esito', motivazione='$motivazione' WHERE numero='$id'";
     } else {
-        $sql = "UPDATE Revisione SET numero='$id', targa='$targa', dataRev='$dataRev', esito='$esito', motivazione=NULL WHERE id='$id'";
+        $sql = "UPDATE Revisione SET numero='$id', targa='$targa', dataRev='$dataRev', esito='$esito', motivazione=NULL WHERE numero='$id'";
     }
-
-    $sql = "UPDATE Revisione SET numero='$id', targa='$targa', dataRev='$dataRev', esito='$esito', motivazione='$motivazione' WHERE id='$id'";
     
     try {
         // Execute the query
@@ -155,8 +153,6 @@ if($_POST['action'] == 'update') {
         );
         echo json_encode($response);
     }
-    $conn->query($sql);
-    echo "success";
 }
 
 // Delete operation

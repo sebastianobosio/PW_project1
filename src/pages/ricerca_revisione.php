@@ -71,6 +71,7 @@
         <div class="editForm" style="display: none">
             <h2>Edit Entry</h2>
             <form id="editForm">
+                <input type="hidden" id="editId" name="editId">
                 <label for="editTarga">Targa:</label>
                 <input type="text" id="editTarga" name="editTarga" required><br><br>
                 <label for="editDataRev">Data Revisione:</label>
@@ -82,8 +83,8 @@
                     <option value="negativo">Negativo</option>
                 </select><br><br>
                 <div id="editMotivazioneDiv" style="display: none;">
-                    <label for="editMotivazioneDiv">Motivazione:</label>
-                    <input type="text" id="editMotivazioneDiv" name="editMotivazioneDiv">
+                    <label for="editMotivazione">Motivazione:</label>
+                    <input type="text" id="editMotivazione" name="editMotivazione">
                 </div>
                 <br>
                 <button type="submit">Submit</button>

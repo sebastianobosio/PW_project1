@@ -19,7 +19,7 @@ $(document).ready(function() {
         var targa = $('#targa').val();
         var dataRev = $('#dataRev').val();
         var esito = $('#esito').val();
-
+        
         handleAjaxRequest(
             '../php/search_revisione.php',
             'POST',
@@ -42,12 +42,43 @@ $(document).ready(function() {
     $('#addForm').submit(function(e){
         e.preventDefault();
         var formData = $(this).serialize() + '&action=create';
-        var numero = $('#numero').val();
-        var targa = $('#targa').val();
-        var dataRev = $('#dataRev').val();
-        var esito = $('#esito').val();
+        console.log(formData);
+        var targa = $('#addTarga').val();
+        var dataRev = $('#addDataRev').val();
+        var checkOnFields = false;
 
         handleAjaxRequest(
+            '../php/search_targa_api.php',
+            'POST',
+            {targa: targa, telaio: "", status: "both"},
+            function(response) {
+
+                if (response.success === true) {
+                    var dataEm = response.data[0]['dataEm'];
+                    var dataRes = response.data[0]['dataRes'];
+                    var dataEmObj = new Date(dataEm);
+                    var dataResObj = new Date(dataRes);
+                    var dataRevObj = new Date(dataRev);
+                    if (dataRevObj < dataEmObj) {
+                        confirm("Data di revisione antecedente alla data di emissione della targa associata");
+                    } else if (dataRevObj > dataResObj) {
+                        confirm("Data di revisione posteriore alla data di restituzione della targa associata");
+                    } else {
+                        checkOnFields = true;
+                    }
+                }
+                else {
+                    confirm("Targa non presente nel database");
+                }
+            },
+            function(xhr, status, error) {
+                console.error('Error', xhr.responseText);
+                $('#searchResults').html('<p>Error occurred while fetching data.</p>');
+            }
+        )
+        
+        console.log(checkOnFields);
+        /*handleAjaxRequest(
             '../php/search_revisione.php',
             'POST',
             //{ action: 'delete', numero: numero, targa: targa, dataRev: dataRev, esito: esito },
@@ -64,19 +95,20 @@ $(document).ready(function() {
                 console.error('Error', xhr.responseText);
                 $('#searchResults').html('<p>Error occurred while fetching data.</p>');
             }
-        );
+        );*/
 
     });
 
+    function formatDate(dateString) {
+        var parts = dateString.split("-");
+        // Rearrange parts to get yyyy-mm-dd format
+        return parts[2] + '-' + parts[1] + '-' + parts[0];
+    }
+
     $('#editForm').submit(function(e){
         e.preventDefault();
-        var id = $(this).closest('li').data('id');
-        var formData = $(this).serialize() + '&id=' + id + '&action=update';
-        var numero = $('#numero').val();
-        var targa = $('#targa').val();
-        var dataRev = $('#dataRev').val();
-        var esito = $('#esito').val();
-
+        var formData = $(this).serialize() +  '&action=update';
+        console.log(formData);
         handleAjaxRequest(
             '../php/search_revisione.php',
             'POST',
@@ -100,26 +132,30 @@ $(document).ready(function() {
 
     $(document).on('click', '.deleteBtn', function(){
         var id = $(this).closest('li').data('id');
+        var confirmed = confirm("Are you sure you want to delete this entry?");
         
-        handleAjaxRequest(
-            '../php/search_revisione.php',
-            'POST',
-            { action: 'delete', id: id},
-            function(response) {
-                console.log('Response:', response.message);
-                if (response.success === true) {
-                    $('#searchResults').html('<p>Elemento rimosso<p>');
-                    //Potrebbe essere intelligente separare la funzione per il read del db
-                    //loadProducts();
-                } else {
-                    $('#searchResults').html('<p>Impossibile rimuovere il prodotto</p>');
+        if (confirmed) {
+            handleAjaxRequest(
+                '../php/search_revisione.php',
+                'POST',
+                { action: 'delete', id: id},
+                function(response) {
+                    console.log('Response:', response.message);
+                    if (response.success === true) {
+                        $('#searchResults').html('<p>Elemento rimosso<p>');
+                        //Potrebbe essere intelligente separare la funzione per il read del db
+                        //loadProducts();
+                    } else {
+                        $('#searchResults').html('<p>Impossibile rimuovere il prodotto</p>');
+                    }
+                },
+                function(xhr, status, error) {
+                    console.error('Error', xhr.responseText);
+                    $('#searchResults').html('<p>Error occurred while fetching data.</p>');
                 }
-            },
-            function(xhr, status, error) {
-                console.error('Error', xhr.responseText);
-                $('#searchResults').html('<p>Error occurred while fetching data.</p>');
-            }
-        );
+            );
+        }
+        
     });
 
     $(document).on('click', '.editBtn', function(){
@@ -131,22 +167,21 @@ $(document).ready(function() {
         var esito = listItem.text().includes('esito positivo') ? 'positivo' : 'negativo';
         var motivazione = '';
         if (esito === 'negativo') {
-            motivazione = listItem.text().split('La motivazione: ')[1];
+            motivazione = listItem.text().split('La motivazione: ')[1].split('EditDelete')[0];
         }
-
+        //data = formatDate(data);
         // Populate form with data
+        console.log(motivazione);
         $('#editId').val(id);
-        $('#editData').val(data);
+        $('#editDataRev').val(data);
         $('#editTarga').val(targa);
         $('#editEsito').val(esito);
-        $('#editMotivazione').val(motivazione);
-
-        // Show motivazione field if esito is negativo
         if (esito === 'negativo') {
             $('#editMotivazioneDiv').show();
         } else {
             $('#editMotivazioneDiv').hide();
         }
+        $('#editMotivazione').val(motivazione);
 
         // Hide add form, show edit form
         $('.addForm').hide();
