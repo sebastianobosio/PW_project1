@@ -101,3 +101,12 @@ footer {
     flex-grow: 1; /* Make the button take full width */
 }
 
+#searchResults {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.infoBtn {
+    display: flex;
+}
+

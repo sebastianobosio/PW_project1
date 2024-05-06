@@ -43,22 +43,20 @@ if ($_GET['action'] == 'read') {
             exit(); // Stop further execution
         }
 
-        $output = '<ul>';
+        $results = array();
 
-        // Process the result directly in the loop
         foreach ($stmt as $row) {
-            //Do something with each row
+            $result = array();
+            $output['numero'] = $row['numero'];
+            $output['dataRev'] = $row['dataRev'];
+            $output['targa'] = $row['targa'];
+            $output['esito'] = $row['esito'];
             if ($row['esito'] === 'negativo') {
-                //$output .= '<li>' . 'Revisione ' . $row['numero'] . ' fatta il ' . $row['dataRev'] . ' alla targa ' . $row['targa'] . ', ha avuto esito ' . $row['esito'] . '. La motivazione: ' . $row['motivazione'] . '<button onclick="editRevision(' + $row['numero'] + ')">Edit</button>' . '<button onclick="deleteRevision(' + $row['numero'] + ')">Delete</button>' . '</li>';
-                $output .= '<li data-id="' . $row['numero'] . '">' . 'Revisione ' . $row['numero'] . ' fatta il ' . $row['dataRev'] . ' alla targa ' . $row['targa'] . ', ha avuto esito ' . $row['esito'] . '. La motivazione: ' . $row['motivazione'] . '<button class="editBtn">Edit</button>' . '<button class="deleteBtn">Delete</button>' . '</li>';
+                $output['motivazione'] = $row['motivazione'];
             }
-            else {
-                $output .= '<li data-id="' . $row['numero'] . '">' . 'Revisione ' . $row['numero'] . ' fatta il ' . $row['dataRev'] . ' alla targa ' . $row['targa'] . ', ha avuto esito ' . $row['esito'] . '<button class="editBtn">Edit</button>' . '<button class="deleteBtn">Delete</button>' . '</li>';
-                //$output .= '<li>' . 'Revisione ' . $row['numero'] . ' fatta il ' . $row['dataRev'] . ' alla targa ' . $row['targa'] . ', ha avuto esito ' . $row['esito'] . '<button onclick="editRevision(' + $row['numero'] + ')">Edit</button>' . '<button onclick="deleteRevision(' + $row['numero'] + ')">Delete</button>' . '</li>';
-            }
+            $results[] = $result;
         }
 
-        $output .= '</ul>';
 
         $response = array(
             'success' => true,

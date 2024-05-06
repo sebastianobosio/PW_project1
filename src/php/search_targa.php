@@ -7,6 +7,10 @@ $targa = $_GET['targa'] ?? '';
 $telaio = $_GET['telaio'] ?? '';
 $status = $_GET['status'] ?? '';
 
+//status is both as default
+// Ricorda che per le relazioni 0:n è utile mostarre il numero di entità collegate
+// Construct the SQL query based on the provided criteria
+
 
 $sql_condition = "";
 if (!empty($targa)) {
@@ -56,23 +60,25 @@ try {
         exit(); // Stop further execution
     }
 
-    $output = '<ul>';
+    $results = array();
     // Process the result directly in the loop
     foreach ($stmt as $row) {
+        $result = array();
         // Do something with each row
+        $result['numero'] = $row['numero'];
+        $result['dataEm'] = $row['dataEm'];
+        $result['vehicle'] = $row['veicolo'];
+        $result['status'] = $row['origin'];
         if ($row['origin'] === 'non-active') {
-            $output .= '<li>' . $row['numero'] . ' emessa il ' . $row['dataEm'] . ': ultimo veicolo ' . $row['veicolo'] . ', restituita il ' . $row['dataRes'] . '</li>';
+            $result['dataRes'] = $row['dataRes'];
         }
-        else {
-            $output .= '<li>' . $row['numero'] . ' emessa il ' . $row['dataEm'] . ': veicolo attuale ' . $row['veicolo'] . '</li>';
-        }
+        $results[] = $result;
     }
-    $output .= '</ul>';
 
     $response = array(
         'success' => true,
         'message' => 'Query executed successfully',
-        'data' => $output
+        'data' => $results
     );
 
     echo json_encode($response);

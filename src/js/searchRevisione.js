@@ -33,7 +33,7 @@ $(document).ready(function() {
 
     function checkRevisionAndPerformAction(formData, targa, dataRev, actionCallback) {
         handleAjaxRequest(
-            '../php/search_targa_api.php',
+            '../php/search_targa.php',
             'GET',
             "targa=" + targa,
             function(response) {
@@ -156,10 +156,7 @@ $(document).ready(function() {
             data,
             function(response) {
                 if (response.success === true) {
-                    $('#searchResults').html(response.data);
-                    //             $('<div>').addClass('.editAndRemoveButtons');
-            //const editButton = $('<button>').text('Edit').addClass('edit-button');
-            //const deleteButton = $('<button>').text('Delete').addClass('delete-button');
+                    formatRevisioneData(response.data);
                 } else {
                     alert("Non sono state trovate corrispondenze");
                 }
