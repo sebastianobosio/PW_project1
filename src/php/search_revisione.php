@@ -47,12 +47,12 @@ if ($_GET['action'] == 'read') {
 
         foreach ($stmt as $row) {
             $result = array();
-            $output['numero'] = $row['numero'];
-            $output['dataRev'] = $row['dataRev'];
-            $output['targa'] = $row['targa'];
-            $output['esito'] = $row['esito'];
+            $result['numero'] = $row['numero'];
+            $result['dataRev'] = $row['dataRev'];
+            $result['targa'] = $row['targa'];
+            $result['esito'] = $row['esito'];
             if ($row['esito'] === 'negativo') {
-                $output['motivazione'] = $row['motivazione'];
+                $result['motivazione'] = $row['motivazione'];
             }
             $results[] = $result;
         }
@@ -61,7 +61,7 @@ if ($_GET['action'] == 'read') {
         $response = array(
             'success' => true,
             'message' => 'Query executed successfully',
-            'data' => $output
+            'data' => $results
         );
 
         echo json_encode($response);
