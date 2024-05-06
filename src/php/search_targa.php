@@ -3,13 +3,9 @@
 include '../includes/db_connection.php';
 
 // Retrieve search criteria from POST data
-$targa = $_POST['targa'] ?? '';
-$telaio = $_POST['telaio'] ?? '';
-$status = $_POST['status'] ?? '';
-
-//status is both as default
-// Ricorda che per le relazioni 0:n è utile mostarre il numero di entità collegate
-// Construct the SQL query based on the provided criteria
+$targa = $_GET['targa'] ?? '';
+$telaio = $_GET['telaio'] ?? '';
+$status = $_GET['status'] ?? '';
 
 
 $sql_condition = "";
@@ -44,7 +40,7 @@ if ($status === 'active') {
     $sql = $sql_only_active;
 } elseif ($status === 'returned') {
     $sql = $sql_only_returned;
-} elseif ($status === 'both') {
+} else {
     $sql = $sql_both;
 }
 

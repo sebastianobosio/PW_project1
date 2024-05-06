@@ -2,12 +2,12 @@
 // Include database connection
 include '../includes/db_connection.php';
 
-if ($_POST['action'] == 'read') {
+if ($_GET['action'] == 'read') {
     // Retrieve search criteria from POST data
-    $numero = $_POST['numero'] ?? '';
-    $targa = $_POST['targa'] ?? '';
-    $dataRev = $_POST['dataRev'] ?? '';
-    $esito = $_POST['esito'] ?? '';
+    $numero = $_GET['numero'] ?? '';
+    $targa = $_GET['targa'] ?? '';
+    $dataRev = $_GET['dataRev'] ?? '';
+    $esito = $_GET['esito'] ?? '';
 
     //status is both as default
     // Ricorda che per le relazioni 0:n è utile mostarre il numero di entità collegate
@@ -84,7 +84,7 @@ if($_POST['action'] == 'create') {
     $dataRev = $_POST['addDataRev'];
     $esito = $_POST['addEsito'];
     if ($esito === 'negativo') {
-        $motivazione = $_POST['addMmotivazione'];
+        $motivazione = $_POST['addMotivazione'];
         $sql = "INSERT INTO Revisione (numero, targa, dataRev, esito, motivazione) VALUES (NULL, '$targa', '$dataRev', '$esito', '$motivazione')";
     } else {
         $sql = "INSERT INTO Revisione (numero, targa, dataRev, esito, motivazione) VALUES (NULL, '$targa', '$dataRev', '$esito', NULL)";
@@ -123,7 +123,7 @@ if($_POST['action'] == 'update') {
     $dataRev = $_POST['editDataRev'];
     $esito = $_POST['editEsito'];
     if ($esito === 'negativo') {
-        $motivazione = $_POST['editMmotivazione'];
+        $motivazione = $_POST['editMotivazione'];
         $sql = "UPDATE Revisione SET numero='$id', targa='$targa', dataRev='$dataRev', esito='$esito', motivazione='$motivazione' WHERE numero='$id'";
     } else {
         $sql = "UPDATE Revisione SET numero='$id', targa='$targa', dataRev='$dataRev', esito='$esito', motivazione=NULL WHERE numero='$id'";

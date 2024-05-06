@@ -3,23 +3,17 @@ $(document).ready(function() {
     $('#searchForm').submit(function(event) {
         // Prevent default form submission
         event.preventDefault();
-
         // Get form data
-        var targa = $('#targa').val();
-        var telaio = $('#telaio').val();
-        var status = $('#status').val();
+        var formData = $(this).serialize();
+        performSearch(formData);
+    });
 
-        // Send AJAX request
-        $.ajax({
-            url: '../php/search_targa.php', // PHP script to handle the search
-            method: 'POST',
-            dataType: 'json',
-            data: {
-                targa: targa,
-                telaio: telaio,
-                status: status
-            },
-            success: function(response) {
+    function performSearch(formData) {
+        handleAjaxRequest(
+            '../php/search_targa.php',
+            'GET',
+            formData,
+            function(response) {
                 console.log('Response:', response.message);
                 if (response.success === true) {
                     $('#searchResults').html(response.data);
@@ -27,10 +21,17 @@ $(document).ready(function() {
                     $('#searchResults').html('<p>Non sono state trovate corrispondenze</p>');
                 }
             },
-            error: function(xhr, status, error) {
+            function(xhr, status, error) {
                 console.error('Error', xhr.responseText);
                 $('#searchResults').html('<p>Error occurred while fetching data.</p>');
             }
-        });
-    });
+        )
+    };
+
+    //reload elements on page load
+    function performDefaulSearch() {
+        performSearch(null);
+    };
+
+    performDefaulSearch();
 });

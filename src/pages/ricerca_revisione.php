@@ -6,9 +6,9 @@
     <title>Ricerca revisione</title>
     <link rel="stylesheet" href="../css/style.css">
     <script type="text/javascript" src="../js/jquery-3.7.1.js"></script>
-    <script src="../js/search_revisione.js"></script>
-    <script src="../js/test.js"></script>
-    <script src="../js/active_page.js"></script>
+    <script src="../js/ajaxHelper.js"></script>
+    <script src="../js/searchRevisione.js"></script>
+    <script src="../js/activePage.js"></script>
 </head>
 <body>
     <?php include '../includes/header.php'; ?>
@@ -41,7 +41,7 @@
                 </div>
                 <button type="submit">Cerca</button>
             </form>
-
+            <div><button class="addButton">Aggiungi nuova revisione</button></div>
 
             <!-- Search Results -->
             <div id="searchResults"></div>

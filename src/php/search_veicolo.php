@@ -3,9 +3,9 @@
 include '../includes/db_connection.php';
 
 // Retrieve search criteria from POST data
-$telaio = $_POST['telaio'] ?? '';
-$modello = $_POST['modello'] ?? '';
-$marca = $_POST['marca'] ?? '';
+$telaio = $_GET['telaio'] ?? '';
+$modello = $_GET['modello'] ?? '';
+$marca = $_GET['marca'] ?? '';
 
 // Construct the SQL query based on the provided criteria
 $sql = "SELECT * FROM Veicolo WHERE 1";
