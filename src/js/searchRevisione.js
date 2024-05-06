@@ -4,7 +4,7 @@ $(document).ready(function() {
     $('#editForm').submit(editFormSubmitted);
     $(document).on('click', '.deleteBtn', deleteBtnClicked);
     $(document).on('click', '.editBtn', editBtnClicked);
-    $('#addEsito').change(addEsitoChanged);
+    $('#addEsito').change(addEsitoChanged); // need to be copied for the #editEsitoS
     $(document).on('click', '.addButton', addButtonClicked);
 
     performDefaultSearch();

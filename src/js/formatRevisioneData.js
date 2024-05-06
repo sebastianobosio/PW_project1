@@ -10,15 +10,26 @@ function formatRevisioneData(data) {
         if (revisione.esito == 'negativo') {
             $('<div>').text('Motivazione: ' + revisione.motivazione).appendTo(revisioneDiv);
         }
+
+        //info buttons
         const informationBtnDiv = $('<div>').addClass('infoBtn');
         const veicoloButton = $('<button>').text('Dettaglio veicolo').addClass('veicolo-button');
         const targaButton = $('<button>').text('Dettaglio targa').addClass('targa-button');
         veicoloButton.appendTo(informationBtnDiv)
         targaButton.appendTo(informationBtnDiv);
-
         veicoloButton.on('click', function() {veicoloDaRevisioneBtnClicked(revisione)});
         targaButton.on('click', function() {targaDaRevisioneBtnClicked(revisione)});
         informationBtnDiv.appendTo(revisioneDiv);
+
+        //Edit and remove buttons
+        const editAndRemoveBtnDiv = $('<div>').addClass('edirmBtn');
+        const editButton = $('<button>').text('Edit').addClass('edit-button');
+        const removeButton = $('<button>').text('Remove').addClass('remove-button');
+        editButton.appendTo(editAndRemoveBtnDiv)
+        removeButton.appendTo(editAndRemoveBtnDiv);
+        editButton.on('click', editBtnClicked);
+        removeButton.on('click', deleteBtnClicked);
+        editAndRemoveBtnDiv.appendTo(revisioneDiv);
         revisioneDiv.appendTo($('#searchResults'));
     });
 }
