@@ -7,7 +7,7 @@ function formatRevisioneData(data) {
         $('<div>').text('Data della revisione: ' + revisione.dataRev).appendTo(revisioneDiv);
         $('<div>').text('Targa associata: ' + revisione.targa).appendTo(revisioneDiv);
         $('<div>').text('Esito: ' + revisione.esito).appendTo(revisioneDiv);
-        if (revisione.esiot == 'negativo') {
+        if (revisione.esito == 'negativo') {
             $('<div>').text('Motivazione: ' + revisione.motivazione).appendTo(revisioneDiv);
         }
         const informationBtnDiv = $('<div>').addClass('infoBtn');
@@ -33,11 +33,12 @@ function veicoloDaRevisioneBtnClicked(revisione) {
         function(response) {
             console.log('Response:', response.message);
             if (response.success === true) {
-                data = response.data[0].telaio;
+                telaio = response.data[0].vehicle;
+                console.log(data);
                 handleAjaxRequest(
                     '../php/search_veicolo.php',
                     'GET',
-                    "telaio=" + data,
+                    "telaio=" + telaio,
                     function(response) {
                         if (response.success === true) {
                             formatVehicleData(response.data);

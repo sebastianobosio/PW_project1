@@ -18,7 +18,7 @@ function formatTargaData(data) {
         revisioneButton.appendTo(informationBtnDiv);
 
         veicoloButton.on('click', function() {veicoloDaTargaBtnClicked(targa)});
-        revisioneButton.on('click', revisioneDaTargaBtnClicked);
+        revisioneButton.on('click', function() {revisioneDaTargaBtnClicked(targa)});
         informationBtnDiv.appendTo(targaDiv);
         targaDiv.appendTo($('#searchResults'));
     });
@@ -47,6 +47,24 @@ function veicoloDaTargaBtnClicked(targa) {
     )
 };    
 
-function revisioneDaTargaBtnClicked() {
-    console.log("bho");
+function revisioneDaTargaBtnClicked(targa) {
+    data = "targa=" + targa.numero + "&action=read";
+    handleAjaxRequest(
+        '../php/search_revisione.php',
+        'GET',
+        data,
+        function(response) {
+            console.log('Response:', response.message);
+            if (response.success === true) {
+                formatRevisioneData(response.data);
+            } else {
+                alert("Non sono state trovate corrispondenze");
+            }
+        },
+        function(xhr, status, error) {
+            console.error('Error', xhr.responseText);
+            alert("Error occurred while fetching data.");
+        }
+    )
+
 }

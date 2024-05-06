@@ -2,15 +2,65 @@
 // Include database connection
 include '../includes/db_connection.php';
 
+
+if ($_GET['action'] == 'read-array') {
+    $targhe = $_GET['targhe'];
+
+    // Check if 'targa' is provided as a comma-separated list of values
+    if (!empty($targhe) && is_string($targhe)) {
+        // Split the comma-separated values into an array
+        $targhe = explode(',', $targhe);
+    }
+
+    $total_results = array();
+    foreach ($targhe as $targa) {
+        $sql_condition = "";
+        if (!empty($targa)) {
+            $sql_condition .= " AND targa = '$targa'";
+        }
+
+        $sql = "SELECT * FROM Revisione WHERE 1 $sql_condition";
+
+        try {
+            // Prepare and execute the query
+            $stmt = $conn->query($sql);
+            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if (count($results) > 0) {
+                $total_results = array_merge($total_results, $results);
+            }
+        } catch (PDOException $e) {
+            // Handle errors
+            $response = array(
+                'success' => false,
+                'message' => 'Error executing query: ' . $e->getMessage()
+            );
+            echo json_encode($response);
+            exit();
+        }
+    }
+
+    if (empty($total_results)) {
+        $response = array(
+            'success' => false,
+            'message' => 'No results found'
+        );
+    } else {
+        $response = array(
+            'success' => true,
+            'message' => 'Queries executed successfully',
+            'data' => $total_results
+        );
+    }
+
+    echo json_encode($response);
+}
+
 if ($_GET['action'] == 'read') {
     // Retrieve search criteria from POST data
     $numero = $_GET['numero'] ?? '';
     $targa = $_GET['targa'] ?? '';
     $dataRev = $_GET['dataRev'] ?? '';
     $esito = $_GET['esito'] ?? '';
-
-    //status is both as default
-    // Ricorda che per le relazioni 0:n è utile mostarre il numero di entità collegate
 
     $sql_condition = "";
     if (!empty($targa)) {
