@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ricerca targa</title>
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/targa.css">
     <script type="text/javascript" src="../js/jquery-3.7.1.js"></script>
     <script src="../js/ajaxHelper.js"></script>
     <script src="../js/searchTarga.js"></script>

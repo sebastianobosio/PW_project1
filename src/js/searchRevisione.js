@@ -157,6 +157,9 @@ $(document).ready(function() {
             function(response) {
                 if (response.success === true) {
                     $('#searchResults').html(response.data);
+                    //             $('<div>').addClass('.editAndRemoveButtons');
+            //const editButton = $('<button>').text('Edit').addClass('edit-button');
+            //const deleteButton = $('<button>').text('Delete').addClass('delete-button');
                 } else {
                     alert("Non sono state trovate corrispondenze");
                 }

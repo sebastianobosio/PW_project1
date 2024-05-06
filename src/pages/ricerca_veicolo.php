@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ricerca veicolo</title>
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/veicolo.css">
     <script type="text/javascript" src="../js/jquery-3.7.1.js"></script>
     <script src="../js/ajaxHelper.js"></script>
     <script src="../js/searchVeicolo.js"></script>

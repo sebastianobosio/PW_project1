@@ -63,19 +63,19 @@ try {
     $results = array();
     // Process the result directly in the loop
     foreach ($stmt as $row) {
-        $output = array();
+        $result = array();
         // Do something with each row
         if ($row['origin'] === 'non-active') {
-            $output['numero'] = $row['numero'];
-            $output['dataEm'] = $row['dataEm'];
-            $output['lastVehicle'] = $row['veicolo'];
-            $output['dataRes'] = $row['dataRes'];
+            $result['numero'] = $row['numero'];
+            $result['dataEm'] = $row['dataEm'];
+            $result['dataRes'] = $row['dataRes'];
         } else {
-            $output['numero'] = $row['numero'];
-            $output['dataEm'] = $row['dataEm'];
-            $output['activeVehicle'] = $row['veicolo'];
+            $result['numero'] = $row['numero'];
+            $result['dataEm'] = $row['dataEm'];
         }
-        $results[] = $output;
+        $result['vehicle'] = $row['veicolo'];
+        $result['stato'] = $row['origin'];
+        $results[] = $result;
     }
 
     $response = array(

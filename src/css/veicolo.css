@@ -1,0 +1,17 @@
+#searchResults {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.vehicle {
+    width: 200px; /* Set the fixed width */
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin: 5px;
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+}
+
+.infoBtn {
+    display: flex;
+}

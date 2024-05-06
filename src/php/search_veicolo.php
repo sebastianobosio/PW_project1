@@ -23,19 +23,28 @@ if (!empty($marca)) {
 try {
     // Prepare and execute the query
     $stmt = $conn->query($sql);
-
-    $output = '<ul>';
-    // Process the result directly in the loop
-    foreach ($stmt as $row) {
-        // Do something with each row
-        $output .= '<li>' . '<a href="#" class="telaioLink">' . $row['telaio'] . '</a>' . ': ' . $row['marca'] . ' ' . $row['modello'] . '</li>';
+    if ($stmt->rowCount() == 0) {
+        $response = array(
+            'success' => false,
+            'message' => 'No results found'
+        );
+        echo json_encode($response);
+        exit();
     }
-    $output .= '</ul>';
+
+    $results = array();
+    foreach ($stmt as $row) {
+        $result = array();
+        $result['telaio'] = $row['telaio'];
+        $result['marca'] = $row['marca'];
+        $result['modello'] = $row['modello'];
+        $results[] = $result;
+    }
 
     $response = array(
         'success' => true,
         'message' => 'Query executed successfully',
-        'data' => $output
+        'data' => $results
     );
 
     echo json_encode($response);
