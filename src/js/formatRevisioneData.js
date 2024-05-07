@@ -3,14 +3,13 @@ function formatRevisioneData(data) {
 
     data.forEach(revisione => {
         const revisioneDiv = $('<div>').addClass('revisione');
-        $('<div>').text('Revisione: ' + revisione.numero).appendTo(revisioneDiv);
-        $('<div>').text('Data della revisione: ' + revisione.dataRev).appendTo(revisioneDiv);
-        $('<div>').text('Targa associata: ' + revisione.targa).appendTo(revisioneDiv);
-        $('<div>').text('Esito: ' + revisione.esito).appendTo(revisioneDiv);
+        $('<div>').html('Revisione: <span class="numero">' + revisione.numero + '</span>').appendTo(revisioneDiv);
+        $('<div>').html('Data della revisione: <span class="dataRev">' + revisione.dataRev + '</span>').appendTo(revisioneDiv);
+        $('<div>').html('Targa associata: <span class="targa">' + revisione.targa + '</span>').appendTo(revisioneDiv);
+        $('<div>').html('Esito: <span class="esito">' + revisione.esito + '</span>').appendTo(revisioneDiv);
         if (revisione.esito == 'negativo') {
-            $('<div>').text('Motivazione: ' + revisione.motivazione).appendTo(revisioneDiv);
+            $('<div>').html('Motivazione: <span class="motivazione">' + revisione.motivazione + '</span>').appendTo(revisioneDiv);
         }
-
         //info buttons
         const informationBtnDiv = $('<div>').addClass('infoBtn');
         const veicoloButton = $('<button>').text('Dettaglio veicolo').addClass('veicolo-button');
@@ -27,7 +26,7 @@ function formatRevisioneData(data) {
         const removeButton = $('<button>').text('Remove').addClass('remove-button');
         editButton.appendTo(editAndRemoveBtnDiv)
         removeButton.appendTo(editAndRemoveBtnDiv);
-        editButton.on('click', editBtnClicked);
+        editButton.on('click', editBtnClicked(revisioneDiv));
         removeButton.on('click', deleteBtnClicked);
         editAndRemoveBtnDiv.appendTo(revisioneDiv);
         revisioneDiv.appendTo($('#searchResults'));
@@ -94,4 +93,39 @@ function targaDaRevisioneBtnClicked(revisione) {
         }
     )
     console.log("bho");
+}
+
+function deleteBtnClicked() {
+    var id = $(this).closest('li').data('id');
+    var confirmed = confirm("Are you sure you want to delete this entry?");
+    if (confirmed) {
+        handleAjaxRequest(
+            '../php/search_revisione.php',
+            'POST',
+            { action: 'delete', id: id},
+            function(response) {
+                handleResponse(response, "Elemento rimosso");
+            },
+            function(xhr, status, error) {
+                handleAjaxError(xhr.responseText);
+            }
+        );
+    }
+}
+
+function editBtnClicked(revisioneDiv) {
+    var listItem = revisioneDiv;
+    var id = listItem.find('.numero');
+    var data = listItem.find('.dataRev');
+    var targa = listItem.find('.targa');
+    var esito = listItem.find('.esito');
+    var motivazione = esito === 'negativo' ? listItem.find('.motivazione') : '';
+    $('#editId').val(id);
+    $('#editDataRev').val(data);
+    $('#editTarga').val(targa);
+    $('#editEsito').val(esito);
+    $('#editMotivazione').val(motivazione);
+    $('#editMotivazioneDiv').toggle(esito === 'negativo');
+    $('.addForm').hide();
+    $('.editForm').show();            
 }

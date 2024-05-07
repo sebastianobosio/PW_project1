@@ -118,8 +118,9 @@ $(document).ready(function() {
     }
 
     function editBtnClicked() {
-        var listItem = $(this).closest('li');
-        var id = listItem.data('id');
+        var listItem = $(this);
+        var id = listItem.find('.numero');
+        console.log(id);
         var data = listItem.text().split('fatta il ')[1].split(' alla targa ')[0];
         var targa = listItem.text().split('targa ')[1].split(',')[0];
         var esito = listItem.text().includes('esito positivo') ? 'positivo' : 'negativo';
