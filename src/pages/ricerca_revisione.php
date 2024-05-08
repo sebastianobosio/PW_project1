@@ -11,6 +11,7 @@
     <script type="text/javascript" src="../js/jquery-3.7.1.js"></script>
     <script src="../js/formatVehicleData.js"></script>
     <script src="../js/formatTargaData.js"></script>
+    <script src="../js/searchRevisione-performSearch.js"></script>
     <script src="../js/formatRevisioneData.js"></script>
     <script src="../js/ajaxHelper.js"></script>
     <script src="../js/searchRevisione.js"></script>

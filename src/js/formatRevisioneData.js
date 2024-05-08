@@ -110,7 +110,8 @@ function targaDaRevisioneBtnClicked(revisione) {
 
 function deleteBtnClicked(revisioneDiv, caller, callerData) {
     var id = revisioneDiv.find('.numero').text();
-    var confirmed = confirm("Are you sure you want to delete this entry?");
+    var confirmed = confirm("Are you sure you want to delete this entry");
+    console.log(caller);
     if (confirmed) {
         handleAjaxRequest(
             '../php/search_revisione.php',

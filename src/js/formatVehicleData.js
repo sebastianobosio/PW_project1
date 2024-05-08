@@ -62,7 +62,7 @@ function revisioneDaVeicoloBtnClicked(car) {
                     data,
                     function(response) {
                         if (response.success === true) {
-                            formatRevisioneData(response.data, "revisioneDaVeicoloBtnClicked", car);
+                            formatRevisioneData(response.data, revisioneDaVeicoloBtnClicked, car);
                         } else {
                             alert("Non sono state trovate corrispondenze");
                         }
