@@ -63,7 +63,7 @@ $(document).ready(function() {
             data,
             function(response) {
                 if (response.success === true) {
-                    formatRevisioneData(response.data);
+                    formatRevisioneData(response.data, "performSearch", data);
                 } else {
                     alert("Non sono state trovate corrispondenze");
                 }

@@ -56,7 +56,7 @@ function revisioneDaTargaBtnClicked(targa) {
         function(response) {
             console.log('Response:', response.message);
             if (response.success === true) {
-                formatRevisioneData(response.data);
+                formatRevisioneData(response.data, "revisioneDaTargaBtnClicked", targa);
             } else {
                 alert("Non sono state trovate corrispondenze");
             }

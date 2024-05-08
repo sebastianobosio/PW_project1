@@ -1,4 +1,4 @@
-function formatRevisioneData(data) {
+function formatRevisioneData(data, caller, callerData) {
     $('#searchResults').empty();
 
     data.forEach(async revisione => {
@@ -40,7 +40,7 @@ function formatRevisioneData(data) {
         editButton.appendTo(editAndRemoveBtnDiv)
         removeButton.appendTo(editAndRemoveBtnDiv);
         //editButton.on('click', editBtnClicked(revisioneDiv));
-        removeButton.on('click', function() {deleteBtnClicked(revisioneDiv)});
+        removeButton.on('click', function() {deleteBtnClicked(revisioneDiv, caller, callerData)});
         editAndRemoveBtnDiv.appendTo(revisioneDiv);
         revisioneDiv.appendTo($('#searchResults'));
     });
@@ -108,7 +108,7 @@ function targaDaRevisioneBtnClicked(revisione) {
     console.log("bho");
 }
 
-function deleteBtnClicked(revisioneDiv) {
+function deleteBtnClicked(revisioneDiv, caller, callerData) {
     var id = revisioneDiv.find('.numero').text();
     var confirmed = confirm("Are you sure you want to delete this entry?");
     if (confirmed) {
@@ -118,6 +118,7 @@ function deleteBtnClicked(revisioneDiv) {
             { action: 'delete', id: id},
             function(response) {
                 handleResponse(response, "Elemento rimosso");
+                caller(callerData);
             },
             function(xhr, status, error) {
                 handleAjaxError(xhr.responseText);
