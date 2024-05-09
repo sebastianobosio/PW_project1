@@ -18,7 +18,12 @@ $(document).ready(function() {
             function(response) {
                 console.log('Response:', response.message);
                 if (response.success === true) {
-                    formatTargaData(response.data);
+                    data = response.data;
+                    $('#searchResults').empty();
+                    data.forEach(targa => {
+                        targaComponent = renderTargaData(targa);
+                        targaComponent.appendTo($('#searchResults'));
+                    });
                 } else {
                     alert("Non sono state trovate corrispondenze");
                 }
