@@ -1,46 +1,50 @@
 $(document).ready(function() {
     // Function to fetch car details based on ID
-    async function fetchTargaDetails(id) {
+    async function fetchVeicoloDetails(id) {
         console.log(id);
         try {
-            const targaResponse = await new Promise((resolve, reject) => {
+            const veicoloResponse = await new Promise((resolve, reject) => {
                 handleAjaxRequest(
-                    '/php/search_targa.php', // URL to fetch car details from the server
+                    '/php/search_veicolo.php', // URL to fetch car details from the server
                     'GET',
-                    "targa=" + id,
+                    'telaio=' + id,
                     resolve,
                     reject
                 );
             });
-            if (targaResponse.success == true) {
-                console.log(targaResponse.data[0]);
-                const targa = targaResponse.data[0];
-                const targaComponent = renderTarga(targa);
-                targaComponent.appendTo($('#targa'));
+            if (veicoloResponse.success == true) {
+                console.log(veicoloResponse.data[0]);
+                const veicolo = veicoloResponse.data[0];
+                const veicoloComponent = renderVeicolo(veicolo);
+                veicoloComponent.appendTo($('#veicolo'));
 
-                const veicoloResponse = await new Promise((resolve, reject) => {
+                const targaResponse = await new Promise((resolve, reject) => {
                     handleAjaxRequest(
-                        '/php/search_veicolo.php',
+                        '/php/search_targa.php',
                         'GET',
-                        "telaio=" + targa.vehicle,
+                        "telaio=" + veicolo.telaio,
                         resolve,
                         reject
                     );
                 });
-                if (veicoloResponse.success == true) {
-                    veicolo = veicoloResponse.data[0];
-                    veicoloComponent = renderVeicolo(veicolo);
-                    veicoloComponent.appendTo($('#veicoloAssociato'));
-                } else {
-                    // render niente veicolo per questa targa
-                    // non dovrebbe mai accadere. Ogni targa ha almeno un veicolo per costruzione del db
-                }
 
+                targhe = [];
+                if (targaResponse.success == true) {
+                    (targaResponse.data).forEach(targa => {
+                        console.log(targa);
+                        targa.numero.push(targhe);
+                        targaComponent = renderTarga(targa);
+                        targaComponent.appendTo($('#targheAssociate'));
+                    });
+                } else {
+                    $('#targheAssociate').html('<p>Questo veicolo non è ancora stato targato</p>');
+                }
+                // non devo più fare la richiesta per ottenere le targhe, le ho già da prima
                 const revisioneResponse = await new Promise((resolve, reject) => {
                     handleAjaxRequest(
                         '/php/search_revisione.php',
                         'GET',
-                        "targa=" + targa.numero + "&action=read",
+                        "targa=" + veicolo.telaio + "&action=read",
                         resolve,
                         reject
                     );  
@@ -66,13 +70,13 @@ $(document).ready(function() {
 
     // Get car ID from URL query parameter
     const urlParams = new URLSearchParams(window.location.search);
-    const targaNumber = urlParams.get('id');
+    const veicoloNumber = urlParams.get('id');
     
     // Fetch car details based on the ID
-    fetchTargaDetails(targaNumber);
+    fetchTargaDetails(veicoloNumber);
 });
 
 function returnToMotherPage() {
-    var motherURL = '/pages/targhe.php'
+    var motherURL = '/pages/veicoli.php'
     window.location.href = motherURL;
 }

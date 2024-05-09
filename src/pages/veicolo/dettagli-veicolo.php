@@ -9,8 +9,10 @@
     <link rel="stylesheet" href="/css/veicolo.css">
     <link rel="stylesheet" href="/css/revisione.css">
     <script type="text/javascript" src="/js/jquery-3.7.1.js"></script>
-    <script src="/js/formatTargaData.js"></script>
-    <script src="/js/dettagliTarga.js"></script>
+    <script src="/js/renderTarga.js"></script>
+    <script src="/js/renderVeicolo.js"></script>
+    <script src="/js/renderRevisione.js"></script>
+    <script src="/js/dettagliVeicolo.js"></script>
     <script src="/js/ajaxHelper.js"></script>
     <script src="/js/activePage.js"></script>
 </head>
@@ -20,9 +22,9 @@
         <div class="navigation">
             <?php include '../../includes/navigation.php'; ?>
         </div>
-        <div class="dettagliTarga">
-            <div id="targa"></div>
-            <div id="veicoloAssociato"></div>
+        <div class="dettagliVeicolo">
+            <div id="veicolo"></div>
+            <div id="targheAssociate"></div>
             <div id="revisioniAssociate"></div>
         </div>
     </div>

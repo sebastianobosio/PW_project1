@@ -1,27 +1,35 @@
-function formatVehicleData(data) {
-    $('#searchResults').empty();
-
-    data.forEach(car => {
-        const vehicleDiv = $('<div>').addClass('vehicle');
-        $('<div>').text('Veicolo: ' + car.telaio).appendTo(vehicleDiv);
-        $('<div>').text('Modello: ' + car.modello).appendTo(vehicleDiv);
-        $('<div>').text('Marca: ' + car.marca).appendTo(vehicleDiv);
-        const informationBtnDiv = $('<div>').addClass('infoBtn');
-        const targaButton = $('<button>').text('Targhe associate').addClass('targa-button');
-        const revisioneButton = $('<button>').text('Revisioni associate').addClass('revisione-button');
-        targaButton.appendTo(informationBtnDiv)
-        revisioneButton.appendTo(informationBtnDiv);
-
-        targaButton.on('click', function() {targaDaVeicoloBtnClicked(car)});
-        revisioneButton.on('click', function() {revisioneDaVeicoloBtnClicked(car)});
-        informationBtnDiv.appendTo(vehicleDiv);
-        vehicleDiv.appendTo($('#searchResults'));
-    });
+function renderVeicolo(veicolo) {
+    const veicoloComponent = createVeicoloComponent(veicolo);
+    return veicoloComponent;
 }
 
-function targaDaVeicoloBtnClicked(car) {
-    console.log(car);
-    data = "telaio=" + car.telaio;
+function createVeicoloComponent(veicolo) {
+    const vehicleDiv = $('<div>').addClass('vehicle');
+    const veicoloNumberDiv = $('<div>').text('Veicolo: ' + veicolo.telaio).appendTo(vehicleDiv);
+    const veicoloModelDiv = $('<div>').text('Modello: ' + veicolo.modello).appendTo(vehicleDiv);
+    const veicoloBrandDiv = $('<div>').text('Marca: ' + veicolo.marca).appendTo(vehicleDiv);
+    const detailsBtnDiv = $('<div>').addClass('detailsBtn');
+    const detailsButton = $('<button>').text('Dettaglio veicolo').addClass('detail-button');
+    detailsButton.appendTo(detailsBtnDiv)
+
+    detailsButton.on('click', function() {detailsBtnClicked(veicolo)});
+    detailsBtnDiv.appendTo(vehicleDiv);
+
+    return vehicleDiv;
+}
+
+function detailsBtnClicked(veicolo) {
+    console.log("sono qui");
+    viewVeicoloDetails(veicolo);
+};    
+
+function viewVeicoloDetails(veicolo) {
+    window.location.href = '/pages/veicolo/dettagli-veicolo.php?id=' + veicolo.numero;
+}
+
+/*function detailsBtnClicked(veicolo) {
+    console.log(veicolo);
+    data = "telaio=" + veicolo.telaio;
     handleAjaxRequest(
         '../php/search_targa.php',
         'GET',
@@ -39,6 +47,8 @@ function targaDaVeicoloBtnClicked(car) {
             alert("Error occurred while fetching data.");
         }
     )
+
+    window.location.href = 'nuova pagina per il dettaglio del veicolo'
 };    
 
 function revisioneDaVeicoloBtnClicked(car) {
@@ -81,4 +91,4 @@ function revisioneDaVeicoloBtnClicked(car) {
             alert("Error occurred while fetching data.");
         }
     )
-}
+}*/

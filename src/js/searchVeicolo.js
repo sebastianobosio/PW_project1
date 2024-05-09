@@ -18,7 +18,12 @@ $(document).ready(function() {
             function(response) {
                 console.log('Response:', response.message);
                 if (response.success === true) {
-                    formatVehicleData(response.data);
+                    data = response.data;
+                    $('#searchResults').empty();
+                    data.forEach(veicolo => {
+                        veicoloComponent = renderVeicolo(veicolo);
+                        veicoloComponent.appendTo($('#searchResults'));
+                    });
                 } else {
                     alert("Non sono state trovate corrispondenze");
                 }

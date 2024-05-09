@@ -1,50 +1,57 @@
-function formatRevisioneData(data, caller, callerData) {
-    $('#searchResults').empty();
+/*
+    renderRevisione non avrà più bisogno di caller e callerData in quanto i dettagli
+    verranno visualizzati in un link specifico. Quindi per 
+    tornare indietro sarà sufficiente ritornare al link originario quando 
+    ad esempio si fa un delete. L'edit in teoria
+    non avrà bisogno neanche di quello. Usa anche qua lo stile promise invece 
+    delle funzioni success e error
+*/
 
-    data.forEach(async revisione => {
-        const revisioneDiv = $('<div>').addClass('revisione');
-        $('<div>').html('Revisione: <span class="numero">' + revisione.numero + '</span>').appendTo(revisioneDiv);
-        //$('<div>').html('Data della revisione: <span class="dataRev">' + revisione.dataRev + '</span>').appendTo(revisioneDiv);
-        $('<div>').html('Data della revisione: <span class="dataRev">' + '<input type="date" value="' + revisione.dataRev + '" disabled></input>' + '</span>').appendTo(revisioneDiv);
-        $('<div>').html('Targa associata: <span class="targa">' + revisione.targa + '</span>').appendTo(revisioneDiv);
-        //$('<div>').html('Esito: <span class="esito">' + revisione.esito + '</span>').appendTo(revisioneDiv);
-        const esitoSelect = $('<select>').addClass('esito').prop('disabled', true); // Disable select element initially
-        $('<option>').val('positivo').text('Positivo').appendTo(esitoSelect);
-        $('<option>').val('negativo').text('Negativo').appendTo(esitoSelect);
-        if (revisione.esito === 'positivo') {
-            esitoSelect.val('positivo');
-        } else if (revisione.esito === 'negativo') {
-            esitoSelect.val('negativo');
-        }
-        console.log("porco dio");
-        $('<div>').html('Esito: ').append(esitoSelect).appendTo(revisioneDiv);
-        $('<div>').addClass('motivazioneDiv').css('display', 'none').html('Motivazione: <span class="motivazione"><input type="text" required disabled></input></span>').appendTo(revisioneDiv);
-        if (revisione.esito == 'negativo') {
-            revisioneDiv.find('.motivazioneDiv').toggle(revisione.esito === 'negativo');
-            revisioneDiv.find('.motivazione input').val(revisione.motivazione);
-        }
-        //info buttons
-        const informationBtnDiv = $('<div>').addClass('infoBtn');
-        const veicoloButton = $('<button>').text('Dettaglio veicolo').addClass('veicolo-button');
-        const targaButton = $('<button>').text('Dettaglio targa').addClass('targa-button');
-        veicoloButton.appendTo(informationBtnDiv)
-        targaButton.appendTo(informationBtnDiv);
-        veicoloButton.on('click', function() {veicoloDaRevisioneBtnClicked(revisione)});
-        targaButton.on('click', function() {targaDaRevisioneBtnClicked(revisione)});
-        informationBtnDiv.appendTo(revisioneDiv);
-
-        //Edit and remove buttons
-        const editAndRemoveBtnDiv = $('<div>').addClass('edirmBtn');
-        const editButton = await createEditButton(revisioneDiv);
-        const removeButton = $('<button>').text('Remove').addClass('remove-button');
-        editButton.appendTo(editAndRemoveBtnDiv)
-        removeButton.appendTo(editAndRemoveBtnDiv);
-        //editButton.on('click', editBtnClicked(revisioneDiv));
-        removeButton.on('click', function() {deleteBtnClicked(revisioneDiv, caller, callerData)});
-        editAndRemoveBtnDiv.appendTo(revisioneDiv);
-        revisioneDiv.appendTo($('#searchResults'));
-    });
+async function renderRevisione(revisione, caller, callerData) {
+    const revisioneComponent = await createRevisioneComponent(revisione);
+    // attach handler to edit button
+    return revisioneComponent;
 }
+
+async function createRevisioneComponent(revisione) {
+    const revisioneDiv = $('<div>').addClass('revisione');
+    const revisioneNumberDiv = $('<div>').html('Revisione: <span class="numero">' + revisione.numero + '</span>').appendTo(revisioneDiv);
+    const dataRevDiv = $('<div>').html('Data della revisione: <span class="dataRev">' + '<input type="date" value="' + revisione.dataRev + '" disabled></input>' + '</span>').appendTo(revisioneDiv);
+    const targaNumberDiv = $('<div>').html('Targa associata: <span class="targa">' + revisione.targa + '</span>').appendTo(revisioneDiv);
+    const esitoSelect = $('<select>').addClass('esito').prop('disabled', true); // Disable select element initially
+    $('<option>').val('positivo').text('Positivo').appendTo(esitoSelect);
+    $('<option>').val('negativo').text('Negativo').appendTo(esitoSelect);
+    if (revisione.esito === 'positivo') {
+        esitoSelect.val('positivo');
+    } else if (revisione.esito === 'negativo') {
+        esitoSelect.val('negativo');
+    }
+    const esitoDiv = $('<div>').html('Esito: ').append(esitoSelect).appendTo(revisioneDiv);
+    const motivazioneDiv = $('<div>').addClass('motivazioneDiv').css('display', 'none').html('Motivazione: <span class="motivazione"><input type="text" required disabled></input></span>').appendTo(revisioneDiv);
+    if (revisione.esito == 'negativo') {
+        motivazioneDiv.toggle(revisione.esito === 'negativo');
+        motivazioneDiv.find('.motivazione input').val(revisione.motivazione);
+    }
+    //info buttons
+    const detailsBtnDiv = $('<div>').addClass('detailsBtn');
+    const detailsButton = $('<button>').text('Dettaglio revisione').addClass('veicolo-button');
+    detailsButton.appendTo(detailsBtnDiv)
+    detailsButton.on('click', function() {detailsBtnClicked(revisione)});
+    detailsBtnDiv.appendTo(revisioneDiv);
+
+    //Edit and remove buttons
+    const editAndRemoveBtnDiv = $('<div>').addClass('edirmBtn');
+    const editButton = await createEditButton(revisioneDiv);
+    const removeButton = $('<button>').text('Remove').addClass('remove-button');
+    editButton.appendTo(editAndRemoveBtnDiv)
+    removeButton.appendTo(editAndRemoveBtnDiv);
+    //editButton.on('click', editBtnClicked(revisioneDiv));
+    removeButton.on('click', function() {deleteBtnClicked(revisioneDiv, caller, callerData)});
+    editAndRemoveBtnDiv.appendTo(revisioneDiv);
+    revisioneDiv.appendTo($('#searchResults'));
+
+    return revisioneDiv;
+};
 
 function veicoloDaRevisioneBtnClicked(revisione) {
     console.log("sono qui");
@@ -223,7 +230,7 @@ async function createEditButton(revisioneDiv) {
 async function checkRevision(targa, dataRev) {
     return new Promise((resolve, reject) => {
         handleAjaxRequest(
-            '../php/search_targa.php',
+            '/php/search_targa.php',
             'GET',
             "targa=" + targa,
             function(response) {
@@ -260,7 +267,7 @@ async function checkRevision(targa, dataRev) {
 async function saveChanges(dataUpdateRequest) {
     return new Promise((resolve, reject) => {
         handleAjaxRequest(
-            '../php/search_revisione.php',
+            '/php/search_revisione.php',
             'POST',
             dataUpdateRequest,
             function(response) {
