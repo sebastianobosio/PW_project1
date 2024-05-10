@@ -87,11 +87,13 @@ async function handlePageReloadOnDelete() {
 async function handlePageReloadOnEdit() {
     var currentPage = window.location.pathname;
     console.log(currentPage + " " + currentPage.endsWith('dettagli-revisione.php'))
-    if (!currentPage.endsWith('revisioni.php')) {
+    if (currentPage.endsWith('dettagli-revisione.php')) {
         // se sono in una pagina dettagli
         console.log("sono finito nell'else");
         window.location.reload(); // se cambia la targa cambia anche i dettagli della targa e il veicolo
-    } 
+    } else if (!currentPage.endsWith('revisioni.php')) {
+        await loadRevisioniDiv();
+    }
 }
 
 function editEsitoChanged(revisioneDiv) {
@@ -156,7 +158,7 @@ async function createEditButton(revisioneDiv) {
                     try {
                         await saveChanges(dataUpdateRequest);
                         console.log("sono qui")
-                        if (targa != originalTarga) { await handlePageReloadOnEdit();}
+                        if (targa != originalTarga) {handlePageReloadOnEdit();}
                         editButton.text('Edit Fields');
                         attachEditHandler();
                     } catch (error) {
