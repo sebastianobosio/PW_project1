@@ -32,32 +32,16 @@ $(document).ready(function() {
                 if (targaResponse.success == true) {
                     (targaResponse.data).forEach(targa => {
                         console.log(targa);
-                        targa.numero.push(targhe);
+                        targhe.push(targa.numero);
                         targaComponent = renderTarga(targa);
                         targaComponent.appendTo($('#targheAssociate'));
                     });
                 } else {
                     $('#targheAssociate').html('<p>Questo veicolo non è ancora stato targato</p>');
                 }
+                loadRevisioniDiv();
                 // non devo più fare la richiesta per ottenere le targhe, le ho già da prima
-                const revisioneResponse = await new Promise((resolve, reject) => {
-                    handleAjaxRequest(
-                        '/php/search_revisione.php',
-                        'GET',
-                        "targa=" + veicolo.telaio + "&action=read",
-                        resolve,
-                        reject
-                    );  
-                });
-                if (revisioneResponse.success == true) {
-                    (revisioneResponse.data).forEach(async revisione => {
-                        console.log(revisione);
-                        revisioneComponent = await renderRevisione(revisione);
-                        revisioneComponent.appendTo($('#revisioniAssociate'))
-                    });
-                } else {
-                    $('#revisioniAssociate').html('<p>Niente revisioni per questa targa</p>')
-                }
+                
             } else {
                 alert("Non sono state trovate corrispondenze");
                 returnToMotherPage();
@@ -73,10 +57,39 @@ $(document).ready(function() {
     const veicoloNumber = urlParams.get('id');
     
     // Fetch car details based on the ID
-    fetchTargaDetails(veicoloNumber);
+    fetchVeicoloDetails(veicoloNumber);
 });
 
 function returnToMotherPage() {
     var motherURL = '/pages/veicoli.php'
     window.location.href = motherURL;
+}
+
+async function loadRevisioniDiv() {
+    var div = '#revisioniAssociate';
+    $(div).empty();
+    try {
+        const revisioneResponse = await new Promise((resolve, reject) => {
+            handleAjaxRequest(
+                '/php/search_revisione.php',
+                'GET',
+                "targhe=" + targhe + "&action=read-array",
+                resolve,
+                reject
+            );  
+        });
+        if (revisioneResponse.success == true) {
+            (revisioneResponse.data).forEach(async revisione => {
+                console.log(revisione);
+                revisioneComponent = await renderRevisione(revisione);
+                revisioneComponent.appendTo($(div));
+            });
+        } else {
+            $(div).html('<p>Niente revisioni per questa targa</p>')
+        }
+    } catch (error) {
+        console.error('Error', error);
+        alert("Error occurred while fetching data.");
+    }
+    
 }

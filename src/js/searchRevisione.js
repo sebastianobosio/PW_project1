@@ -63,7 +63,13 @@ $(document).ready(function() {
             data,
             function(response) {
                 if (response.success === true) {
-                    formatRevisioneData(response.data, performSearch, data);
+                    data = response.data;
+                    console.log(data);
+                    $('#searchResults').empty();
+                    data.forEach(async revisione => {
+                        revisioneComponent = await renderRevisione(revisione);
+                        revisioneComponent.appendTo($('#searchResults'));
+                    });
                 } else {
                     alert("Non sono state trovate corrispondenze");
                 }

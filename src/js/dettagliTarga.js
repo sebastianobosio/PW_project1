@@ -35,25 +35,9 @@ $(document).ready(function() {
                     // render niente veicolo per questa targa
                     // non dovrebbe mai accadere. Ogni targa ha almeno un veicolo per costruzione del db
                 }
-
-                const revisioneResponse = await new Promise((resolve, reject) => {
-                    handleAjaxRequest(
-                        '/php/search_revisione.php',
-                        'GET',
-                        "targa=" + targa.numero + "&action=read",
-                        resolve,
-                        reject
-                    );  
-                });
-                if (revisioneResponse.success == true) {
-                    (revisioneResponse.data).forEach(async revisione => {
-                        console.log(revisione);
-                        revisioneComponent = await renderRevisione(revisione);
-                        revisioneComponent.appendTo($('#revisioniAssociate'))
-                    });
-                } else {
-                    $('#revisioniAssociate').html('<p>Niente revisioni per questa targa</p>')
-                }
+                
+                loadRevisioniDiv();
+                
             } else {
                 alert("Non sono state trovate corrispondenze");
                 returnToMotherPage();
@@ -75,4 +59,32 @@ $(document).ready(function() {
 function returnToMotherPage() {
     var motherURL = '/pages/targhe.php'
     window.location.href = motherURL;
+}
+
+async function loadRevisioniDiv() {
+    div = '#revisioniAssociate';
+    $(div).empty();
+    try {
+        const revisioneResponse = await new Promise((resolve, reject) => {
+            handleAjaxRequest(
+                '/php/search_revisione.php',
+                'GET',
+                "targa=" + targa.numero + "&action=read",
+                resolve,
+                reject
+            );  
+        });
+        if (revisioneResponse.success == true) {
+            (revisioneResponse.data).forEach(async revisione => {
+                console.log(revisione);
+                revisioneComponent = await renderRevisione(revisione);
+                revisioneComponent.appendTo($(div));
+            });
+        } else {
+            $(div).html('<p>Niente revisioni per questa targa</p>')
+        }
+    } catch (error) {
+        console.error('Error', error);
+        alert("Error occurred while fetching data.");
+    }
 }

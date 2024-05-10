@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="/css/veicolo.css">
     <link rel="stylesheet" href="/css/revisione.css">
     <script type="text/javascript" src="/js/jquery-3.7.1.js"></script>
-    <script src="/js/renderTarga.js"></script>
     <script src="/js/renderVeicolo.js"></script>
+    <script src="/js/renderTarga.js"></script>
     <script src="/js/renderRevisione.js"></script>
     <script src="/js/dettagliVeicolo.js"></script>
     <script src="/js/ajaxHelper.js"></script>

@@ -12,7 +12,7 @@
     <script src="/js/renderTarga.js"></script>
     <script src="/js/renderVeicolo.js"></script>
     <script src="/js/renderRevisione.js"></script>
-    <script src="/js/dettagliTarga.js"></script>
+    <script src="/js/dettagliRevisione.js"></script>
     <script src="/js/ajaxHelper.js"></script>
     <script src="/js/activePage.js"></script>
 </head>

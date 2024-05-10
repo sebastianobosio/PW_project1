@@ -16,13 +16,13 @@ function createTargaComponent(targa) {
     const detailsBtnDiv = $('<div>').addClass('detailsBtn');
     const detailsButton = $('<button>').text('Dettaglio targa').addClass('detail-button');
     detailsButton.appendTo(detailsBtnDiv);
-    detailsButton.on('click', function() {detailsBtnClicked(targa)});
+    detailsButton.on('click', function() {targaDetailsBtnClicked(targa)});
     detailsBtnDiv.appendTo(targaDiv);
 
     return targaDiv;
 }
 
-function detailsBtnClicked(targa) {
+function targaDetailsBtnClicked(targa) {
     console.log("sono qui");
     viewTargaDetails(targa);
 };    
