@@ -22,10 +22,32 @@
         <div class="navigation">
             <?php include '../../includes/navigation.php'; ?>
         </div>
+        <div id="titolo"></div>
         <div class="dettagliTarga">
             <div id="targa"></div>
             <div id="veicoloAssociato"></div>
             <div id="revisioniAssociate"></div>
+        </div>
+        <div class="addForm">
+            <h2>Add New Entry</h2>
+            <form id="addForm">
+                <label for="addTarga">Targa:</label>
+                <input type="text" id="addTarga" name="addTarga" required><br><br>
+                <label for="addDataRev">Data Revisione:</label>
+                <input type="date" id="addDataRev" name="addDataRev" required><br><br>
+                <label for="addEsito">Esito:</label>
+                <select id="addEsito" name="addEsito" required>
+                    <option value="">Select</option>
+                    <option value="positivo">Positivo</option>
+                    <option value="negativo">Negativo</option>
+                </select><br><br>
+                <div id="addMotivazioneDiv" style="display: none;">
+                    <label for="addMotivazione">Motivazione:</label>
+                    <input type="text" id="addMotivazione" name="addMotivazione">
+                </div>
+                <br>
+                <button type="submit">Submit</button>
+            </form>
         </div>
     </div>
 </body>

@@ -1,5 +1,8 @@
 function renderTarga(targa) {
+    console.log("renderizzando la targa");
+    console.log(targa);
     const targaComponent = createTargaComponent(targa);
+    console.log(targaComponent);
     return targaComponent;
 }
 

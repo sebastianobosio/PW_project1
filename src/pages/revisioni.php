@@ -71,29 +71,6 @@
                 <button type="submit">Submit</button>
             </form>
         </div>
-
-        <div class="editForm" style="display: none">
-            <h2>Edit Entry</h2>
-            <form id="editForm">
-                <input type="hidden" id="editId" name="editId">
-                <label for="editTarga">Targa:</label>
-                <input type="text" id="editTarga" name="editTarga" required><br><br>
-                <label for="editDataRev">Data Revisione:</label>
-                <input type="date" id="editDataRev" name="editDataRev" required><br><br>
-                <label for="editEsito">Esito:</label>
-                <select id="editEsito" name="editEsito" required>
-                    <option value="">Select</option>
-                    <option value="positivo">Positivo</option>
-                    <option value="negativo">Negativo</option>
-                </select><br><br>
-                <div id="editMotivazioneDiv" style="display: none;">
-                    <label for="editMotivazione">Motivazione:</label>
-                    <input type="text" id="editMotivazione" name="editMotivazione">
-                </div>
-                <br>
-                <button type="submit">Submit</button>
-            </form>
-        </div>
     </div>
 </body>
 <?php include '../includes/footer.php'; ?>

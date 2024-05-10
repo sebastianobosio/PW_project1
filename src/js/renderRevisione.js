@@ -1,11 +1,4 @@
-/*
-    renderRevisione non avrà più bisogno di caller e callerData in quanto i dettagli
-    verranno visualizzati in un link specifico. Quindi per 
-    tornare indietro sarà sufficiente ritornare al link originario quando 
-    ad esempio si fa un delete. L'edit in teoria
-    non avrà bisogno neanche di quello. Usa anche qua lo stile promise invece 
-    delle funzioni success e error
-*/
+
 
 async function renderRevisione(revisione) {
     const revisioneComponent = await createRevisioneComponent(revisione);
@@ -82,9 +75,9 @@ function deleteBtnClicked(numeroRev) {
 
 async function handlePageReloadOnDelete() {
     var currentPage = window.location.pathname;
-    if (currentPage.endsWith('revisioni')) {
+    if (currentPage.endsWith('revisioni.php')) {
         performDefaultSearch(); // se sono in revisioni chiamo la funzione presente nel file searchRevisione.js
-    } else if (currentPage.endsWith('dettagli-revisione')) {
+    } else if (currentPage.endsWith('dettagli-revisione.php')) {
         returnToMotherPage();
     } else {
         await loadRevisioniDiv();
@@ -94,15 +87,11 @@ async function handlePageReloadOnDelete() {
 async function handlePageReloadOnEdit() {
     var currentPage = window.location.pathname;
     console.log(currentPage + " " + currentPage.endsWith('dettagli-revisione.php'))
-    if (currentPage.endsWith('revisioni.php')) {
-         // se sono in revisioni non faccio nulla
-    } else if (currentPage.endsWith('dettagli-revisione.php')) {
-        
-    } else { //dettagli-veicolo e dettaglio-targa
+    if (!currentPage.endsWith('revisioni.php')) {
+        // se sono in una pagina dettagli
         console.log("sono finito nell'else");
-        await loadRevisioniDiv();
-    }
-    console.log(1);
+        window.location.reload(); // se cambia la targa cambia anche i dettagli della targa e il veicolo
+    } 
 }
 
 function editEsitoChanged(revisioneDiv) {

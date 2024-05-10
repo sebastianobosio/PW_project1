@@ -15,6 +15,7 @@ $(document).ready(function() {
             if (revisioneResponse.success == true) {
                 console.log(revisioneResponse.data[0]);
                 const revisione = revisioneResponse.data[0];
+                $('#titolo').html('<h1>Dettagli sulla revisione ' + revisione.numero + '</h1>');
                 const revisioneComponent = await renderRevisione(revisione);// here i shoul render it with a different style component
                 revisioneComponent.appendTo($('#revisione'));
 

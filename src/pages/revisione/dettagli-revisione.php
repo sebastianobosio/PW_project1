@@ -22,6 +22,7 @@
         <div class="navigation">
             <?php include '../../includes/navigation.php'; ?>
         </div>
+        <div id="titolo"></div>
         <div class="dettagliRevisione">
             <div id="revisione"></div>
             <div id="veicoloAssociato"></div>
