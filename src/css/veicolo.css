@@ -1,8 +1,33 @@
 .vehicle {
-    width: 200px; /* Set the fixed width */
-    padding: 10px;
-    border: 1px solid #ccc;
-    margin: 5px;
+    width: 300px; /* Adjust the width as needed */
+    padding: 15px;
+    border: 1px solid #8B4513; /* Brown border */
+    margin: 10px;
     display: flex;
-    flex-direction: column; /* Stack items vertically */
+    flex-direction: column;
+    background-color: #D2B48C; /* Light brown background */
+    border-radius: 5px;
+    color: #654321; /* Dark brown text color */
+}
+
+.vehicle > div {
+    margin-bottom: 10px; /* Add space between each section */
+}
+
+.vehicle div:first-child {
+    font-weight: bold; /* Make the first child text bold */
+}
+
+/* Style for the details button */
+.detail-button {
+    background-color: #8B4513; /* Brown background */
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.detail-button:hover {
+    background-color: #654321; /* Dark brown background on hover */
 }

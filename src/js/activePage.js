@@ -9,13 +9,11 @@ $(document).ready(function() {
     // Loop through each link
     links.each(function(link) {
         var href = $(this).attr('href');
-        if (href.startsWith('../')) {
-            // Remove the '../' part from the href attribute
-            href = href.substring(3);
-        }
-        // Check if the modified href matches the current URL path
+
         if (path.endsWith(href)) {
             // If it matches, add a class to emphasize it
+            $(this).addClass('active');
+        } else if (href == '/index.php' && path == '/') {
             $(this).addClass('active');
         }
     });
