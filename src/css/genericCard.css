@@ -1,25 +1,26 @@
-.vehicle {
-    width: 300px; /* Adjust the width as needed */
+.card {
+    width: 40%; /* Adjust the width as needed */
     padding: 15px;
     border: 1px solid #8B4513; /* Brown border */
-    margin: 10px;
+    /*margin: 10px;*/
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     background-color: #D2B48C; /* Light brown background */
     border-radius: 5px;
     color: #654321; /* Dark brown text color */
 }
 
-.vehicle > div {
+.card div {
     margin-bottom: 10px; /* Add space between each section */
 }
 
-.vehicle div:first-child {
+.card div:first-child div:first-child {
     font-weight: bold; /* Make the first child text bold */
 }
 
 /* Style for the details button */
-.detail-button {
+.card button {
     background-color: #8B4513; /* Brown background */
     color: #fff;
     border: none;
@@ -28,6 +29,14 @@
     cursor: pointer;
 }
 
-.detail-button:hover {
+.card button:hover {
     background-color: #654321; /* Dark brown background on hover */
+}
+
+  .detail-button i{
+    margin-left: 10px;
+}
+
+.action-button {
+    margin-top: auto;
 }

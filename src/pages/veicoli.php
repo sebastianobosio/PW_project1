@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ricerca veicolo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Libre+Baskerville&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/veicolo.css">
+    <link rel="stylesheet" href="/css/genericCard.css">
     <script type="text/javascript" src="/js/jquery-3.7.1.js"></script>
+    <script src="https://kit.fontawesome.com/0a63b22d0b.js" crossorigin="anonymous"></script>
     <script src="/js/renderVeicolo.js"></script>
     <script src="/js/ajaxHelper.js"></script>
     <script src="/js/searchVeicolo.js"></script>
@@ -18,8 +20,9 @@
         <div class="navigation">
             <?php include '../includes/navigation.php'; ?>
         </div>
-        <div class="results">
+        <div class="content">
             <!-- Search Form -->
+            <div class="searchContainer">
             <form id="searchForm">
                 <div>
                     <label for="telaio">Telaio:</label>
@@ -33,9 +36,9 @@
                     <label for="marca">Marca:</label>
                     <input type="text" id="marca" name="marca">
                 </div>
-                <button type="submit">Cerca</button>
+                <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
             </form>
-
+</div>
 
             <!-- Search Results -->
             <div id="searchResults"></div>

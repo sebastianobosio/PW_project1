@@ -19,7 +19,7 @@
         <nav class="navigation">
             <?php include 'includes/navigation.php'; ?>
         </nav>
-        <div class="results">
+        <div class="content">
             <!-- This is where the results will be displayed -->
             <h1>Benvenuti</h1>
             <h4>In questo sito è possible effettuare le seguenti operazioni</h4>

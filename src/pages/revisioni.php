@@ -4,9 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ricerca revisione</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Libre+Baskerville&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/revisione.css">
+    <link rel="stylesheet" href="/css/genericCard.css">
+    <link rel="stylesheet" href="/css/revisioneCard.css">
     <script type="text/javascript" src="/js/jquery-3.7.1.js"></script>
+    <script src="https://kit.fontawesome.com/0a63b22d0b.js" crossorigin="anonymous"></script>
     <script src="/js/renderRevisione.js"></script>
     <script src="/js/ajaxHelper.js"></script>
     <script src="/js/searchRevisione.js"></script>
@@ -18,8 +21,9 @@
         <div class="navigation">
             <?php include '../includes/navigation.php'; ?>
         </div>
-        <div class="results">
+        <div class="content">
             <!-- Search Form -->
+            <div class="searchContainer">
             <form id="searchForm">
                 <div>
                     <label for="numero">Numero:</label>
@@ -41,14 +45,14 @@
                             <option value="both" selected>Entrambi</option>
                     </select>
                 </div>
-                <button type="submit">Cerca</button>
+                <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
             </form>
-            <div><button class="addButton">Aggiungi nuova revisione</button></div>
-
+            <button id="addButton"><i class="fa-solid fa-plus"></i></button>
+</div>
             <!-- Search Results -->
             <div id="searchResults"></div>
         </div>
-        <div class="addForm">
+        <div class="addFormDiv" style="display: none">
             <h2>Add New Entry</h2>
             <form id="addForm">
                 <label for="addTarga">Targa:</label>
@@ -67,6 +71,7 @@
                 </div>
                 <br>
                 <button type="submit">Submit</button>
+                <button id="undoButton"><i class="fa-solid fa-xmark"></i></button>
             </form>
         </div>
     </div>

@@ -41,7 +41,7 @@ $(document).ready(function() {
                     handleAjaxRequest(
                         '/php/search_veicolo.php',
                         'GET',
-                        "telaio=" + targa.vehicle,
+                        "telaio=" + targa.veicolo,
                         resolve,
                         reject
                     );  

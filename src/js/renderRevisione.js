@@ -7,10 +7,11 @@ async function renderRevisione(revisione) {
 }
 
 async function createRevisioneComponent(revisione) {
-    const revisioneDiv = $('<div>').addClass('revisione'); 
-    const revisioneNumberDiv = $('<div>').html('Revisione: <span class="numero">' + revisione.numero + '</span>').appendTo(revisioneDiv);
-    const dataRevDiv = $('<div>').html('Data della revisione: <span class="dataRev">' + '<input type="date" value="' + revisione.dataRev + '" disabled></input>' + '</span>').appendTo(revisioneDiv);
-    const targaNumberDiv = $('<div>').html('Targa associata: <span class="targa">' + revisione.targa + '</span>').appendTo(revisioneDiv);
+    const revisioneDiv = $('<div>').addClass('revisione card');
+    const infoDiv = $('<div>').addClass('info'); 
+    const revisioneNumberDiv = $('<div>').html('Revisione: <span class="numero">' + revisione.numero + '</span>').appendTo(infoDiv);
+    const dataRevDiv = $('<div>').html('Data della revisione: <span class="dataRev">' + '<input type="date" value="' + revisione.dataRev + '" disabled></input>' + '</span>').appendTo(infoDiv);
+    const targaNumberDiv = $('<div>').html('Targa associata: <span class="targa">' + revisione.targa + '</span>').appendTo(infoDiv);
     const esitoSelect = $('<select>').addClass('esito').prop('disabled', true); // Disable select element initially
     $('<option>').val('positivo').text('Positivo').appendTo(esitoSelect);
     $('<option>').val('negativo').text('Negativo').appendTo(esitoSelect);
@@ -19,27 +20,27 @@ async function createRevisioneComponent(revisione) {
     } else if (revisione.esito === 'negativo') {
         esitoSelect.val('negativo');
     }
-    const esitoDiv = $('<div>').html('Esito: ').append(esitoSelect).appendTo(revisioneDiv);
-    const motivazioneDiv = $('<div>').addClass('motivazioneDiv').css('display', 'none').html('Motivazione: <span class="motivazione"><input type="text" required disabled></input></span>').appendTo(revisioneDiv);
+    const esitoDiv = $('<div>').html('Esito: ').append(esitoSelect).appendTo(infoDiv);
+    const motivazioneDiv = $('<div>').addClass('motivazioneDiv').css('display', 'none').html('Motivazione: <span class="motivazione"><input type="text" required disabled></input></span>').appendTo(infoDiv);
     if (revisione.esito == 'negativo') {
         motivazioneDiv.toggle(revisione.esito === 'negativo');
         motivazioneDiv.find('.motivazione input').val(revisione.motivazione);
     }
+    infoDiv.appendTo(revisioneDiv);
     //info buttons
-    const detailsBtnDiv = $('<div>').addClass('detailsBtn');
-    const detailsButton = $('<button>').text('Dettaglio revisione').addClass('detail-button');
-    detailsButton.appendTo(detailsBtnDiv)
+    const btnsDiv = $('<div>').addClass('action-btn');
+    const detailsButton = $('<button>').html('Scopri di più' + '<i class="fa-solid fa-circle-info"></i>').addClass('detail-button');
+    detailsButton.appendTo(btnsDiv)
     detailsButton.on('click', function() {revisioneDetailsBtnClicked(revisione)});
-    detailsBtnDiv.appendTo(revisioneDiv);
 
     //Edit and remove buttons
-    const editAndRemoveBtnDiv = $('<div>').addClass('edirmBtn');
     const editButton = await createEditButton(revisioneDiv);
-    const removeButton = $('<button>').text('Remove').addClass('remove-button');
-    editButton.appendTo(editAndRemoveBtnDiv)
-    removeButton.appendTo(editAndRemoveBtnDiv);
+    const removeButton = $('<button>').addClass('remove-button');
+    removeButton.html('<i class="fas fa-trash-alt"></i>'); // This adds a trash icon
+    editButton.appendTo(btnsDiv)
+    removeButton.appendTo(btnsDiv);
     removeButton.on('click', function() {deleteBtnClicked(revisione.numero)});
-    editAndRemoveBtnDiv.appendTo(revisioneDiv);
+    btnsDiv.appendTo(revisioneDiv);
 
     return revisioneDiv;
 };
@@ -105,7 +106,8 @@ function editEsitoChanged(revisioneDiv) {
 }
 
 async function createEditButton(revisioneDiv) {
-    const editButton = $('<button>').text('Edit Fields');
+    const editButton = $('<button>').addClass('edit-button');
+    editButton.html('<i class="fa-solid fa-pen-to-square"></i>');
     
     async function attachEditHandler() {
         const id = revisioneDiv.find('.numero').text();
@@ -159,7 +161,7 @@ async function createEditButton(revisioneDiv) {
                         await saveChanges(dataUpdateRequest);
                         console.log("sono qui")
                         if (targa != originalTarga) {handlePageReloadOnEdit();}
-                        editButton.text('Edit Fields');
+                        editButton.html('<i class="fa-solid fa-pen-to-square"></i>');
                         attachEditHandler();
                     } catch (error) {
                         console.log("non funziona un cazzo");

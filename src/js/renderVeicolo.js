@@ -4,12 +4,14 @@ function renderVeicolo(veicolo) {
 }
 
 function createVeicoloComponent(veicolo) {
-    const vehicleDiv = $('<div>').addClass('vehicle');
-    const veicoloNumberDiv = $('<div>').text('Veicolo: ' + veicolo.telaio).appendTo(vehicleDiv);
-    const veicoloModelDiv = $('<div>').text('Modello: ' + veicolo.modello).appendTo(vehicleDiv);
-    const veicoloBrandDiv = $('<div>').text('Marca: ' + veicolo.marca).appendTo(vehicleDiv);
-    const detailsBtnDiv = $('<div>').addClass('detailsBtn');
-    const detailsButton = $('<button>').text('Dettaglio veicolo').addClass('detail-button');
+    const vehicleDiv = $('<div>').addClass('veicolo card');
+    const infoDiv = $('<div>').addClass('info');
+    const veicoloNumberDiv = $('<div>').text('Veicolo: ' + veicolo.telaio).appendTo(infoDiv);
+    const veicoloModelDiv = $('<div>').text('Modello: ' + veicolo.modello).appendTo(infoDiv);
+    const veicoloBrandDiv = $('<div>').text('Marca: ' + veicolo.marca).appendTo(infoDiv);
+    infoDiv.appendTo(vehicleDiv);
+    const detailsBtnDiv = $('<div>').addClass('action-btn');
+    const detailsButton = $('<button>').html('Scopri di più' + '<i class="fa-solid fa-circle-info"></i>').addClass('detail-button');
     detailsButton.appendTo(detailsBtnDiv)
 
     detailsButton.on('click', function() {veicoloDetailsBtnClicked(veicolo)});

@@ -7,17 +7,19 @@ function renderTarga(targa) {
 }
 
 function createTargaComponent(targa) {
-    const targaDiv = $('<div>').addClass('targa');
-    const targaNumberDiv = $('<div>').text('Targa: ' + targa.numero).appendTo(targaDiv);
-    const dataEmDiv = $('<div>').text('Data di Emissione: ' + targa.dataEm).appendTo(targaDiv);
+    const targaDiv = $('<div>').addClass('targa card');
+    const infoDiv = $('<div>').addClass('info');
+    const targaNumberDiv = $('<div>').text('Targa: ' + targa.numero).appendTo(infoDiv);
+    const dataEmDiv = $('<div>').text('Data di Emissione: ' + targa.dataEm).appendTo(infoDiv);
     if (targa.status == 'non-active') {
-        const vehicle = $('<div>').text('Ultimo veicolo: ' + targa.vehicle).appendTo(targaDiv);
-        const dataRes = $('<div>').text('Data di restituzione: ' + targa.dataRes).appendTo(targaDiv);
+        const vehicle = $('<div>').text('Ultimo veicolo: ' + targa.veicolo).appendTo(infoDiv);
+        const dataRes = $('<div>').text('Data di restituzione: ' + targa.dataRes).appendTo(infoDiv);
     } else if (targa.status == 'active') {
-        const vehicle = $('<div>').text('Veicolo associato: ' + targa.vehicle).appendTo(targaDiv);
+        const vehicle = $('<div>').text('Veicolo associato: ' + targa.veicolo).appendTo(infoDiv);
     }
-    const detailsBtnDiv = $('<div>').addClass('detailsBtn');
-    const detailsButton = $('<button>').text('Dettaglio targa').addClass('detail-button');
+    infoDiv.appendTo(targaDiv);
+    const detailsBtnDiv = $('<div>').addClass('action-btn');
+    const detailsButton = $('<button>').html('Scopri di più' + '<i class="fa-solid fa-circle-info"></i>').addClass('detail-button');
     detailsButton.appendTo(detailsBtnDiv);
     detailsButton.on('click', function() {targaDetailsBtnClicked(targa)});
     detailsBtnDiv.appendTo(targaDiv);

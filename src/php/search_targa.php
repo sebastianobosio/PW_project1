@@ -67,7 +67,7 @@ try {
         // Do something with each row
         $result['numero'] = $row['numero'];
         $result['dataEm'] = $row['dataEm'];
-        $result['vehicle'] = $row['veicolo'];
+        $result['veicolo'] = $row['veicolo'];
         $result['status'] = $row['origin'];
         if ($row['origin'] === 'non-active') {
             $result['dataRes'] = $row['dataRes'];

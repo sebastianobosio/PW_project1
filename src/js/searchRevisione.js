@@ -3,8 +3,20 @@ $(document).ready(function() {
     $('#addForm').submit(addFormSubmitted);
     $(document).on('click', '.deleteBtn', deleteBtnClicked);
     $('#addEsito').change(addEsitoChanged); // need to be copied for the #editEsitoS
+    $('#addButton').on('click', showAddForm);
+    $('#undoButton').on('click', hideAddForm);
 
     performDefaultSearch();
+
+    function showAddForm() {
+        console.log("diocasadsca");
+        $('.addFormDiv').toggle();
+    }
+
+    function hideAddForm() {
+        $('.addFormDiv').toggle();
+
+    }
 
     function searchFormSubmitted(event) {
         event.preventDefault();
@@ -67,7 +79,7 @@ $(document).ready(function() {
                     console.log(data);
                     $('#searchResults').empty();
                     data.forEach(async revisione => {
-                        revisioneComponent = await renderRevisione(revisione);
+                        var revisioneComponent = await renderRevisione(revisione);
                         revisioneComponent.appendTo($('#searchResults'));
                     });
                 } else {
