@@ -4,16 +4,23 @@ $(document).ready(function () {
   $(document).on("click", ".deleteBtn", deleteBtnClicked);
   $("#addEsito").change(addEsitoChanged); // need to be copied for the #editEsitoS
   $("#addButton").on("click", showAddForm);
-  $("#undoButton").on("click", hideAddForm);
+  $("#undoButton").on("click", function(event) {hideAddForm(event)});
 
   performDefaultSearch();
 
   function showAddForm() {
-    $(".addFormDiv").toggle("slow");
+    if (!$('.addFormDiv').is(":visible")) {
+        $(".addFormDiv").toggle("slow");
+        $("#addForm").removeAttr('novalidate');
+    }
   }
 
-  function hideAddForm() {
-    $(".addFormDiv").toggle("slow");
+  function hideAddForm(event) {
+    if ($('.addFormDiv').is(":visible")) {
+        $(".addFormDiv").toggle("slow");
+        $("#addForm").attr('novalidate', true);
+        event.preventDefault();
+    }
   }
 
   function searchFormSubmitted(event) {

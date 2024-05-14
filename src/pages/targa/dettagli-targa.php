@@ -10,6 +10,7 @@
     <script type="text/javascript" src="/js/jquery-3.7.1.js"></script>
     <script src="/js/renderTarga.js"></script>
     <script src="/js/renderVeicolo.js"></script>
+ <!--   <script src="/js/performSearchRevisioni.js"></script>-->
     <script src="/js/renderRevisione.js"></script>
     <script src="/js/dettagliTarga.js"></script>
     <script src="/js/ajaxHelper.js"></script>
