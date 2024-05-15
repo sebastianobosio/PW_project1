@@ -1,6 +1,7 @@
 $(document).ready(function() {
     $('#addForm').submit(addFormSubmitted);
     $('#addEsito').change(addEsitoChanged); // need to be copied for the #editEsitoS
+    
     // Function to fetch car details based on ID
     async function fetchTargaDetails(id) {
         console.log(id);
@@ -21,7 +22,7 @@ $(document).ready(function() {
                 const formState = targaStatus == 'active';
                 toggleFormVisibility(formState);
                 $('#titolo').html('<h1>Dettagli sulla targa ' + targa.numero + '</h1>');
-                const targaComponent = renderTarga(targa);
+                const targaComponent = renderTargaDetail(targa);
                 targaComponent.appendTo($('#targa'));
 
                 const veicoloResponse = await new Promise((resolve, reject) => {
@@ -35,9 +36,15 @@ $(document).ready(function() {
                 });
                 if (veicoloResponse.success == true) {
                     veicolo = veicoloResponse.data[0];
-                    veicoloComponent = renderVeicolo(veicolo);
-                    veicoloComponent.appendTo($('#veicoloAssociato'));
+                    veicoloComponent = renderVeicoloCard(veicolo);
+                    if (formState) {
+                        $('.veicolo .titolo').html('<h3>Veicolo attualmente associato</h3>')
+                    } else {
+                        $('.veicolo .titolo').html('<h3>Ultimo veicolo associato</h3>')
+                    }
+                    veicoloComponent.appendTo($('#veicolo'));
                 } else {
+                    $('.veicolo .titolo').html('<h3>Nessun veicolo associato. Strano!</h3>')
                     // render niente veicolo per questa targa
                     // non dovrebbe mai accadere. Ogni targa ha almeno un veicolo per costruzione del db
                 }
@@ -56,10 +63,10 @@ $(document).ready(function() {
     
     function toggleFormVisibility(state) {
         if (state) {
-          $('#addForm').show();
+          $('#addButton').show();
           prepareForm(targaNumber) // Show the form
         } else {
-          $('#addForm').hide(); // Hide the form
+          $('#addButton').hide(); // Hide the form
         }
     }
     
@@ -125,7 +132,7 @@ function returnToMotherPage() {
 }
 
 async function loadRevisioniDiv() {
-    div = '#revisioniAssociate';
+    div = '#revisione';
     $(div).empty();
     var targa = targaNumber;
     try {
@@ -139,13 +146,17 @@ async function loadRevisioniDiv() {
             );  
         });
         if (revisioneResponse.success == true) {
+            var length = revisioneResponse.data.length;
+            var revisionText = length === 1 ? 'è associata ' + length + ' revisione' : 'sono associate ' + length + ' revisioni';
+            $('.revisione .titolo').html('<h3>A questa targa ' + revisionText + '</h3>');
             (revisioneResponse.data).forEach(async revisione => {
-                console.log(revisione);
-                revisioneComponent = await renderRevisione(revisione);
+                console.log("ciao");
+                revisioneComponent = await renderRevisioneCard(revisione);
+                console.log("ciao");
                 revisioneComponent.appendTo($(div));
             });
         } else {
-            $(div).html('<p>Niente revisioni per questa targa</p>')
+            $('.revisione .titolo').html('<h3>A questa targa non sono associate revisioni</h3>')
         }
     } catch (error) {
         console.error('Error', error);

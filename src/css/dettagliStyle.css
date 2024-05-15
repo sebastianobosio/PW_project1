@@ -99,10 +99,10 @@ footer {
   padding: 20px 50px;
 }
 
-.searchContainer {
+.titolo-container {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: center;
   border-bottom: 2px solid white;
   padding: 10px;
 }
@@ -111,42 +111,46 @@ footer {
   margin-left: auto;
 }
 
-#searchForm {
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-end;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-#searchForm div label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-.searchContainer button {
+.titolo-container button {
   background-color: #fff; /* Brown background */
   color: #000;
   border: none;
-  padding: 8px 15px;
+  padding: 15px 15px;
   border-radius: 5px;
   cursor: pointer;
 }
 
-.searchContainer button:hover {
+.titolo-container button:hover {
   background-color: #654321;
   color: white; /* Dark brown background on hover */
 }
 
-#searchForm select {
-  border-radius: 3px;
-  padding: 5px;
+#dettagli-content {
+    margin-top: 20px;
 }
 
-#searchResults {
+#veicolo {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
   gap: 15px;
-  padding: 25px 0px;
+}
+
+#revisione {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+#targa {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+#dettagli-content > div {
+    padding-bottom: 10px;
+    border-bottom: 2px solid white;
 }

@@ -21,7 +21,7 @@ $(document).ready(function() {
                     data = response.data;
                     $('#searchResults').empty();
                     data.forEach(targa => {
-                        targaComponent = renderTarga(targa);
+                        targaComponent = renderTargaCard(targa);
                         targaComponent.appendTo($('#searchResults'));
                     });
                 } else {

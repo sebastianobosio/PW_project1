@@ -74,6 +74,22 @@ try {
         }
         $results[] = $result;
     }
+    
+    $activeIndex = -1;
+    foreach ($results as $index => $result) {
+        //index will be the position, result the value
+        if ($result['status'] === 'active') {
+            $activeIndex = $index;
+            break;
+        }
+    }
+
+    // If an element with status = 'active' is found, move it to the beginning of the array
+    if ($activeIndex !== -1) {
+        $activeElement = $results[$activeIndex];
+        unset($results[$activeIndex]);
+        array_unshift($results, $activeElement);
+    }
 
     $response = array(
         'success' => true,
@@ -90,4 +106,3 @@ try {
     );
     echo json_encode($response);
 }
-?>

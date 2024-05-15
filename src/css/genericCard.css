@@ -15,7 +15,7 @@
     margin-bottom: 10px; /* Add space between each section */
 }
 
-.card div:first-child div:first-child {
+.card .info div:first-child {
     font-weight: bold; /* Make the first child text bold */
 }
 

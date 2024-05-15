@@ -3,25 +3,10 @@ $(document).ready(function () {
   $("#addForm").submit(addFormSubmitted);
   $(document).on("click", ".deleteBtn", deleteBtnClicked);
   $("#addEsito").change(addEsitoChanged); // need to be copied for the #editEsitoS
-  $("#addButton").on("click", showAddForm);
-  $("#undoButton").on("click", function(event) {hideAddForm(event)});
-
+  
   performDefaultSearch();
 
-  function showAddForm() {
-    if (!$('.addFormDiv').is(":visible")) {
-        $(".addFormDiv").toggle("slow");
-        $("#addForm").removeAttr('novalidate');
-    }
-  }
 
-  function hideAddForm(event) {
-    if ($('.addFormDiv').is(":visible")) {
-        $(".addFormDiv").toggle("slow");
-        $("#addForm").attr('novalidate', true);
-        event.preventDefault();
-    }
-  }
 
   function searchFormSubmitted(event) {
     event.preventDefault();
@@ -84,7 +69,7 @@ $(document).ready(function () {
           console.log(data);
           $("#searchResults").empty();
           data.forEach(async (revisione) => {
-            var revisioneComponent = await renderRevisione(revisione);
+            var revisioneComponent = await renderRevisioneCard(revisione);
             revisioneComponent.appendTo($("#searchResults"));
           });
         } else {

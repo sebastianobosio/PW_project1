@@ -16,7 +16,7 @@ $(document).ready(function() {
                 console.log(veicoloResponse.data[0]);
                 const veicolo = veicoloResponse.data[0];
                 $('#titolo').html('<h1>Dettagli sul veicolo ' + veicolo.telaio + '</h1>');
-                const veicoloComponent = renderVeicolo(veicolo);
+                const veicoloComponent = renderVeicoloDetail(veicolo);
                 veicoloComponent.appendTo($('#veicolo'));
 
                 const targaResponse = await new Promise((resolve, reject) => {
@@ -31,18 +31,23 @@ $(document).ready(function() {
                 var state = false;
                 //targhe = []; it's global
                 if (targaResponse.success == true) {
+                    var length = targaResponse.data.length;
+                    var revisionText = length === 1 ? 'è associata ' + length + ' targa' : 'sono associate ' + length + ' targhe';
+                    $('.targa .titolo').html('<h3>A questo veicolo ' + revisionText + '</h3>');
                     (targaResponse.data).forEach(targa => {
                         console.log(targa);
                         if (targa.status == 'active') {
                             targaAttiva = targa;
                             state = true;
                         }
+                        // here i could save targhe infos and sort them to find the active one and put it first, but i'm lazy :) 
+                        // better if done in the backend. I actually done it
                         targhe.push(targa.numero);
-                        targaComponent = renderTarga(targa);
-                        targaComponent.appendTo($('#targheAssociate'));
+                        targaComponent = renderTargaCard(targa);
+                        targaComponent.appendTo($('#targa'));
                     });
                 } else {
-                    $('#targheAssociate').html('<p>Questo veicolo non è ancora stato targato</p>');
+                    $('.targa .titolo').html('<h3>Questo veicolo non è ancora stato targato</h3>')
                 }
                 toggleFormVisibility(state);
                 loadRevisioniDiv();
@@ -60,10 +65,10 @@ $(document).ready(function() {
 
     function toggleFormVisibility(state) {
         if (state) {
-            $('#addForm').show();
+            $('#addButton').show();
             prepareForm(targaAttiva.numero) // Show the form
           } else {
-            $('#addForm').hide(); // Hide the form
+            $('#addButton').hide(); // Hide the form
           }
       }
       
@@ -134,7 +139,7 @@ function returnToMotherPage() {
 }
 
 async function loadRevisioniDiv() {
-    var div = '#revisioniAssociate';
+    var div = '#revisione';
     $(div).empty();
     try {
         const revisioneResponse = await new Promise((resolve, reject) => {
@@ -147,13 +152,16 @@ async function loadRevisioniDiv() {
             );  
         });
         if (revisioneResponse.success == true) {
+            var length = revisioneResponse.data.length;
+            var revisionText = length === 1 ? 'è associata ' + length + ' revisione' : 'sono associate ' + length + ' revisioni';
+            $('.revisione .titolo').html('<h3>A questo veicolo ' + revisionText + '</h3>');
             (revisioneResponse.data).forEach(async revisione => {
                 console.log(revisione);
-                revisioneComponent = await renderRevisione(revisione);
+                revisioneComponent = await renderRevisioneCard(revisione);
                 revisioneComponent.appendTo($(div));
             });
         } else {
-            $(div).html('<p>Niente revisioni per questa targa</p>')
+            $('.revisione .titolo').html('<h3>A questa targa non sono associate revisioni</h3>')
         }
     } catch (error) {
         console.error('Error', error);

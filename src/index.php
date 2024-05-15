@@ -29,6 +29,13 @@
                 <li>Visualizzare informazioni dettagliate su un veicolo e la sua storia</li>
             </ul>
             <p>Effettua queste ricerche navigando tra le pagine a lato</p>
+            <p>Le modifiche delle revisioni possono essere effettuate direttamente dalla card.
+                Sia per le modifiche che per l'aggiunta vengono effettuati dei controlli sui campi.
+                Nel caso dell'edit vengono ripristinati i valori originali.
+                Nelle pagine dettaglio-targa/veicolo il form di aggiunta revisione è già riempito
+                con la targa o targa-attiva. Form che è presente solo se il veicolo è targato con targa attiva.
+            </p>
+            <p>Sarebbe bello implementare anche un sistema di paginazione, così da non caricare le card tutte insieme. Cosa che potrebbe essere problematica quando il database è pieno.</p>
         </div>
     </div>
 </body>

@@ -16,7 +16,7 @@ $(document).ready(function() {
                 console.log(revisioneResponse.data[0]);
                 const revisione = revisioneResponse.data[0];
                 $('#titolo').html('<h1>Dettagli sulla revisione ' + revisione.numero + '</h1>');
-                const revisioneComponent = await renderRevisione(revisione);// here i shoul render it with a different style component
+                const revisioneComponent = await renderRevisioneDetail(revisione);// here i shoul render it with a different style component
                 revisioneComponent.appendTo($('#revisione'));
 
                 const targaResponse = await new Promise((resolve, reject) => {
@@ -30,9 +30,11 @@ $(document).ready(function() {
                 });
                 if (targaResponse.success == true) {
                     targa = targaResponse.data[0];
-                    targaComponent = renderTarga(targa);
-                    targaComponent.appendTo($('#targaAssociata'));
+                    targaComponent = renderTargaCard(targa);
+                    $('.targa .titolo').html('<h3>Targa associata</h3>')
+                    targaComponent.appendTo($('#targa'));
                 } else {
+                    $('.targa .titolo').html('<h3>Nessuna targa associata a questa revisione. Strano!</h3>')
                     // render niente veicolo per questa targa
                     // non dovrebbe mai accadere. Ogni revisione ha la sua targa per costruzione del db
                 }
@@ -48,9 +50,13 @@ $(document).ready(function() {
                 });
                 if (veicoloResponse.success == true) {
                     veicolo = veicoloResponse.data[0];
-                    veicoloComponent = renderVeicolo(veicolo);
-                    veicoloComponent.appendTo($('#veicoloAssociato'))
+                    veicoloComponent = renderVeicoloCard(veicolo);
+                    $('.veicolo .titolo').html('<h3>Veicolo associato</h3>')
+
+                    veicoloComponent.appendTo($('#veicolo'))
                 } else {
+                    $('.veicolo .titolo').html('<h3>Nessun veicolo associato. Strano!</h3>')
+
                     // render niente veic   olo per questa targa
                     // non dovrebbe mai accadere. Ogni targa ha il suo veicolo per costruzione del db
                 }

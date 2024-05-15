@@ -1,9 +1,14 @@
-function renderVeicolo(veicolo) {
-    const veicoloComponent = createVeicoloComponent(veicolo);
+function renderVeicoloCard(veicolo) {
+    const veicoloComponent = createVeicoloCardComponent(veicolo);
     return veicoloComponent;
 }
 
-function createVeicoloComponent(veicolo) {
+function renderVeicoloDetail(veicolo) {
+    const veicoloComponent = createVeicoloDetailComponent(veicolo);
+    return veicoloComponent;
+}
+
+function createVeicoloCardComponent(veicolo) {
     const vehicleDiv = $('<div>').addClass('veicolo card');
     const infoDiv = $('<div>').addClass('info');
     const veicoloNumberDiv = $('<div>').text('Veicolo: ' + veicolo.telaio).appendTo(infoDiv);
@@ -16,6 +21,23 @@ function createVeicoloComponent(veicolo) {
 
     detailsButton.on('click', function() {veicoloDetailsBtnClicked(veicolo)});
     detailsBtnDiv.appendTo(vehicleDiv);
+
+    return vehicleDiv;
+}
+
+function createVeicoloDetailComponent(veicolo) {
+    const vehicleDiv = $('<div>').addClass('veicolo card');
+    const infoDiv = $('<div>').addClass('info');
+    const veicoloNumberDiv = $('<div>').text('Veicolo: ' + veicolo.telaio).appendTo(infoDiv);
+    const veicoloModelDiv = $('<div>').text('Modello: ' + veicolo.modello).appendTo(infoDiv);
+    const veicoloBrandDiv = $('<div>').text('Marca: ' + veicolo.marca).appendTo(infoDiv);
+    infoDiv.appendTo(vehicleDiv);
+    /*const detailsBtnDiv = $('<div>').addClass('action-btn');
+    const detailsButton = $('<button>').html('Scopri di più' + '<i class="fa-solid fa-circle-info"></i>').addClass('detail-button');
+    detailsButton.appendTo(detailsBtnDiv)
+
+    detailsButton.on('click', function() {veicoloDetailsBtnClicked(veicolo)});
+    detailsBtnDiv.appendTo(vehicleDiv);*/
 
     return vehicleDiv;
 }

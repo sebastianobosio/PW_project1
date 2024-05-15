@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Libre+Baskerville&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/genericCard.css">
+    <link rel="stylesheet" href="/css/targaCard.css">
     <script type="text/javascript" src="/js/jquery-3.7.1.js"></script>
     <script src="https://kit.fontawesome.com/0a63b22d0b.js" crossorigin="anonymous"></script>
     <script src="/js/renderTarga.js"></script>

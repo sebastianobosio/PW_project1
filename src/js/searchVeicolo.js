@@ -21,7 +21,7 @@ $(document).ready(function() {
                     data = response.data;
                     $('#searchResults').empty();
                     data.forEach(veicolo => {
-                        veicoloComponent = renderVeicolo(veicolo);
+                        veicoloComponent = renderVeicoloCard(veicolo);
                         veicoloComponent.appendTo($('#searchResults'));
                     });
                 } else {
