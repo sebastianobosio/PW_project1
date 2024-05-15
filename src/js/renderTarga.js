@@ -23,11 +23,11 @@ function createTargaCardComponent(targa) {
         const vehicle = $('<div>').text('Ultimo veicolo: ' + targa.veicolo).appendTo(infoDiv);
         const dataRes = $('<div>').text('Data di restituzione: ' + targa.dataRes).appendTo(infoDiv);
         targaDiv.addClass('non-active');
-        $('<div>').addClass('dot non-active-dot').appendTo(targaNumberDiv);
+        $('<div>').addClass('dot non-active-dot').text('non attiva').appendTo(targaNumberDiv);
     } else if (targa.status == 'active') {
         const vehicle = $('<div>').text('Veicolo associato: ' + targa.veicolo).appendTo(infoDiv);
         targaDiv.addClass('active');
-        $('<div>').addClass('dot active-dot').appendTo(targaNumberDiv);
+        $('<div>').addClass('dot active-dot').text('attiva').appendTo(targaNumberDiv);
     }
     infoDiv.appendTo(targaDiv);
     const detailsBtnDiv = $('<div>').addClass('action-btn');
@@ -48,11 +48,11 @@ function createTargaDetailComponent(targa) {
         const vehicle = $('<div>').text('Ultimo veicolo: ' + targa.veicolo).appendTo(infoDiv);
         const dataRes = $('<div>').text('Data di restituzione: ' + targa.dataRes).appendTo(infoDiv);
         targaDiv.addClass('non-active');
-        $('<div>').addClass('dot non-active-dot').appendTo(targaNumberDiv);
+        $('<div>').addClass('dot non-active-dot').text('non attiva').appendTo(targaNumberDiv);
     } else if (targa.status == 'active') {
         const vehicle = $('<div>').text('Veicolo associato: ' + targa.veicolo).appendTo(infoDiv);
         targaDiv.addClass('active');
-        $('<div>').addClass('dot active-dot').appendTo(targaNumberDiv);
+        $('<div>').addClass('dot active-dot').text('attiva').appendTo(targaNumberDiv);
     }
     infoDiv.appendTo(targaDiv);
     /*const detailsBtnDiv = $('<div>').addClass('action-btn');

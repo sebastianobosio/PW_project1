@@ -1,7 +1,7 @@
 $(document).ready(function () {
   $("#searchForm").submit(searchFormSubmitted);
   $("#addForm").submit(addFormSubmitted);
-  $(document).on("click", ".deleteBtn", deleteBtnClicked);
+  //$(document).on("click", ".deleteBtn", deleteBtnClicked);
   $("#addEsito").change(addEsitoChanged); // need to be copied for the #editEsitoS
   
   performDefaultSearch();

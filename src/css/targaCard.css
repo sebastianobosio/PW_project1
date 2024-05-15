@@ -2,12 +2,15 @@
 .targaDiv {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .targa .dot {
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
+  width: auto;
+  height: auto;
+  border-radius: 5px;
+  padding: 5px;
+  color: black;
 }
 
 .targa .active-dot {

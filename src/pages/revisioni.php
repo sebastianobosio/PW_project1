@@ -40,7 +40,7 @@
                     </div>
                     <div>
                         <label for="dataRev">Data Revisione:</label>
-                        <input type="text" id="dataRev" name="dataRev">
+                        <input type="date" id="dataRev" name="dataRev">
                     </div>
                     <div>
                         <label for="esito">Esito:</label>

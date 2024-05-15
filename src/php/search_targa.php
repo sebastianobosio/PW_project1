@@ -6,6 +6,8 @@ include '../includes/db_connection.php';
 $targa = $_GET['targa'] ?? '';
 $telaio = $_GET['telaio'] ?? '';
 $status = $_GET['status'] ?? '';
+$dataEm = $_GET['dataEm'] ?? '';
+$dataRes = $_GET['dataRes'] ?? '';
 
 //status is both as default
 // Ricorda che per le relazioni 0:n è utile mostarre il numero di entità collegate
@@ -18,6 +20,12 @@ if (!empty($targa)) {
 }
 if (!empty($telaio)) {
     $sql_condition .= " AND veicolo = '$telaio'";
+}
+if (!empty($dataEm)) {
+    $sql_condition .= " AND dataEm = '$dataEm'";
+}
+if (!empty($dataRes)) {
+    $sql_condition .= " AND dataRes = '$dataRes'";
 }
 
 $sql_only_active = "SELECT Targa.numero, Targa.dataEm, TargaAttiva.targa AS targa_attiva, TargaAttiva.veicolo, 'active' AS origin

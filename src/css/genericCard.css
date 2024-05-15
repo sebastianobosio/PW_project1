@@ -33,10 +33,14 @@
     background-color: #654321; /* Dark brown background on hover */
 }
 
-  .detail-button i{
+.detail-button i{
     margin-left: 10px;
 }
 
-.action-button {
+.action-btn {
     margin-top: auto;
+}
+
+.edit-button {
+    margin-left: auto;
 }

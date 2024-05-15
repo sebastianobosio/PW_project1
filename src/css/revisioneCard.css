@@ -1,34 +1,47 @@
 .revisione input[type="date"] {
-    border: 1px solid #654321; /* Dark brown border for date input */
-    border-radius: 3px;
-    padding: 5px;
+  border: 1px solid #654321; /* Dark brown border for date input */
+  border-radius: 3px;
+  padding: 5px;
 }
 
 /* Style for the select element */
 .revisione select.esito {
-    border: 1px solid #654321; /* Dark brown border for select */
-    border-radius: 3px;
-    padding: 5px;
+  border: 1px solid #654321; /* Dark brown border for select */
+  border-radius: 3px;
+  padding: 5px;
+}
+
+.revisione .remove-button:hover {
+  background-color: #dc1414;
 }
 
 .revisione .targa[contenteditable="true"] {
-    /* Your specific styles for contenteditable true */
-    background-color: white; /* Example background color */
-    color: black; /* Example text color */
-    border: 1px solid black;
+  /* Your specific styles for contenteditable true */
+  background-color: white; /* Example background color */
+  color: black; /* Example text color */
+  border: 1px solid black;
+}
+
+.revisione .save-change:hover {
+  background-color: green;
+  color: black;
+}
+
+.revisione .discard-changes:hover {
+  background-color: #b6ae16;
+  color: black;
 }
 
 .revisione .targa {
-    padding: 0 5px;
+  padding: 0 5px;
 }
 
 .action-btn {
-    display: flex;
-    justify-content: space-between;
-    gap: 5px;
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
 }
 
 .action-btn button:first-child {
-    margin-right: auto;
+  margin-right: auto;
 }
-
