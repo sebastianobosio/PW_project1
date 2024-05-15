@@ -1,4 +1,6 @@
 $(document).ready(function() {
+    $('#addForm').submit(addFormSubmitted);
+    $('#addEsito').change(addEsitoChanged); // need to be copied for the #editEsitoS
     // Function to fetch car details based on ID
     async function fetchVeicoloDetails(id) {
         console.log(id);

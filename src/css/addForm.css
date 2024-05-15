@@ -1,51 +1,52 @@
 .addFormDiv {
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    overflow-y: auto;
-    background-color: #D2B48C;
-    padding: 20px;
-    width: 300px; /* Adjust width as needed */
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  background-color: #d2b48c;
+  padding: 20px;
+  width: 300px; /* Adjust width as needed */
 }
 
 .addFormDiv .form-group {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 .addFormDiv label {
-    display: block;
-    font-weight: bold;
+  display: block;
+  font-weight: bold;
 }
+
 
 .addFormDiv input[type="text"],
 .addFormDiv input[type="date"],
 .addFormDiv select {
-    width: 100%;
-    border: 1px solid #654321; /* Dark brown border for select */
-    border-radius: 3px;
-    padding: 5px;
+  width: 100%;
+  border: 1px solid #654321; /* Dark brown border for select */
+  border-radius: 3px;
+  padding: 5px;
 }
 
 .addFormDiv .button-group {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .addFormDiv .submit-button,
 .addFormDiv .undo-button {
-    background-color: #8B4513; /* Brown background */
-    color: #fff;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 5px;
-    cursor: pointer;
+  background-color: #8b4513; /* Brown background */
+  color: #fff;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .addFormDiv .submit-button:hover,
 .addFormDiv .undo-button:hover {
-    background-color: #654321;
+  background-color: #654321;
 }
 
-.addFormDiv .submit-button i{
-    margin-left: 10px;
+.addFormDiv .submit-button i {
+  margin-left: 10px;
 }

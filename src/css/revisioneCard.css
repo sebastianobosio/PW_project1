@@ -24,11 +24,10 @@
 
 .revisione .save-change:hover {
   background-color: green;
-  color: black;
 }
 
 .revisione .discard-changes:hover {
-  background-color: #b6ae16;
+  background-color: #eeff00;
   color: black;
 }
 

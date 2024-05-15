@@ -10,8 +10,11 @@
     <link rel="stylesheet" href="/css/addForm.css">
     <link rel="stylesheet" href="/css/genericCard.css">
     <link rel="stylesheet" href="/css/revisioneCard.css">
+    <link rel="stylesheet" href="/css/textarea.css">
+    
     <script type="text/javascript" src="/js/jquery-3.7.1.js"></script>   
     <script src="https://kit.fontawesome.com/0a63b22d0b.js" crossorigin="anonymous"></script>
+    <script src="/js/resizeMotivazioneField.js"></script>
     <script src="/js/addForm.js"></script>
     <script src="/js/performSearchRevisioni.js"></script>
     <script src="/js/renderRevisione.js"></script>
@@ -78,7 +81,7 @@
                 </div>
                 <div class="form-group" id="addMotivazioneDiv" style="display: none;">
                     <label for="addMotivazione">Motivazione:</label>
-                    <input type="text" id="addMotivazione" name="addMotivazione">
+                    <textarea class="motivazione" oninput="autoResize()" id="addMotivazione" name="addMotivazione"></textarea>
                 </div>
                 <div class="button-group">
                     <button type="submit" class="submit-button">Submit<i class="fa-solid fa-paper-plane"></i></button>

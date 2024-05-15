@@ -10,12 +10,14 @@
     <link rel="stylesheet" href="/css/genericCard.css">
     <link rel="stylesheet" href="/css/revisioneCard.css">
     <link rel="stylesheet" href="/css/targaCard.css">
+    <link rel="stylesheet" href="/css/textarea.css">
 
     <script type="text/javascript" src="/js/jquery-3.7.1.js"></script>
     <script src="https://kit.fontawesome.com/0a63b22d0b.js" crossorigin="anonymous"></script>
     <script src="/js/renderTarga.js"></script>
     <script src="/js/renderVeicolo.js"></script>
     <!-- <script src="/js/performSearchRevisioni.js"></script> -->
+    <script src="/js/resizeMotivazioneField.js"></script>
     <script src="/js/renderRevisione.js"></script>
     <script src="/js/dettagliRevisione.js"></script>
     <script src="/js/ajaxHelper.js"></script>

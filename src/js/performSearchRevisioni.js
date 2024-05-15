@@ -14,7 +14,7 @@ function performDefaultSearch() {
           console.log(data);
           $("#searchResults").empty();
           data.forEach(async (revisione) => {
-            var revisioneComponent = await renderRevisione(revisione);
+            var revisioneComponent = await renderRevisioneCard(revisione);
             revisioneComponent.appendTo($("#searchResults"));
           });
         } else {

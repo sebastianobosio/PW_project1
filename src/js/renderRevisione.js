@@ -44,12 +44,12 @@ async function createRevisioneCardComponent(revisione) {
         .addClass("motivazioneDiv")
         .css("display", "none")
         .html(
-            'Motivazione: <span class="motivazione"><input type="text" required disabled></input></span>'
+            'Motivazione: <span class="motivazione"><textarea class="motivazione" oninput="autoResize()" type="text" required disabled></textarea></span>'
         )
         .appendTo(infoDiv);
     if (revisione.esito == "negativo") {
         motivazioneDiv.toggle(revisione.esito === "negativo");
-        motivazioneDiv.find(".motivazione input").val(revisione.motivazione);
+        motivazioneDiv.find(".motivazione textarea").val(revisione.motivazione);
     }
     infoDiv.appendTo(revisioneDiv);
     //info buttons
@@ -120,12 +120,12 @@ async function createRevisioneDetailComponent(revisione) {
         .addClass("motivazioneDiv")
         .css("display", "none")
         .html(
-            'Motivazione: <span class="motivazione"><input type="text" required disabled></input></span>'
+            'Motivazione: <span class="motivazione"><textarea class="motivazione" oninput="autoResize()" required disabled></textarea></span>'
         )
         .appendTo(infoDiv);
     if (revisione.esito == "negativo") {
         motivazioneDiv.toggle(revisione.esito === "negativo");
-        motivazioneDiv.find(".motivazione input").val(revisione.motivazione);
+        motivazioneDiv.find(".motivazione textarea").val(revisione.motivazione);
     }
     infoDiv.appendTo(revisioneDiv);
     //info buttons
@@ -221,13 +221,13 @@ function editEsitoChanged(revisioneDiv) {
         .find(".motivazioneDiv")
         .toggle(revisioneDiv.find("select.esito").val() == "negativo");
     revisioneDiv
-        .find(".motivazione input")
+        .find(".motivazione textarea")
         .prop("required", revisioneDiv.find("select.esito").val() == "negativo");
     revisioneDiv
-        .find(".motivazione input")
+        .find(".motivazione textarea")
         .prop("disabled", revisioneDiv.find("select.esito").val() == "positivo");
     revisioneDiv
-        .find(".motivazione input")
+        .find(".motivazione textarea")
         .prop("disabled", revisioneDiv.find("select.esito").val() == "positivo");
 }
 
@@ -255,7 +255,7 @@ async function createEditButton(
             .prop("disabled", true)
             .val();
         var originalMotivazione = revisioneDiv
-            .find(".motivazione input")
+            .find(".motivazione textarea")
             .prop("disabled", true)
             .val();
         console.log(
@@ -278,7 +278,7 @@ async function createEditButton(
                 .prop("disabled", false)
                 .val();
             if (esito === "negativo") {
-                revisioneDiv.find(".motivazione input").prop("disabled", false);
+                revisioneDiv.find(".motivazione textarea").prop("disabled", false);
             }
 
             revisioneDiv.find("select.esito").change(function () {
@@ -308,7 +308,7 @@ async function createEditButton(
                         .find("select.esito")
                         .prop("disabled", true);
                     var motivazioneObj = revisioneDiv
-                        .find(".motivazione input")
+                        .find(".motivazione textarea")
                         .prop("disabled", true);
                     var motivazione = motivazioneObj.val();
                     var esito = esitoObj.val();
@@ -389,7 +389,7 @@ async function createEditButton(
                 var dataRevObj = revisioneDiv.find(".dataRev input");
                 var targaObj = revisioneDiv.find(".targa");
                 var esitoObj = revisioneDiv.find("select.esito");
-                var motivazioneObj = revisioneDiv.find(".motivazione input");
+                var motivazioneObj = revisioneDiv.find(".motivazione textarea");
                 var motivazione = motivazioneObj.val();
                 var esito = esitoObj.val();
                 motivazioneObj.prop("disabled", true); // Re-enable input
