@@ -116,8 +116,8 @@ $(document).ready(function() {
     }
 
     function addEsitoChanged() {
-        $('#addMotivazioneDiv').toggle($(this).val() === 'negativo');
-        $('#addMotivazione').prop('required', $(this).val() === 'negativo');
+        $('#addMotivazioneDiv').toggle($(this).val() === 'negative');
+        $('#addMotivazione').prop('required', $(this).val() === 'negative');
     }
     // Fetch car details based on the ID
     fetchTargaDetails(targaNumber);

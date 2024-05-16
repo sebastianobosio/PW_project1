@@ -69,8 +69,8 @@
                     <label for="addEsito">Esito:</label>
                     <select id="addEsito" name="addEsito" required>
                         <option value="">Select</option>
-                        <option value="positivo">Positivo</option>
-                        <option value="negativo">Negativo</option>
+                        <option value="positive">Positivo</option>
+                        <option value="negative">Negativo</option>
                     </select>
                 </div>
                 <div class="form-group" id="addMotivazioneDiv" style="display: none;">

@@ -19,7 +19,7 @@ if (!empty($targa)) {
     $sql_condition .= " AND Plates.number = '$targa'"; // using only 'number' was causing an issue in the query
 }
 if (!empty($telaio)) {
-    $sql_condition .= " AND vehicleNumber = '$telaio'";
+    $sql_condition .= " AND Plates.vehicleNumber = '$telaio'";
 }
 if (!empty($dataEm)) {
     $sql_condition .= " AND Plates.emissionDate = '$dataEm'";

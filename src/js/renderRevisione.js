@@ -29,12 +29,12 @@ async function createRevisioneCardComponent(revisione) {
         .html('Targa associata: <span class="targa">' + revisione.targa + "</span>")
         .appendTo(infoDiv);
     const esitoSelect = $("<select>").addClass("esito").prop("disabled", true); // Disable select element initially
-    $("<option>").val("positivo").text("Positivo").appendTo(esitoSelect);
-    $("<option>").val("negativo").text("Negativo").appendTo(esitoSelect);
-    if (revisione.esito === "positivo") {
-        esitoSelect.val("positivo");
-    } else if (revisione.esito === "negativo") {
-        esitoSelect.val("negativo");
+    $("<option>").val("positive").text("Positivo").appendTo(esitoSelect);
+    $("<option>").val("negative").text("Negativo").appendTo(esitoSelect);
+    if (revisione.esito === "positive") {
+        esitoSelect.val("positive");
+    } else if (revisione.esito === "negative") {
+        esitoSelect.val("negative");
     }
     const esitoDiv = $("<div>")
         .html("Esito: ")
@@ -47,8 +47,8 @@ async function createRevisioneCardComponent(revisione) {
             'Motivazione: <span class="motivazione"><textarea class="motivazione" oninput="autoResize()" type="text" required disabled></textarea></span>'
         )
         .appendTo(infoDiv);
-    if (revisione.esito == "negativo") {
-        motivazioneDiv.toggle(revisione.esito === "negativo");
+    if (revisione.esito == "negative") {
+        motivazioneDiv.toggle(revisione.esito === "negative");
         motivazioneDiv.find(".motivazione textarea").val(revisione.motivazione);
     }
     infoDiv.appendTo(revisioneDiv);
@@ -105,12 +105,12 @@ async function createRevisioneDetailComponent(revisione) {
         .html('Targa associata: <span class="targa">' + revisione.targa + "</span>")
         .appendTo(infoDiv);
     const esitoSelect = $("<select>").addClass("esito").prop("disabled", true); // Disable select element initially
-    $("<option>").val("positivo").text("Positivo").appendTo(esitoSelect);
-    $("<option>").val("negativo").text("Negativo").appendTo(esitoSelect);
-    if (revisione.esito === "positivo") {
-        esitoSelect.val("positivo");
-    } else if (revisione.esito === "negativo") {
-        esitoSelect.val("negativo");
+    $("<option>").val("positive").text("Positivo").appendTo(esitoSelect);
+    $("<option>").val("negative").text("Negativo").appendTo(esitoSelect);
+    if (revisione.esito === "positive") {
+        esitoSelect.val("positive");
+    } else if (revisione.esito === "negative") {
+        esitoSelect.val("negative");
     }
     const esitoDiv = $("<div>")
         .html("Esito: ")
@@ -123,8 +123,8 @@ async function createRevisioneDetailComponent(revisione) {
             'Motivazione: <span class="motivazione"><textarea class="motivazione" oninput="autoResize()" required disabled></textarea></span>'
         )
         .appendTo(infoDiv);
-    if (revisione.esito == "negativo") {
-        motivazioneDiv.toggle(revisione.esito === "negativo");
+    if (revisione.esito == "negative") {
+        motivazioneDiv.toggle(revisione.esito === "negative");
         motivazioneDiv.find(".motivazione textarea").val(revisione.motivazione);
     }
     infoDiv.appendTo(revisioneDiv);
@@ -215,20 +215,20 @@ async function handlePageReloadOnEdit() {
 function editEsitoChanged(revisioneDiv) {
     console.log(
         "Esito ha cambiato stato: " + revisioneDiv.find("select.esito").val() ==
-        "negativo"
+        "negative"
     );
     revisioneDiv
         .find(".motivazioneDiv")
-        .toggle(revisioneDiv.find("select.esito").val() == "negativo");
+        .toggle(revisioneDiv.find("select.esito").val() == "negative");
     revisioneDiv
         .find(".motivazione textarea")
-        .prop("required", revisioneDiv.find("select.esito").val() == "negativo");
+        .prop("required", revisioneDiv.find("select.esito").val() == "negative");
     revisioneDiv
         .find(".motivazione textarea")
-        .prop("disabled", revisioneDiv.find("select.esito").val() == "positivo");
+        .prop("disabled", revisioneDiv.find("select.esito").val() == "positive");
     revisioneDiv
         .find(".motivazione textarea")
-        .prop("disabled", revisioneDiv.find("select.esito").val() == "positivo");
+        .prop("disabled", revisioneDiv.find("select.esito").val() == "positive");
 }
 
 async function createEditButton(
@@ -277,7 +277,7 @@ async function createEditButton(
                 .find("select.esito")
                 .prop("disabled", false)
                 .val();
-            if (esito === "negativo") {
+            if (esito === "negative") {
                 revisioneDiv.find(".motivazione textarea").prop("disabled", false);
             }
 
@@ -312,7 +312,7 @@ async function createEditButton(
                         .prop("disabled", true);
                     var motivazione = motivazioneObj.val();
                     var esito = esitoObj.val();
-                    if (esito === "negativo" && motivazione === "") {
+                    if (esito === "negative" && motivazione === "") {
                         alert(
                             "La motivazione non può essere nulla in caso di esito negativo"
                         );
@@ -324,11 +324,11 @@ async function createEditButton(
                         dataRevObj.val(originalDataRev);
                         targaObj.text(originalTarga);
                         esitoObj.val(originalEsito);
-                        if (originalEsito == "positivo") {
+                        if (originalEsito == "positive") {
                             motivazioneObj.prop("disabled", true);
                             revisioneDiv
                                 .find(".motivazioneDiv")
-                                .toggle(revisioneDiv.find("select.esito").val() == "negativo");
+                                .toggle(revisioneDiv.find("select.esito").val() == "negative");
                         }
                         return false; // Prevent form submission
                     }
@@ -376,11 +376,11 @@ async function createEditButton(
                         dataRevObj.val(originalDataRev);
                         targaObj.text(originalTarga);
                         esitoObj.val(originalEsito);
-                        if (originalEsito == "positivo") {
+                        if (originalEsito == "positive") {
                             motivazioneObj.prop("disabled", true);
                             revisioneDiv
                                 .find(".motivazioneDiv")
-                                .toggle(revisioneDiv.find("select.esito").val() == "negativo");
+                                .toggle(revisioneDiv.find("select.esito").val() == "negative");
                         }
                         return false;
                     }
@@ -400,11 +400,11 @@ async function createEditButton(
                 dataRevObj.val(originalDataRev);
                 targaObj.text(originalTarga);
                 esitoObj.val(originalEsito);
-                if (originalEsito == "positivo") {
+                if (originalEsito == "positive") {
                     motivazioneObj.prop("disabled", true);
                     revisioneDiv
                         .find(".motivazioneDiv")
-                        .toggle(revisioneDiv.find("select.esito").val() == "negativo");
+                        .toggle(revisioneDiv.find("select.esito").val() == "negative");
                 }
                 if (detailsButton != null) {
                     detailsButton.show();

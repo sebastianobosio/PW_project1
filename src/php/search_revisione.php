@@ -16,15 +16,39 @@ if ($_GET['action'] == 'read-array') {
     foreach ($targhe as $targa) {
         $sql_condition = "";
         if (!empty($targa)) {
-            $sql_condition .= " AND targa = '$targa'";
+            $sql_condition .= " AND plateNumber = '$targa'";
         }
 
-        $sql = "SELECT * FROM Revisione WHERE 1 $sql_condition";
+        $sql = "SELECT * FROM Revisions WHERE 1 $sql_condition";
+
 
         try {
             // Prepare and execute the query
             $stmt = $conn->query($sql);
-            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if ($stmt->rowCount() == 0) {
+                $response = array(
+                    'success' => false,
+                    'message' => 'No results found'
+                );
+                echo json_encode($response);
+                exit(); // Stop further execution
+            }
+
+            $results = array();
+
+            foreach ($stmt as $row) {
+                $result = array();
+                $result['numero'] = $row['id'];
+                $result['dataRev'] = $row['revisionDate'];
+                $result['targa'] = $row['plateNumber'];
+                $result['esito'] = $row['outcome'];
+                if ($row['outcome'] === 'negative') {
+                    $result['motivazione'] = $row['motivation'];
+                }
+                $results[] = $result;
+            }
+
+
             if (count($results) > 0) {
                 $total_results = array_merge($total_results, $results);
             }
@@ -35,16 +59,20 @@ if ($_GET['action'] == 'read-array') {
                 'message' => 'Error executing query: ' . $e->getMessage()
             );
             echo json_encode($response);
-            exit();
         }
     }
 
     if (empty($total_results)) {
+
+        // here add logic for sorting the array (copy from search_targa.php)
         $response = array(
             'success' => false,
             'message' => 'No results found'
         );
     } else {
+        usort($total_results, function ($b, $a) {
+            return strtotime($a['dataRev']) - strtotime($b['dataRev']);
+        });
         $response = array(
             'success' => true,
             'message' => 'Queries executed successfully',
@@ -64,22 +92,22 @@ if ($_GET['action'] == 'read') {
 
     $sql_condition = "";
     if (!empty($targa)) {
-        $sql_condition .= " AND targa = '$targa'";
+        $sql_condition .= " AND plateNumber = '$targa'";
     }
     if (!empty($numero)) {
-        $sql_condition .= " AND numero = '$numero'";
+        $sql_condition .= " AND id = '$numero'";
     }
     if (!empty($dataRev)) {
-        $sql_condition .= " AND dataRev = '$dataRev'";
-    }
-    
-    if ($esito === 'positive') {
-        $sql_condition .= " AND esito = 'positivo'";
-    } elseif ($esito === 'negative') {
-        $sql_condition .= " AND esito = 'negativo'";
+        $sql_condition .= " AND revisionDate = '$dataRev'";
     }
 
-    $sql = "SELECT * FROM Revisione WHERE 1 $sql_condition";
+    if ($esito === 'positive') {
+        $sql_condition .= " AND outcome = 'positive'";
+    } elseif ($esito === 'negative') {
+        $sql_condition .= " AND outcome = 'negative'";
+    }
+
+    $sql = "SELECT * FROM Revisions WHERE 1 $sql_condition";
 
     try {
         // Prepare and execute the query
@@ -97,16 +125,19 @@ if ($_GET['action'] == 'read') {
 
         foreach ($stmt as $row) {
             $result = array();
-            $result['numero'] = $row['numero'];
-            $result['dataRev'] = $row['dataRev'];
-            $result['targa'] = $row['targa'];
-            $result['esito'] = $row['esito'];
-            if ($row['esito'] === 'negativo') {
-                $result['motivazione'] = $row['motivazione'];
+            $result['numero'] = $row['id'];
+            $result['dataRev'] = $row['revisionDate'];
+            $result['targa'] = $row['plateNumber'];
+            $result['esito'] = $row['outcome'];
+            if ($row['outcome'] === 'negative') {
+                $result['motivazione'] = $row['motivation'];
             }
             $results[] = $result;
         }
 
+        usort($results, function ($b, $a) {
+            return strtotime($a['dataRev']) - strtotime($b['dataRev']);
+        });
 
         $response = array(
             'success' => true,
@@ -127,15 +158,15 @@ if ($_GET['action'] == 'read') {
 
 
 // Create operation
-if($_POST['action'] == 'create') {
+if ($_POST['action'] == 'create') {
     $targa = $_POST['addTarga'];
     $dataRev = $_POST['addDataRev'];
     $esito = $_POST['addEsito'];
-    if ($esito === 'negativo') {
+    if ($esito === 'negative') {
         $motivazione = $_POST['addMotivazione'];
-        $sql = "INSERT INTO Revisione (numero, targa, dataRev, esito, motivazione) VALUES (NULL, '$targa', '$dataRev', '$esito', '$motivazione')";
+        $sql = "INSERT INTO Revisions (id, plateNumber, revisionDate, outcome, motivation) VALUES (NULL, '$targa', '$dataRev', '$esito', '$motivazione')";
     } else {
-        $sql = "INSERT INTO Revisione (numero, targa, dataRev, esito, motivazione) VALUES (NULL, '$targa', '$dataRev', '$esito', NULL)";
+        $sql = "INSERT INTO Revisione (id, plateNumber, revisionDate, outcome, motivation) values (null, '$targa', '$dataRev', '$esito', NULL)";
     }
 
     try {
@@ -165,18 +196,18 @@ if($_POST['action'] == 'create') {
 }
 
 // Update operation
-if($_POST['action'] == 'update') {
+if ($_POST['action'] == 'update') {
     $id = $_POST['editId'];
     $targa = $_POST['editTarga'];
     $dataRev = $_POST['editDataRev'];
     $esito = $_POST['editEsito'];
-    if ($esito === 'negativo') {
+    if ($esito === 'negative') {
         $motivazione = $_POST['editMotivazione'];
-        $sql = "UPDATE Revisione SET numero='$id', targa='$targa', dataRev='$dataRev', esito='$esito', motivazione='$motivazione' WHERE numero='$id'";
+        $sql = "UPDATE Revisions SET id='$id', plateNumber='$targa', revisionDate='$dataRev', outcome='$esito', motivation='$motivazione' WHERE id='$id'";
     } else {
-        $sql = "UPDATE Revisione SET numero='$id', targa='$targa', dataRev='$dataRev', esito='$esito', motivazione=NULL WHERE numero='$id'";
+        $sql = "UPDATE Revisions SET id='$id', plateNumber='$targa', revisionDate='$dataRev', outcome='$esito', motivation=NULL WHERE id='$id'";
     }
-    
+
     try {
         // Execute the query
         $success = $conn->query($sql);
@@ -204,10 +235,10 @@ if($_POST['action'] == 'update') {
 }
 
 // Delete operation
-if($_POST['action'] == 'delete') {
+if ($_POST['action'] == 'delete') {
     $id = $_POST['id'];
 
-    $sql = "DELETE FROM Revisione WHERE numero='$id'";
+    $sql = "DELETE FROM Revisions WHERE id='$id'";
     try {
         // Execute the query
         $success = $conn->query($sql);
@@ -233,5 +264,3 @@ if($_POST['action'] == 'delete') {
         echo json_encode($response);
     }
 }
-
-?>

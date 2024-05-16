@@ -32,9 +32,10 @@ def generate_inactive_plate_data(plate_data,
     while True:
         try:
             print("i'm here")
+            rand = random.randint(1, (next_emission_date - plate_data[1]).days - 5)
             restitution_date = next_emission_date - timedelta(
-                days=random.randint(1, (
-                    (next_emission_date - plate_data[1]).days)))
+                days=rand) # resitution date at least 5 days after the emission date
+            print(rand)
             print(next_emission_date)
             print(plate_data[1])
             print(restitution_date)
@@ -45,9 +46,31 @@ def generate_inactive_plate_data(plate_data,
     # Random restitution date within 1-3 months before next emission date
     return (plate_data[0], last_vehicle_number, restitution_date)
 
+motivation_list = [
+    "Veicolo non superato il test delle emissioni",
+    "Scoperte problematiche di sicurezza durante l'ispezione",
+    "Violazione delle leggi sul traffico",
+    "Targa danneggiata o manomessa",
+    "Documentazione errata presentata",
+    "Proprietario precedente non ha rivelato problemi",
+    "Veicolo coinvolto in incidente",
+    "Non conformità alle normative",
+    "Falsificazione o contraffazione di documenti",
+    "Targa persa o rubata",
+    "Violazione delle normative ambientali",
+    "Registrazione scaduta",
+    "Modifiche improprie apportate al veicolo",
+    "Registrazione fraudolenta",
+    "Veicolo considerato non sicuro per l'uso su strada",
+    "Mancato pagamento di multe o tasse",
+    "Mancato pagamento di imposte",
+    "Modifiche illegali apportate al veicolo",
+    "Veicolo segnalato come rubato",
+    "Targa associata ad attività criminali"
+]
 
 # Connect to the SQLite database
-conn = sqlite3.connect('vehicle_database.db')
+conn = sqlite3.connect('../db/vehicle_database.db')
 cursor = conn.cursor()
 
 # Create the tables if they don't exist
@@ -102,13 +125,14 @@ for j in range(100):
 
     # Generate the first emission date from 10 to 30 days after the vehicle prod
     emission_date = vehicle_data[3] + timedelta(days=random.randint(10, 30))
+
     plates.append(generate_plate_data(emission_date))
 
     # Generate additional emission dates ensuring they are at least 30 days apart
     for _ in range(0, random.randint(0, 2)):
         while True:
             # second plate is 30 to 50 days later than the first one, meaning that the first must be returned in this interval
-            new_emission_date = plates[-1][1] + timedelta(days=random.randint(30, 50))
+            new_emission_date = plates[-1][1] + timedelta(days=random.randint(30, 100))
             print(new_emission_date)
             if (new_emission_date - plates[-1][1]).days >= 30:
                 plates.append(generate_plate_data(new_emission_date))
@@ -135,7 +159,7 @@ for j in range(100):
                     days=random.randint(1, (datetime.now() - active_plate_data[1]).days))
                 outcome = random.choice(['positive', 'negative'])
                 if outcome == 'negative':
-                    motivation = 'Some reason for negative outcome'
+                    motivation = random.choice(motivation_list)
                 else:
                     motivation = None
                 cursor.execute('INSERT INTO Revisions (plateNumber, revisionDate, outcome, motivation) VALUES (?, ?, ?, ?)',
@@ -168,7 +192,7 @@ for j in range(100):
                             pass
                     outcome = random.choice(['positive', 'negative'])
                     if outcome == 'negative':
-                        motivation = 'Some reason for negative outcome'
+                        motivation = random.choice(motivation_list)
                     else:
                         motivation = None
                     cursor.execute('INSERT INTO Revisions (plateNumber, revisionDate, outcome, motivation) VALUES (?, ?, ?, ?)',
@@ -200,7 +224,7 @@ for j in range(100):
                         pass
                 outcome = random.choice(['positive', 'negative'])
                 if outcome == 'negative':
-                    motivation = 'Some reason for negative outcome'
+                    motivation = random.choice(motivation_list)
                 else:
                     motivation = None
                 cursor.execute(

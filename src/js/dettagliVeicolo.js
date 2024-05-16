@@ -34,8 +34,8 @@ $(document).ready(function() {
                 //targhe = []; it's global
                 if (targaResponse.success == true) {
                     var length = targaResponse.data.length;
-                    var revisionText = length === 1 ? 'è associata ' + length + ' targa' : 'sono associate ' + length + ' targhe';
-                    $('.targa .titolo').html('<h3>A questo veicolo ' + revisionText + '</h3>');
+                    var targaText = length === 1 ? 'è associata ' + length + ' targa' : 'sono associate ' + length + ' targhe';
+                    $('.targa .titolo').html('<h3>A questo veicolo ' + targaText + '</h3>');
                     (targaResponse.data).forEach(targa => {
                         console.log(targa);
                         if (targa.status == 'active') {
@@ -120,8 +120,8 @@ $(document).ready(function() {
       }
   
       function addEsitoChanged() {
-          $('#addMotivazioneDiv').toggle($(this).val() === 'negativo');
-          $('#addMotivazione').prop('required', $(this).val() === 'negativo');
+          $('#addMotivazioneDiv').toggle($(this).val() === 'negative');
+          $('#addMotivazione').prop('required', $(this).val() === 'negative');
       }
 
 

@@ -36,6 +36,7 @@
                 con la targa o targa-attiva. Form che è presente solo se il veicolo è targato con targa attiva.
             </p>
             <p>I dati sono stati generati tramite uno script python che crea un database SQLite che ho poi convertito in uno MySQL</P>
+            <p>Targhe e revisioni sono caricati in ordine di data di emissione e revisione rispettivamente</p>
             <p>Sarebbe bello implementare anche un sistema di paginazione, così da non caricare le card tutte insieme. Cosa che potrebbe essere problematica quando il database è pieno.</p>
         </div>
     </div>
