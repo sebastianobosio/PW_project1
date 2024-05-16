@@ -31,9 +31,13 @@ def generate_inactive_plate_data(plate_data,
     print((next_emission_date - plate_data[1]).days)
     while True:
         try:
+            print("i'm here")
             restitution_date = next_emission_date - timedelta(
                 days=random.randint(1, (
                     (next_emission_date - plate_data[1]).days)))
+            print(next_emission_date)
+            print(plate_data[1])
+            print(restitution_date)
             break  # Exit the loop if no ValueError occurs
         except ValueError:
             pass  # If ValueError occurs, continue to the next iteration
@@ -74,6 +78,14 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS Plates (
                     active BOOLEAN,
                     FOREIGN KEY(vehicleNumber) REFERENCES Vehicle(number))''')
 
+cursor.execute('''CREATE TABLE IF NOT EXISTS Revisions (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    plateNumber TEXT,
+                    revisionDate DATE,
+                    outcome TEXT,
+                    motivation TEXT,
+                    FOREIGN KEY(plateNumber) REFERENCES Plates(number))'''
+               )
 # Generate and insert fake data
 # Generate and insert fake data
 for j in range(100):
@@ -117,6 +129,17 @@ for j in range(100):
         cursor.execute('INSERT INTO Plates VALUES (?, ?, ?, ?)',
                        (active_plate_data[0], active_plate_data[1].strftime('%Y-%m-%d'), vehicle_number, True))
 
+        for _ in range(0, random.randint(0,3)): # 0 to 3 revision
+            if random.choice([True, False]): # assign a revisione to the active_plate
+                revision_date = active_plate_data[1] + timedelta(
+                    days=random.randint(1, (datetime.now() - active_plate_data[1]).days))
+                outcome = random.choice(['positive', 'negative'])
+                if outcome == 'negative':
+                    motivation = 'Some reason for negative outcome'
+                else:
+                    motivation = None
+                cursor.execute('INSERT INTO Revisions (plateNumber, revisionDate, outcome, motivation) VALUES (?, ?, ?, ?)',
+                               (active_plate_data[0], revision_date.strftime('%Y-%m-%d'), outcome, motivation))
         # Generate and insert inactive plate data
         for i in range(1, len(plates)):
             print("generating inactive plates")
@@ -132,34 +155,57 @@ for j in range(100):
 
             cursor.execute('INSERT INTO Plates VALUES (?, ?, ?, ?)',
                            (plates[i][0], plates[i][1].strftime('%Y-%m-%d'), vehicle_number, False))
+
+            for _ in range(0, random.randint(0, 3)):
+                if random.choice([True, False]):
+                    while True:
+                        try:
+                            revision_date = plates[i][1] + timedelta(
+                            days=random.randint(1, (inactive_plate_data[2] - plates[i][1]).days))
+                            break
+                        except ValueError:
+                            #print((inactive_plate_data[2]-plates[i][1]).days)
+                            pass
+                    outcome = random.choice(['positive', 'negative'])
+                    if outcome == 'negative':
+                        motivation = 'Some reason for negative outcome'
+                    else:
+                        motivation = None
+                    cursor.execute('INSERT INTO Revisions (plateNumber, revisionDate, outcome, motivation) VALUES (?, ?, ?, ?)',
+                                   (plates[i][0], revision_date.strftime('%Y-%m-%d'), outcome, motivation))
     else:
         if random.choice([True, False]):
             print("vehicle will have only inactive plates")
             # Only inactive plates
-            if len(plates) == 1:
-                # if only one and only inactive plate it's restitution date can be anithing
+            for i in range(0, len(plates)):
+                if i == 0:
+                    previous_emission_date = datetime.now()
+                else:
+                    previous_emission_date = plates[i - 1][1]
                 inactive_plate_data = generate_inactive_plate_data(
-                    plates[0], vehicle_number)
+                    plates[i], vehicle_number, previous_emission_date)
                 cursor.execute(
                     'INSERT INTO InactivePlates VALUES (?, ?, ?, ?)',
-                    (plates[0][0], plates[0][1].strftime('%Y-%m-%d'), vehicle_number, inactive_plate_data[2].strftime('%Y-%m-%d')))
+                    (plates[i][0], plates[i][1].strftime('%Y-%m-%d'), vehicle_number, inactive_plate_data[2].strftime('%Y-%m-%d')))
 
                 cursor.execute('INSERT INTO Plates VALUES (?, ?, ?, ?)',
-                               (plates[0][0], plates[0][1].strftime('%Y-%m-%d'), vehicle_number, False))
-            else:
-                for i in range(0, len(plates)):
-                    if i == 0:
-                        previous_emission_date = datetime.now()
-                    else:
-                        previous_emission_date = plates[i - 1][1]
-                    inactive_plate_data = generate_inactive_plate_data(
-                        plates[i], vehicle_number, previous_emission_date)
-                    cursor.execute(
-                        'INSERT INTO InactivePlates VALUES (?, ?, ?, ?)',
-                        (plates[i][0], plates[i][1].strftime('%Y-%m-%d'), vehicle_number, inactive_plate_data[2].strftime('%Y-%m-%d')))
+                               (plates[i][0], plates[i][1].strftime('%Y-%m-%d'), vehicle_number, False))
 
-                    cursor.execute('INSERT INTO Plates VALUES (?, ?, ?, ?)',
-                                   (plates[i][0], plates[i][1].strftime('%Y-%m-%d'), vehicle_number, False))
+                while True:
+                    try:
+                        revision_date = plates[i][1] + timedelta(
+                            days=random.randint(1, (inactive_plate_data[2] - plates[i][1]).days))
+                        break
+                    except ValueError:
+                        pass
+                outcome = random.choice(['positive', 'negative'])
+                if outcome == 'negative':
+                    motivation = 'Some reason for negative outcome'
+                else:
+                    motivation = None
+                cursor.execute(
+                    'INSERT INTO Revisions (plateNumber, revisionDate, outcome, motivation) VALUES (?, ?, ?, ?)',
+                    (plates[i][0], revision_date.strftime('%Y-%m-%d'), outcome, motivation))
         # If no plates generated, set the vehicle to have no active plates
         else:
             print("vehicle will have never been plated")
