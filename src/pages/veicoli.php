@@ -36,6 +36,10 @@
                     <label for="marca">Marca:</label>
                     <input type="text" id="marca" name="marca">
                 </div>
+                <div>
+                    <label for="dataProd">Data di produzione:</label>
+                    <input type="date" id="dataProd" name="dataProd">
+                </div>
                 <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
             </form>
 </div>

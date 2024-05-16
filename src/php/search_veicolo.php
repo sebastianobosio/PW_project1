@@ -6,18 +6,22 @@ include '../includes/db_connection.php';
 $telaio = $_GET['telaio'] ?? '';
 $modello = $_GET['modello'] ?? '';
 $marca = $_GET['marca'] ?? '';
+$dataProd = $_GET['dataProd'] ?? '';
 
 // Construct the SQL query based on the provided criteria
-$sql = "SELECT * FROM Veicolo WHERE 1";
+$sql = "SELECT * FROM Vehicle WHERE 1";
 
 if (!empty($telaio)) {
-    $sql .= " AND telaio = '$telaio'";
+    $sql .= " AND number = '$telaio'";
 }
 if (!empty($modello)) {
-    $sql .= " AND modello = '$modello'";
+    $sql .= " AND model = '$modello'";
 }
 if (!empty($marca)) {
-    $sql .= " AND marca = '$marca'";
+    $sql .= " AND brand = '$marca'";
+}
+if (!empty($dataProd)){
+    $sql .= " AND prodDate = '$dataProd'";
 }
 
 try {
@@ -35,9 +39,10 @@ try {
     $results = array();
     foreach ($stmt as $row) {
         $result = array();
-        $result['telaio'] = $row['telaio'];
-        $result['marca'] = $row['marca'];
-        $result['modello'] = $row['modello'];
+        $result['telaio'] = $row['number'];
+        $result['marca'] = $row['model'];
+        $result['modello'] = $row['brand'];
+        $result['dataProd'] = $row['prodDate'];
         $results[] = $result;
     }
 

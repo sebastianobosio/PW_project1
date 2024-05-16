@@ -16,41 +16,43 @@ $dataRes = $_GET['dataRes'] ?? '';
 
 $sql_condition = "";
 if (!empty($targa)) {
-    $sql_condition .= " AND numero = '$targa'";
+    $sql_condition .= " AND Plates.number = '$targa'"; // using only 'number' was causing an issue in the query
 }
 if (!empty($telaio)) {
-    $sql_condition .= " AND veicolo = '$telaio'";
+    $sql_condition .= " AND vehicleNumber = '$telaio'";
 }
 if (!empty($dataEm)) {
-    $sql_condition .= " AND dataEm = '$dataEm'";
+    $sql_condition .= " AND Plates.emissionDate = '$dataEm'";
 }
 if (!empty($dataRes)) {
-    $sql_condition .= " AND dataRes = '$dataRes'";
+    $sql_condition .= " AND resDate = '$dataRes'";
 }
 
-$sql_only_active = "SELECT Targa.numero, Targa.dataEm, TargaAttiva.targa AS targa_attiva, TargaAttiva.veicolo, 'active' AS origin
-                    FROM Targa
-                    INNER JOIN TargaAttiva ON Targa.numero = TargaAttiva.targa
+$sql_only_active = "SELECT Plates.number, Plates.emissionDate, ActivePlates.number AS active_plate, ActivePlates.vehicleNumber, 'active' AS origin
+                    FROM Plates
+                    INNER JOIN ActivePlates ON Plates.number = ActivePlates.number
                     WHERE 1 $sql_condition";
 
-$sql_only_returned = "SELECT Targa.numero, Targa.dataEm, TargaRestituita.targa AS targa_restituita, TargaRestituita.veicolo, TargaRestituita.dataRes, 'non-active' as origin
-                    FROM Targa
-                    INNER JOIN TargaRestituita ON Targa.numero = TargaRestituita.targa
+$sql_only_returned = "SELECT Plates.number, Plates.emissionDate, InactivePlates.number AS inactive_plate, InactivePlates.vehicleNumber, InactivePlates.resDate, 'non-active' as origin
+                    FROM Plates
+                    INNER JOIN InactivePlates ON Plates.number = InactivePlates.number
                     WHERE 1 $sql_condition";
 
-$sql_both = "SELECT Targa.numero, Targa.dataEm, TargaAttiva.targa AS targa_attiva, TargaAttiva.veicolo, NULL AS dataRes, 'active' AS origin
-        FROM Targa
-        INNER JOIN TargaAttiva ON Targa.numero = TargaAttiva.targa
-        WHERE 1 $sql_condition 
-        UNION ALL 
-        SELECT Targa.numero, Targa.dataEm, TargaRestituita.targa AS targa_restituita, TargaRestituita.veicolo, TargaRestituita.dataRes, 'non-active' AS origin
-        FROM Targa
-        INNER JOIN TargaRestituita ON Targa.numero = TargaRestituita.targa
-        WHERE 1 $sql_condition";
+$sql_both = "SELECT Plates.number, Plates.emissionDate, ActivePlates.number AS active_plate, ActivePlates.vehicleNumber, NULL AS resDate, 'active' AS origin
+             FROM Plates
+             INNER JOIN ActivePlates ON Plates.number = ActivePlates.number
+             WHERE 1 $sql_condition 
+             UNION ALL 
+             SELECT Plates.number, Plates.emissionDate, InactivePlates.number AS inactive_plate, InactivePlates.vehicleNumber, InactivePlates.resDate, 'non-active' as origin
+             FROM Plates
+             INNER JOIN InactivePlates ON Plates.number = InactivePlates.number
+             WHERE 1 $sql_condition";
+
+
 
 if ($status === 'active') {
     $sql = $sql_only_active;
-} elseif ($status === 'returned') {
+} elseif ($status === 'returned' or !(empty($dataRes))) {
     $sql = $sql_only_returned;
 } else {
     $sql = $sql_both;
@@ -73,31 +75,20 @@ try {
     foreach ($stmt as $row) {
         $result = array();
         // Do something with each row
-        $result['numero'] = $row['numero'];
-        $result['dataEm'] = $row['dataEm'];
-        $result['veicolo'] = $row['veicolo'];
+        $result['numero'] = $row['number'];
+        $result['dataEm'] = $row['emissionDate'];
+        $result['veicolo'] = $row['vehicleNumber'];
         $result['status'] = $row['origin'];
         if ($row['origin'] === 'non-active') {
-            $result['dataRes'] = $row['dataRes'];
+            $result['dataRes'] = $row['resDate'];
         }
         $results[] = $result;
     }
-    
-    $activeIndex = -1;
-    foreach ($results as $index => $result) {
-        //index will be the position, result the value
-        if ($result['status'] === 'active') {
-            $activeIndex = $index;
-            break;
-        }
-    }
 
-    // If an element with status = 'active' is found, move it to the beginning of the array
-    if ($activeIndex !== -1) {
-        $activeElement = $results[$activeIndex];
-        unset($results[$activeIndex]);
-        array_unshift($results, $activeElement);
-    }
+    // order for emission date
+    usort($results, function ($b, $a) {
+        return strtotime($a['dataEm']) - strtotime($b['dataEm']);
+    });
 
     $response = array(
         'success' => true,

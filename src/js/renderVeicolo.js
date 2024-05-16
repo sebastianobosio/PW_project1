@@ -14,6 +14,7 @@ function createVeicoloCardComponent(veicolo) {
     const veicoloNumberDiv = $('<div>').text('Telaio: ' + veicolo.telaio).appendTo(infoDiv);
     const veicoloModelDiv = $('<div>').text('Modello: ' + veicolo.modello).appendTo(infoDiv);
     const veicoloBrandDiv = $('<div>').text('Marca: ' + veicolo.marca).appendTo(infoDiv);
+    const veicoloProdDateDiv = $('<div>').text('Data di produzione: ' + veicolo.dataProd).appendTo(infoDiv);
     infoDiv.appendTo(vehicleDiv);
     const detailsBtnDiv = $('<div>').addClass('action-btn');
     const detailsButton = $('<button>').html('Scopri di più' + '<i class="fa-solid fa-circle-info"></i>').addClass('detail-button');
@@ -31,6 +32,7 @@ function createVeicoloDetailComponent(veicolo) {
     const veicoloNumberDiv = $('<div>').text('Telaio: ' + veicolo.telaio).appendTo(infoDiv);
     const veicoloModelDiv = $('<div>').text('Modello: ' + veicolo.modello).appendTo(infoDiv);
     const veicoloBrandDiv = $('<div>').text('Marca: ' + veicolo.marca).appendTo(infoDiv);
+    const veicoloProdDateDiv = $('<div>').text('Data di produzione: ' + veicolo.dataProd).appendTo(infoDiv);
     infoDiv.appendTo(vehicleDiv);
     /*const detailsBtnDiv = $('<div>').addClass('action-btn');
     const detailsButton = $('<button>').html('Scopri di più' + '<i class="fa-solid fa-circle-info"></i>').addClass('detail-button');
