@@ -1,2 +1,5 @@
 .vscode
 src/.vscode
+DataGenerator/.idea
+DataGenerator/venv
+
