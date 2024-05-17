@@ -16,10 +16,10 @@
     <script src="https://kit.fontawesome.com/0a63b22d0b.js" crossorigin="anonymous"></script>
     <script src="/js/resizeMotivazioneField.js"></script>
     <script src="/js/addForm.js"></script>
-    <script src="/js/performSearchRevisioni.js"></script>
-    <script src="/js/renderRevisione.js"></script>
+    <!--<script src="/js/performSearchRevisioni.js"></script>-->
+    <script type="module" src="/js/renderRevisione.js"></script>
     <script src="/js/ajaxHelper.js"></script>
-    <script src="/js/searchRevisione.js"></script>
+    <script type="module" src="/js/searchRevisione.js"></script>
     <script src="/js/activePage.js"></script>
 </head>
 

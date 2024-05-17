@@ -17,7 +17,7 @@
     <script src="https://kit.fontawesome.com/0a63b22d0b.js" crossorigin="anonymous"></script>
     <script src="/js/renderTarga.js"></script>
     <script src="/js/renderVeicolo.js"></script>
-    <script src="/js/performSearchRevisioni.js"></script>
+    <!--<script src="/js/performSearchRevisioni.js"></script>-->
     <script src="/js/resizeMotivazioneField.js"></script>
     <script src="/js/renderRevisione.js"></script>
     <script src="/js/addForm.js"></script>

@@ -1,3 +1,5 @@
+import { performDefaultSearch, performSearch } from './test.js';
+
 $(document).ready(function () {
   $("#searchForm").submit(searchFormSubmitted);
   $("#addForm").submit(addFormSubmitted);
@@ -53,7 +55,7 @@ $(document).ready(function () {
     $("#addMotivazione").prop("required", $(this).val() === "negative");
   }
 
-  function performDefaultSearch() {
+  /*function performDefaultSearch() {
     var data = "&action=read";
     performSearch(data);
   }
@@ -81,7 +83,7 @@ $(document).ready(function () {
       }
     );
   }
-
+  */
   function handleAjaxError(responseText) {
     console.error("Error", responseText);
     alert("Error occurred while fetching data.");

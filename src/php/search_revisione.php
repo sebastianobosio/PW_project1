@@ -2,58 +2,9 @@
 // Include database connection
 include '../includes/db_connection.php';
 
-// Function to handle query execution and response generation
-function executeQuery($sql, $params = []) {
-    global $conn;
 
-    try {
-        // Prepare and execute the query
-        $stmt = $conn->prepare($sql);
-        $stmt->execute($params);
-        
-        if ($stmt->rowCount() == 0) {
-            return array(
-                'success' => false,
-                'message' => 'No results found'
-            );
-        }
-
-        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $formattedResults = array();
-
-        foreach ($results as $row) {
-            $formattedRow = array(
-                'numero' => $row['id'],
-                'dataRev' => $row['revisionDate'],
-                'targa' => $row['plateNumber'],
-                'esito' => $row['outcome']
-            );
-
-            if ($row['outcome'] === 'negative') {
-                $formattedRow['motivazione'] = $row['motivation'];
-            }
-
-            $formattedResults[] = $formattedRow;
-        }
-
-        return array(
-            'success' => true,
-            'message' => 'Query executed successfully',
-            'data' => $formattedResults
-        );
-    } catch (PDOException $e) {
-        // Handle errors
-        return array(
-            'success' => false,
-            'message' => 'Error executing query: ' . $e->getMessage()
-        );
-    }
-}
-
-// Read operation for array input
 if ($_GET['action'] == 'read-array') {
     $targhe = $_GET['targhe'];
-    $total_results = array();
 
     // Check if 'targa' is provided as a comma-separated list of values
     if (!empty($targhe) && is_string($targhe)) {
@@ -61,35 +12,58 @@ if ($_GET['action'] == 'read-array') {
         $targhe = explode(',', $targhe);
     }
 
+    $total_results = array();
     foreach ($targhe as $targa) {
         $sql_condition = "";
-        $params = array();
-
         if (!empty($targa)) {
-            $sql_condition .= " AND plateNumber = ?";
-            $params[] = $targa;
+            $sql_condition .= " AND plateNumber = '$targa'";
         }
 
         $sql = "SELECT * FROM Revisions WHERE 1 $sql_condition";
-        $queryResult = executeQuery($sql, $params);
 
-        if ($queryResult['success']) {
-            $total_results = array_merge($total_results, $queryResult['data']);
-        } else {
-            echo json_encode($queryResult);
-            exit(); // Stop further execution
+
+        try {
+            // Prepare and execute the query
+            $stmt = $conn->query($sql);
+
+            $results = array();
+
+            foreach ($stmt as $row) {
+                $result = array();
+                $result['numero'] = $row['id'];
+                $result['dataRev'] = $row['revisionDate'];
+                $result['targa'] = $row['plateNumber'];
+                $result['esito'] = $row['outcome'];
+                if ($row['outcome'] === 'negative') {
+                    $result['motivazione'] = $row['motivation'];
+                }
+                $results[] = $result;
+            }
+
+
+            if (count($results) > 0) {
+                $total_results = array_merge($total_results, $results);
+            }
+        } catch (PDOException $e) {
+            // Handle errors
+            $response = array(
+                'success' => false,
+                'message' => 'Error executing query: ' . $e->getMessage()
+            );
+            echo json_encode($response);
         }
     }
 
     if (empty($total_results)) {
+
+        // here add logic for sorting the array (copy from search_targa.php)
         $response = array(
             'success' => false,
             'message' => 'No results found'
         );
     } else {
-        // Sort the results by revision date
-        usort($total_results, function ($a, $b) {
-            return strtotime($b['dataRev']) - strtotime($a['dataRev']);
+        usort($total_results, function ($b, $a) {
+            return strtotime($a['dataRev']) - strtotime($b['dataRev']);
         });
         $response = array(
             'success' => true,
@@ -101,55 +75,116 @@ if ($_GET['action'] == 'read-array') {
     echo json_encode($response);
 }
 
-// Read operation for single record
 if ($_GET['action'] == 'read') {
-    // Retrieve search criteria from GET data
+    // Retrieve search criteria from POST data
     $numero = $_GET['numero'] ?? '';
     $targa = $_GET['targa'] ?? '';
     $dataRev = $_GET['dataRev'] ?? '';
     $esito = $_GET['esito'] ?? '';
 
     $sql_condition = "";
-    $params = array();
-
     if (!empty($targa)) {
-        $sql_condition .= " AND plateNumber = ?";
-        $params[] = $targa;
+        $sql_condition .= " AND plateNumber = '$targa'";
     }
     if (!empty($numero)) {
-        $sql_condition .= " AND id = ?";
-        $params[] = $numero;
+        $sql_condition .= " AND id = '$numero'";
     }
     if (!empty($dataRev)) {
-        $sql_condition .= " AND revisionDate = ?";
-        $params[] = $dataRev;
+        $sql_condition .= " AND revisionDate = '$dataRev'";
     }
+
     if ($esito === 'positive') {
-        $sql_condition .= " AND outcome = ?";
-        $params[] = 'positive';
+        $sql_condition .= " AND outcome = 'positive'";
     } elseif ($esito === 'negative') {
-        $sql_condition .= " AND outcome = ?";
-        $params[] = 'negative';
+        $sql_condition .= " AND outcome = 'negative'";
     }
 
     $sql = "SELECT * FROM Revisions WHERE 1 $sql_condition";
-    $queryResult = executeQuery($sql, $params);
 
-    echo json_encode($queryResult);
+    try {
+        // Prepare and execute the query
+        $stmt = $conn->query($sql);
+        if ($stmt->rowCount() == 0) {
+            $response = array(
+                'success' => false,
+                'message' => 'No results found'
+            );
+            echo json_encode($response);
+            exit(); // Stop further execution
+        }
+
+        $results = array();
+
+        foreach ($stmt as $row) {
+            $result = array();
+            $result['numero'] = $row['id'];
+            $result['dataRev'] = $row['revisionDate'];
+            $result['targa'] = $row['plateNumber'];
+            $result['esito'] = $row['outcome'];
+            if ($row['outcome'] === 'negative') {
+                $result['motivazione'] = $row['motivation'];
+            }
+            $results[] = $result;
+        }
+
+        usort($results, function ($b, $a) {
+            return strtotime($a['dataRev']) - strtotime($b['dataRev']);
+        });
+
+        $response = array(
+            'success' => true,
+            'message' => 'Query executed successfully',
+            'data' => $results
+        );
+
+        echo json_encode($response);
+    } catch (PDOException $e) {
+        // Handle errors
+        $response = array(
+            'success' => false,
+            'message' => 'Error executing query: ' . $e->getMessage()
+        );
+        echo json_encode($response);
+    }
 }
+
 
 // Create operation
 if ($_POST['action'] == 'create') {
     $targa = $_POST['addTarga'];
     $dataRev = $_POST['addDataRev'];
     $esito = $_POST['addEsito'];
-    $motivazione = $_POST['addMotivazione'] ?? null;
-    $sql = "INSERT INTO Revisions (plateNumber, revisionDate, outcome, motivation) VALUES (?, ?, ?, ?)";
+    if ($esito === 'negative') {
+        $motivazione = $_POST['addMotivazione'];
+        $sql = "INSERT INTO Revisions (id, plateNumber, revisionDate, outcome, motivation) VALUES (NULL, '$targa', '$dataRev', '$esito', '$motivazione')";
+    } else {
+        $sql = "INSERT INTO Revisions (id, plateNumber, revisionDate, outcome, motivation) values (null, '$targa', '$dataRev', '$esito', NULL)";
+    }
 
-    $params = array($targa, $dataRev, $esito, $motivazione);
+    try {
+        // Execute the query
+        $success = $conn->query($sql);
+        if ($success) {
+            $response = array(
+                'success' => true,
+                'message' => 'Query executed successfully',
+            );
+        } else {
+            $response = array(
+                'success' => false,
+                'message' => 'Query execution failed'
+            );
+        }
 
-    $queryResult = executeQuery($sql, $params);
-    echo json_encode($queryResult);
+        echo json_encode($response);
+    } catch (PDOException $e) {
+        // Handle errors
+        $response = array(
+            'success' => false,
+            'message' => 'Error executing query: ' . $e->getMessage()
+        );
+        echo json_encode($response);
+    }
 }
 
 // Update operation
@@ -158,22 +193,66 @@ if ($_POST['action'] == 'update') {
     $targa = $_POST['editTarga'];
     $dataRev = $_POST['editDataRev'];
     $esito = $_POST['editEsito'];
-    $motivazione = $_POST['editMotivazione'] ?? null;
+    if ($esito === 'negative') {
+        $motivazione = $_POST['editMotivazione'];
+        $sql = "UPDATE Revisions SET id='$id', plateNumber='$targa', revisionDate='$dataRev', outcome='$esito', motivation='$motivazione' WHERE id='$id'";
+    } else {
+        $sql = "UPDATE Revisions SET id='$id', plateNumber='$targa', revisionDate='$dataRev', outcome='$esito', motivation=NULL WHERE id='$id'";
+    }
 
-    $sql = "UPDATE Revisions SET plateNumber = ?, revisionDate = ?, outcome = ?, motivation = ? WHERE id = ?";
-    $params = array($targa, $dataRev, $esito, $motivazione, $id);
+    try {
+        // Execute the query
+        $success = $conn->query($sql);
+        if ($success) {
+            $response = array(
+                'success' => true,
+                'message' => 'Query executed successfully',
+            );
+        } else {
+            $response = array(
+                'success' => false,
+                'message' => 'Query execution failed'
+            );
+        }
 
-    $queryResult = executeQuery($sql, $params);
-    echo json_encode($queryResult);
+        echo json_encode($response);
+    } catch (PDOException $e) {
+        // Handle errors
+        $response = array(
+            'success' => false,
+            'message' => 'Error executing query: ' . $e->getMessage()
+        );
+        echo json_encode($response);
+    }
 }
 
 // Delete operation
 if ($_POST['action'] == 'delete') {
     $id = $_POST['id'];
-    $sql = "DELETE FROM Revisions WHERE id = ?";
-    $params = array($id);
 
-    $queryResult = executeQuery($sql, $params);
-    echo json_encode($queryResult);
+    $sql = "DELETE FROM Revisions WHERE id='$id'";
+    try {
+        // Execute the query
+        $success = $conn->query($sql);
+        if ($success) {
+            $response = array(
+                'success' => true,
+                'message' => 'Query executed successfully',
+            );
+        } else {
+            $response = array(
+                'success' => false,
+                'message' => 'Query execution failed'
+            );
+        }
+
+        echo json_encode($response);
+    } catch (PDOException $e) {
+        // Handle errors
+        $response = array(
+            'success' => false,
+            'message' => 'Error executing query: ' . $e->getMessage()
+        );
+        echo json_encode($response);
+    }
 }
-?>
