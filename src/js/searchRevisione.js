@@ -43,6 +43,7 @@ $(document).ready(function () {
   function handleResponse(response, successMessage) {
     console.log("Response:", response.message);
     if (response.success === true) {
+      //addForm reset
       alert(successMessage);
       performDefaultSearch();
     } else {
