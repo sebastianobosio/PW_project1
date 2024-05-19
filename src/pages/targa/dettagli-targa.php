@@ -15,15 +15,16 @@
     
     <script type="text/javascript" src="/js/jquery-3.7.1.js"></script>
     <script src="https://kit.fontawesome.com/0a63b22d0b.js" crossorigin="anonymous"></script>
-    <script src="/js/renderTarga.js"></script>
-    <script src="/js/renderVeicolo.js"></script>
-    <!--<script src="/js/performSearchRevisioni.js"></script>-->
-    <script src="/js/resizeMotivazioneField.js"></script>
-    <script src="/js/renderRevisione.js"></script>
-    <script src="/js/addForm.js"></script>
-    <script src="/js/dettagliTarga.js"></script>
+    
     <script src="/js/ajaxHelper.js"></script>
     <script src="/js/activePage.js"></script>
+
+    <script src="/js/renderTarga.js"></script>
+    <script src="/js/renderVeicolo.js"></script>
+    <script src="/js/resizeMotivazioneField.js"></script>
+    <script type="module" src="/js/renderRevisione.js"></script>
+    <script type="module" src="/js/dettagliTarga.js"></script>
+
 </head>
 
 <body>
@@ -54,36 +55,7 @@
                 </div>
             </div>
         </div>
-        <div class="addFormDiv" style="display: none;">
-            <h2>Aggiungi nuova revisione</h2>
-            <form id="addForm">
-                <div class="form-group">
-                    <label for="addTarga">Targa:</label>
-                    <input type="text" id="addTarga" name="addTarga" required>
-                </div>
-                <div class="form-group">
-                    <label for="addDataRev">Data Revisione:</label>
-                    <input type="date" id="addDataRev" name="addDataRev" required>
-                </div>
-                <div class="form-group">
-                    <label for="addEsito">Esito:</label>
-                    <select id="addEsito" name="addEsito" required>
-                        <option value="">Select</option>
-                        <option value="positive">Positivo</option>
-                        <option value="negative">Negativo</option>
-                    </select>
-                </div>
-                <div class="form-group" id="addMotivazioneDiv" style="display: none;">
-                    <label for="addMotivazione">Motivazione:</label>
-                    <textarea class="motivazione" oninput="autoResize()" id="addMotivazione" name="addMotivazione"></textarea>
-                </div>
-                <div class="button-group">
-                    <button type="submit" class="submit-button">Submit<i class="fa-solid fa-paper-plane"></i></button>
-                    <button id="undoButton" class="undo-button"><i class="fa-solid fa-xmark"></i></button>
-                </div>
-            </form>
-        </div>
-
+        <?php include '../../includes/addForm.php'; ?>
     </div>
 </body>
 <?php include '../../includes/footer.php'; ?>

@@ -1,6 +1,11 @@
-import { performDefaultSearch} from './test.js';
+import { checkRevision } from "./checkRevisionFields.js";
+import {
+    handlePageReloadOnDelete,
+    handlePageReloadOnEdit,
+} from "./revisionHandlers.js";
+import { handleAjaxError, handleResponse } from "./handleAjax.js";
 
-async function renderRevisioneCard(revisione) {
+export async function renderRevisioneCard(revisione) {
     const revisioneComponent = await createRevisioneCardComponent(revisione);
     // attach handler to edit button
     return revisioneComponent;
@@ -21,14 +26,18 @@ async function createRevisioneCardComponent(revisione) {
     const dataRevDiv = $("<div>")
         .html(
             'Data della revisione: <span class="dataRev">' +
-            '<input type="date" value="' +
-            revisione.dataRev +
-            '" disabled></input>' +
-            "</span>"
+                '<input type="date" value="' +
+                revisione.dataRev +
+                '" disabled></input>' +
+                "</span>"
         )
         .appendTo(infoDiv);
     const targaNumberDiv = $("<div>")
-        .html('Targa associata: <span class="targa">' + revisione.targa + "</span>")
+        .html(
+            'Targa associata: <span class="targa">' +
+                revisione.targa +
+                "</span>"
+        )
         .appendTo(infoDiv);
     const esitoSelect = $("<select>").addClass("esito").prop("disabled", true); // Disable select element initially
     $("<option>").val("positive").text("Positivo").appendTo(esitoSelect);
@@ -97,14 +106,18 @@ async function createRevisioneDetailComponent(revisione) {
     const dataRevDiv = $("<div>")
         .html(
             'Data della revisione: <span class="dataRev">' +
-            '<input type="date" value="' +
-            revisione.dataRev +
-            '" disabled></input>' +
-            "</span>"
+                '<input type="date" value="' +
+                revisione.dataRev +
+                '" disabled></input>' +
+                "</span>"
         )
         .appendTo(infoDiv);
     const targaNumberDiv = $("<div>")
-        .html('Targa associata: <span class="targa">' + revisione.targa + "</span>")
+        .html(
+            'Targa associata: <span class="targa">' +
+                revisione.targa +
+                "</span>"
+        )
         .appendTo(infoDiv);
     const esitoSelect = $("<select>").addClass("esito").prop("disabled", true); // Disable select element initially
     $("<option>").val("positive").text("Positivo").appendTo(esitoSelect);
@@ -179,7 +192,7 @@ function deleteBtnClicked(numeroRev) {
             "POST",
             { action: "delete", id: id },
             function (response) {
-                handleResponse(response, "Elemento rimosso");
+                handleResponse(response, "Elemento rimosso", null);
                 handlePageReloadOnDelete();
             },
             function (xhr, status, error) {
@@ -189,7 +202,7 @@ function deleteBtnClicked(numeroRev) {
     }
 }
 
-async function handlePageReloadOnDelete() {
+/*async function handlePageReloadOnDelete() {
     var currentPage = window.location.pathname;
     if (currentPage.endsWith("revisioni.php")) {
         performDefaultSearch(); // se sono in revisioni chiamo la funzione presente nel file searchRevisione.js
@@ -212,25 +225,34 @@ async function handlePageReloadOnEdit() {
     } else if (!currentPage.endsWith("revisioni.php")) {
         await loadRevisioniDiv();
     }
-}
+}*/
 
 function editEsitoChanged(revisioneDiv) {
     console.log(
         "Esito ha cambiato stato: " + revisioneDiv.find("select.esito").val() ==
-        "negative"
+            "negative"
     );
     revisioneDiv
         .find(".motivazioneDiv")
         .toggle(revisioneDiv.find("select.esito").val() == "negative");
     revisioneDiv
         .find(".motivazione textarea")
-        .prop("required", revisioneDiv.find("select.esito").val() == "negative");
+        .prop(
+            "required",
+            revisioneDiv.find("select.esito").val() == "negative"
+        );
     revisioneDiv
         .find(".motivazione textarea")
-        .prop("disabled", revisioneDiv.find("select.esito").val() == "positive");
+        .prop(
+            "disabled",
+            revisioneDiv.find("select.esito").val() == "positive"
+        );
     revisioneDiv
         .find(".motivazione textarea")
-        .prop("disabled", revisioneDiv.find("select.esito").val() == "positive");
+        .prop(
+            "disabled",
+            revisioneDiv.find("select.esito").val() == "positive"
+        );
 }
 
 async function createEditButton(
@@ -262,15 +284,15 @@ async function createEditButton(
             .val();
         console.log(
             "valori prima di cliccare l'edit: " +
-            id +
-            " " +
-            originalDataRev +
-            " " +
-            originalTarga +
-            " " +
-            originalEsito +
-            " " +
-            originalMotivazione
+                id +
+                " " +
+                originalDataRev +
+                " " +
+                originalTarga +
+                " " +
+                originalEsito +
+                " " +
+                originalMotivazione
         );
         editButton.off("click").on("click", async function () {
             revisioneDiv.find(".dataRev input").prop("disabled", false);
@@ -280,7 +302,9 @@ async function createEditButton(
                 .prop("disabled", false)
                 .val();
             if (esito === "negative") {
-                revisioneDiv.find(".motivazione textarea").prop("disabled", false);
+                revisioneDiv
+                    .find(".motivazione textarea")
+                    .prop("disabled", false);
             }
 
             revisioneDiv.find("select.esito").change(function () {
@@ -295,7 +319,8 @@ async function createEditButton(
             // add logic here for discard changes.
             discardButton.show();
 
-            editButton.addClass('save-change')
+            editButton
+                .addClass("save-change")
                 .html('<i class="fa-solid fa-floppy-disk"></i>')
                 .off("click")
                 .on("click", async function () {
@@ -330,7 +355,10 @@ async function createEditButton(
                             motivazioneObj.prop("disabled", true);
                             revisioneDiv
                                 .find(".motivazioneDiv")
-                                .toggle(revisioneDiv.find("select.esito").val() == "negative");
+                                .toggle(
+                                    revisioneDiv.find("select.esito").val() ==
+                                        "negative"
+                                );
                         }
                         return false; // Prevent form submission
                     }
@@ -363,7 +391,11 @@ async function createEditButton(
                             }
                             removeButton.show();
                             discardButton.hide();
-                            editButton.removeClass('save-change').html('<i class="fa-solid fa-pen-to-square"></i>');
+                            editButton
+                                .removeClass("save-change")
+                                .html(
+                                    '<i class="fa-solid fa-pen-to-square"></i>'
+                                );
                             attachEditHandler();
                         } catch (error) {
                             console.log("non funziona un cazzo");
@@ -382,7 +414,10 @@ async function createEditButton(
                             motivazioneObj.prop("disabled", true);
                             revisioneDiv
                                 .find(".motivazioneDiv")
-                                .toggle(revisioneDiv.find("select.esito").val() == "negative");
+                                .toggle(
+                                    revisioneDiv.find("select.esito").val() ==
+                                        "negative"
+                                );
                         }
                         return false;
                     }
@@ -406,14 +441,24 @@ async function createEditButton(
                     motivazioneObj.prop("disabled", true);
                     revisioneDiv
                         .find(".motivazioneDiv")
-                        .toggle(revisioneDiv.find("select.esito").val() == "negative");
+                        .toggle(
+                            revisioneDiv.find("select.esito").val() ==
+                                "negative"
+                        );
+                } else if (originalEsito == "negative") {
+                    revisioneDiv
+                        .find(".motivazioneDiv")
+                        .toggle(
+                            revisioneDiv.find("select.esito").val() ==
+                                "negative"
+                        );
                 }
                 if (detailsButton != null) {
                     detailsButton.show();
                 }
                 removeButton.show();
                 discardButton.hide();
-                editButton.removeClass('save-change');
+                editButton.removeClass("save-change");
                 editButton.html('<i class="fa-solid fa-pen-to-square"></i>');
                 attachEditHandler();
                 discardButton.hide();
@@ -426,47 +471,6 @@ async function createEditButton(
     return editButton;
 }
 
-async function checkRevision(targa, dataRev) {
-    return new Promise((resolve, reject) => {
-        handleAjaxRequest(
-            "/php/search_targa.php",
-            "GET",
-            "targa=" + targa,
-            function (response) {
-                if (response.success === true) {
-                    const dataEm = response.data[0]["dataEm"];
-                    const dataRes = response.data[0]["dataRes"];
-                    const dataEmObj = new Date(dataEm);
-                    const dataResObj = new Date(dataRes);
-                    const dataRevObj = new Date(dataRev);
-
-                    if (dataRevObj < dataEmObj) {
-                        alert(
-                            "Data di revisione antecedente alla data di emissione della targa associata"
-                        );
-                        resolve(false);
-                    } else if (dataRevObj > dataResObj) {
-                        alert(
-                            "Data di revisione posteriore alla data di restituzione della targa associata"
-                        );
-                        resolve(false);
-                    } else {
-                        resolve(true);
-                    }
-                } else {
-                    alert("Targa non presente nel database");
-                    resolve(false);
-                }
-            },
-            function (xhr, status, error) {
-                console.error("Error", xhr.responseText);
-                alert("Error occurred while fetching data.");
-                resolve(false);
-            }
-        );
-    });
-}
-
 async function saveChanges(dataUpdateRequest) {
     return new Promise((resolve, reject) => {
         handleAjaxRequest(
@@ -474,7 +478,11 @@ async function saveChanges(dataUpdateRequest) {
             "POST",
             dataUpdateRequest,
             function (response) {
-                handleResponse(response, "Istanza modificata correttamente");
+                handleResponse(
+                    response,
+                    "Istanza modificata correttamente",
+                    null
+                );
                 resolve(response);
             },
             function (xhr, status, error) {
@@ -484,46 +492,3 @@ async function saveChanges(dataUpdateRequest) {
         );
     });
 }
-
-function handleResponse(response, successMessage) {
-    console.log("Response:", response.message);
-    if (response.success === true) {
-        alert(successMessage);
-    } else {
-        alert("Operazione non riuscita");
-    }
-}
-
-function handleAjaxError(responseText) {
-    console.error("Error", responseText);
-    alert("Error occurred while fetching data.");
-}
-
-/*function performDefaultSearch() {
-    var data = "&action=read";
-    performSearch(data);
-  }
-
-  function performSearch(data) {
-    handleAjaxRequest(
-      "../php/search_revisione.php",
-      "GET",
-      data,
-      function (response) {
-        if (response.success === true) {
-          data = response.data;
-          console.log(data);
-          $("#searchResults").empty();
-          data.forEach(async (revisione) => {
-            var revisioneComponent = await renderRevisioneCard(revisione);
-            revisioneComponent.appendTo($("#searchResults"));
-          });
-        } else {
-          alert("Non sono state trovate corrispondenze");
-        }
-      },
-      function (xhr, status, error) {
-        handleAjaxError(xhr.responseText);
-      }
-    );
-  }*/

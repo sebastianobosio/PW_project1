@@ -7,12 +7,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Libre+Baskerville&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/genericCard.css">
+
     <script type="text/javascript" src="/js/jquery-3.7.1.js"></script>
     <script src="https://kit.fontawesome.com/0a63b22d0b.js" crossorigin="anonymous"></script>
-    <script src="/js/renderVeicolo.js"></script>
+    
     <script src="/js/ajaxHelper.js"></script>
-    <script src="/js/searchVeicolo.js"></script>
     <script src="/js/activePage.js"></script>
+    <script src="/js/renderVeicolo.js"></script>
+    <script src="/js/searchVeicolo.js"></script>
 </head>
 <body>
     <?php include '../includes/header.php'; ?>

@@ -158,7 +158,7 @@ if ($_POST['action'] == 'create') {
         $motivazione = $_POST['addMotivazione'];
         $sql = "INSERT INTO Revisions (id, plateNumber, revisionDate, outcome, motivation) VALUES (NULL, '$targa', '$dataRev', '$esito', '$motivazione')";
     } else {
-        $sql = "INSERT INTO Revisions (id, plateNumber, revisionDate, outcome, motivation) values (null, '$targa', '$dataRev', '$esito', NULL)";
+        $sql = "INSERT INTO Revisions (id, plateNumber, revisionDate, outcome, motivation) VALUES (NULL, '$targa', '$dataRev', '$esito', NULL)";
     }
 
     try {

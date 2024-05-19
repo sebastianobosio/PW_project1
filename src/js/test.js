@@ -1,3 +1,6 @@
+import { renderRevisioneCard } from './renderRevisione.js';
+import { handleAjaxError } from './handleAjax.js';
+
 export async function performDefaultSearch() { 
   var data = "&action=read";
   performSearch(data);
@@ -8,11 +11,7 @@ export async function performSearch(data) {
     "../php/search_revisione.php",
     "GET",
     data,
-    function (xhr, status, error) {
-        handleAjaxError(xhr.responseText);
-    },
-    /*function (response) {
-        
+    function (response) {   
       if (response.success === true) {
         data = response.data;
         console.log(data);
@@ -24,7 +23,7 @@ export async function performSearch(data) {
       } else {
         alert("Non sono state trovate corrispondenze");
       }
-    },*/
+    },
     function (xhr, status, error) {
       handleAjaxError(xhr.responseText);
     }
