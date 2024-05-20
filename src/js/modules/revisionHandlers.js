@@ -1,8 +1,8 @@
-import { performDefaultSearch } from "./performRevisionSearch.js";
-import { loadRevisioniDiv } from "./loadRevisions.js";
-import { getTarghe } from "../dettagli/dettagliVeicolo.js";
-import { getTarga } from "../dettagli/dettagliTarga.js";
-import { returnToMotherPage as returnToMotherPageRevisione } from "../dettagli/dettagliRevisione.js";
+import {performDefaultSearch} from "./performRevisionSearch.js";
+import {loadRevisioniDiv} from "./loadRevisions.js";
+import {getTarghe} from "../dettagli/dettagliVeicolo.js";
+import {getTarga} from "../dettagli/dettagliTarga.js";
+import {returnToMotherPage as returnToMotherPageRevisione} from "../dettagli/dettagliRevisione.js";
 
 // this module is used to handle the edit or delete function that are possible from the revision Card
 // based on the modification and on the page the are different scenario.
@@ -23,12 +23,7 @@ export async function handlePageReloadOnDelete() {
 
 export async function handlePageReloadOnEdit() {
     var currentPage = window.location.pathname;
-    console.log(
-        currentPage + " " + currentPage.endsWith("dettagli-revisione.php")
-    );
-    if (currentPage.endsWith("dettagli-revisione.php")) {
-        // se sono in una pagina dettagli
-        console.log("sono finito nell'else");
+    if (currentPage.endsWith("dettagli-revisione.php")) { // se sono in una pagina dettagli
         window.location.reload(); // se cambia la targa cambia anche i dettagli della targa e il veicolo
     } else if (currentPage.endsWith("revisioni.php")) {
         return;

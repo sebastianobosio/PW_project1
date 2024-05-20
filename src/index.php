@@ -39,8 +39,9 @@
                 Invece in dettaglio-revisione la cancellazione della revisione riporta alla pagina principale.
                 L'aggiunta di una nuova revisione comporta sempre un ricaricamento di queste.
             </p>
-            <p>I dati sono stati generati tramite uno script python che crea un database SQLite che ho poi convertito in uno MySQL</P>
-            <p>Targhe e revisioni sono caricati in ordine di data di emissione e revisione rispettivamente</p>
+            <p>I dati sono stati generati tramite uno script python che crea un database SQL importabile su PHPMyAdmin</P>
+            <p>Targhe e revisioni sono caricati in ordine di data di emissione e revisione rispettivamente, così che la targa attiva riferita al veicolo sia sempre la prima.</p>
+            <p>Il form per la ricerca viene resettato ad ogni ricerca, mentre l'addForm solo sia al submit che quando viene chiuso.
             <p>Sarebbe bello implementare anche un sistema di paginazione, così da non caricare le card tutte insieme. Cosa che potrebbe essere problematica quando il database è pieno.</p>
         </div>
     </div>

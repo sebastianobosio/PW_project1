@@ -1,3 +1,3 @@
-import { initializePage } from "../dettagli/dettagliTarga.js";
+import {initializePage} from "../dettagli/dettagliTarga.js";
 
 initializePage();

@@ -1,16 +1,10 @@
 export function renderTargaCard(targa) {
-    console.log("renderizzando la targa");
-    console.log(targa);
     const targaComponent = createTargaCardComponent(targa);
-    console.log(targaComponent);
     return targaComponent;
 }
 
 export function renderTargaDetail(targa) {
-    console.log("renderizzando la targa");
-    console.log(targa);
     const targaComponent = createTargaDetailComponent(targa);
-    console.log(targaComponent);
     return targaComponent;
 }
 
@@ -33,7 +27,9 @@ function createTargaCardComponent(targa) {
     const detailsBtnDiv = $('<div>').addClass('action-btn');
     const detailsButton = $('<button>').html('Scopri di più' + '<i class="fa-solid fa-circle-info"></i>').addClass('detail-button');
     detailsButton.appendTo(detailsBtnDiv);
-    detailsButton.on('click', function() {targaDetailsBtnClicked(targa)});
+    detailsButton.on('click', function () {
+        targaDetailsBtnClicked(targa)
+    });
     detailsBtnDiv.appendTo(targaDiv);
 
     return targaDiv;
@@ -65,9 +61,8 @@ function createTargaDetailComponent(targa) {
 }
 
 function targaDetailsBtnClicked(targa) {
-    console.log("sono qui");
     viewTargaDetails(targa);
-};    
+};
 
 function viewTargaDetails(targa) {
     window.location.href = '/pages/targa/dettagli-targa.php?id=' + targa.numero;

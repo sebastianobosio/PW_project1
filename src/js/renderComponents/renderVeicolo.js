@@ -20,7 +20,9 @@ function createVeicoloCardComponent(veicolo) {
     const detailsButton = $('<button>').html('Scopri di più' + '<i class="fa-solid fa-circle-info"></i>').addClass('detail-button');
     detailsButton.appendTo(detailsBtnDiv)
 
-    detailsButton.on('click', function() {veicoloDetailsBtnClicked(veicolo)});
+    detailsButton.on('click', function () {
+        veicoloDetailsBtnClicked(veicolo)
+    });
     detailsBtnDiv.appendTo(vehicleDiv);
 
     return vehicleDiv;
@@ -45,9 +47,8 @@ function createVeicoloDetailComponent(veicolo) {
 }
 
 function veicoloDetailsBtnClicked(veicolo) {
-    console.log("sono qui balla");
     viewVeicoloDetails(veicolo);
-};    
+};
 
 function viewVeicoloDetails(veicolo) {
     window.location.href = '/pages/veicolo/dettagli-veicolo.php?id=' + veicolo.telaio;

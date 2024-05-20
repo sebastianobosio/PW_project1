@@ -1,17 +1,8 @@
-import {
-    performDefaultSearch,
-    performSearch,
-} from "../modules/performRevisionSearch.js";
-import {
-    addFormSubmitted,
-    addEsitoChanged,
-    hideAddForm,
-    showAddForm,
-} from "../modules/addRevisionForm.js";
+import {performDefaultSearch, performSearch} from "../modules/performRevisionSearch.js";
+import {addFormSubmitted, addEsitoChanged, hideAddForm, showAddForm} from "../modules/addRevisionForm.js";
 
 $(document).ready(function () {
     $("#addForm").submit(function (event) {
-        console.log("siìasf");
         event.preventDefault();
         var formData = $(this).serialize() + "&action=create";
         addFormSubmitted(event, formData, () => performDefaultSearch());

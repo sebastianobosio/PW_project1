@@ -3,28 +3,23 @@ import {
     addEsitoChanged,
     showAddForm,
     hideAddForm,
-    addFormSubmitted,
+    addFormSubmitted
 } from "../modules/addRevisionForm.js";
-import { loadRevisioniDiv } from "../modules/loadRevisions.js";
-import { renderTargaCard } from "../renderComponents/renderTarga.js";
-import { renderVeicoloDetail } from "../renderComponents/renderVeicolo.js";
+import {loadRevisioniDiv} from "../modules/loadRevisions.js";
+import {renderTargaCard} from "../renderComponents/renderTarga.js";
+import {renderVeicoloDetail} from "../renderComponents/renderVeicolo.js";
 
 // this function is called from the initDettagliVeicolo.js once the dettagli-veicolo.php page is laoded
 export function initializePage() {
     // Function to fetch vehicle details based on ID (telaio's number), once that get the vehicle
     // use the telaio to get the targhe details. From the plates it use the plates.number to get the linked revisions
-    // The revisions are loaded by loadRevisionDiv that takes plates as an input and basically calls 
+    // The revisions are loaded by loadRevisionDiv that takes plates as an input and basically calls
     // renderRevisionCard.js for each revision linked to each plate.
     $(document).ready(function () {
         $("#addForm").submit(function (event) {
-            console.log("siìasf");
             event.preventDefault();
-            var formData =
-                $(this).serialize() +
-                "&addTarga=" +
-                targaAttiva.numero +
-                "&action=create";
-            //when the form is submitted the callback function is called, and will reload the revisionDiv
+            var formData = $(this).serialize() + "&addTarga=" + targaAttiva.numero + "&action=create";
+            // when the form is submitted the callback function is called, and will reload the revisionDiv
             addFormSubmitted(event, formData, () => loadRevisioniDiv(targhe));
         });
         $("#addEsito").change(addEsitoChanged); // need to be copied for the #editEsitoS
@@ -35,54 +30,30 @@ export function initializePage() {
         });
         // Function to fetch car details based on ID
         async function fetchVeicoloDetails(id) {
-            console.log(id);
             try {
                 const veicoloResponse = await new Promise((resolve, reject) => {
-                    handleAjaxRequest(
-                        "/php/search_veicolo.php", // URL to fetch car details from the server
-                        "GET",
-                        "telaio=" + id,
-                        resolve,
-                        reject
-                    );
+                    handleAjaxRequest("/php/search_veicolo.php", // URL to fetch car details from the server
+                            "GET", "telaio=" + id,
+                    resolve, reject);
                 });
                 if (veicoloResponse.success == true) {
-                    console.log(veicoloResponse.data[0]);
                     const veicolo = veicoloResponse.data[0];
-                    $("#titolo").html(
-                        "<h1>Dettagli sul veicolo " + veicolo.telaio + "</h1>"
-                    );
+                    $("#titolo").html("<h1>Dettagli sul veicolo " + veicolo.telaio + "</h1>");
                     const veicoloComponent = renderVeicoloDetail(veicolo);
                     veicoloComponent.appendTo($("#veicolo"));
 
-                    const targaResponse = await new Promise(
-                        (resolve, reject) => {
-                            handleAjaxRequest(
-                                "/php/search_targa.php",
-                                "GET",
-                                "telaio=" + veicolo.telaio,
-                                resolve,
-                                reject
-                            );
-                        }
-                    );
-                    console.log(targaResponse);
+                    const targaResponse = await new Promise((resolve, reject) => {
+                        handleAjaxRequest("/php/search_targa.php", "GET", "telaio=" + veicolo.telaio, resolve, reject);
+                    });
                     var state = false;
-                    //targhe = [];
+                    // targhe = [];
                     if (targaResponse.success == true) {
                         var length = targaResponse.data.length;
-                        var targaText =
-                            length === 1
-                                ? "è associata " + length + " targa"
-                                : "sono associate " + length + " targhe";
-                        $(".targa .titolo").html(
-                            "<h3>A questo veicolo " + targaText + "</h3>"
-                        );
+                        var targaText = length === 1 ? "è associata " + length + " targa" : "sono associate " + length + " targhe";
+                        $(".targa .titolo").html("<h3>A questo veicolo " + targaText + "</h3>");
                         targaResponse.data.forEach((targa) => {
-                            console.log(targa);
                             if (targa.status == "active") {
                                 targaAttiva = targa;
-                                console.log(targaAttiva);
                                 state = true;
                             }
                             // here i could save targhe infos and sort them to find the active one and put it first, but i'm lazy :)
@@ -92,17 +63,10 @@ export function initializePage() {
                             targaComponent.appendTo($("#targa"));
                         });
                     } else {
-                        $(".targa .titolo").html(
-                            "<h3>Questo veicolo non è ancora stato targato</h3>"
-                        );
+                        $(".targa .titolo").html("<h3>Questo veicolo non è ancora stato targato</h3>");
                     }
                     // if there's an activePlate than the addForm is displayed and prepared
-                    console.log("popii" + state);
-                    toggleFormVisibility(
-                        state,
-                        state ? targaAttiva.numero : null
-                    );
-                    console.log(targhe);
+                    toggleFormVisibility(state, state ? targaAttiva.numero : null);
                     loadRevisioniDiv(targhe);
                     // non devo più fare la richiesta per ottenere le targhe, le ho già da prima
                 } else {
@@ -115,7 +79,7 @@ export function initializePage() {
             }
         }
 
-        //var targhe = null;
+        // var targhe = null;
         var targaAttiva = null;
         // Fetch car details based on the ID
         fetchVeicoloDetails(veicoloNumber);
