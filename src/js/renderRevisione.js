@@ -11,7 +11,7 @@ export async function renderRevisioneCard(revisione) {
     return revisioneComponent;
 }
 
-async function renderRevisioneDetail(revisione) {
+export async function renderRevisioneDetail(revisione) {
     const revisioneComponent = await createRevisioneDetailComponent(revisione);
     // attach handler to edit button
     return revisioneComponent;
@@ -201,31 +201,6 @@ function deleteBtnClicked(numeroRev) {
         );
     }
 }
-
-/*async function handlePageReloadOnDelete() {
-    var currentPage = window.location.pathname;
-    if (currentPage.endsWith("revisioni.php")) {
-        performDefaultSearch(); // se sono in revisioni chiamo la funzione presente nel file searchRevisione.js
-    } else if (currentPage.endsWith("dettagli-revisione.php")) {
-        returnToMotherPage();
-    } else {
-        await loadRevisioniDiv();
-    }
-}
-
-async function handlePageReloadOnEdit() {
-    var currentPage = window.location.pathname;
-    console.log(
-        currentPage + " " + currentPage.endsWith("dettagli-revisione.php")
-    );
-    if (currentPage.endsWith("dettagli-revisione.php")) {
-        // se sono in una pagina dettagli
-        console.log("sono finito nell'else");
-        window.location.reload(); // se cambia la targa cambia anche i dettagli della targa e il veicolo
-    } else if (!currentPage.endsWith("revisioni.php")) {
-        await loadRevisioniDiv();
-    }
-}*/
 
 function editEsitoChanged(revisioneDiv) {
     console.log(

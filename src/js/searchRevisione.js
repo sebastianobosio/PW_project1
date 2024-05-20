@@ -1,33 +1,33 @@
-import { performDefaultSearch, performSearch } from "./test.js";
+import { performDefaultSearch, performSearch } from "./performRevisionSearch.js";
 import {
-  addFormSubmitted,
-  addEsitoChanged,
-  hideAddForm,
-  showAddForm,
+    addFormSubmitted,
+    addEsitoChanged,
+    hideAddForm,
+    showAddForm,
 } from "./addRevisionForm.js";
 
 $(document).ready(function () {
-  $("#searchForm").submit(searchFormSubmitted);
-  $("#addForm").submit(addFormSubmitted);
-  $("#addButton").on("click", showAddForm);
-  $("#undoButton").on("click", function (event) {
-    hideAddForm(event);
-  });
+    $("#addForm").submit(function (event) {
+        console.log("siìasf");
+        event.preventDefault();
+        var formData =
+            $(this).serialize() +
+            "&action=create";
+        addFormSubmitted(event, formData, () => performDefaultSearch());
+    });
+    $("#addEsito").change(addEsitoChanged); // need to be copied for the #editEsitoS
 
-  $("#addForm").submit(function (event) {
-    event.preventDefault();
-    var formData = $(this).serialize() + "&action=create";
-    addFormSubmitted(event, formData, performDefaultSearch);
-  });
+    $("#addButton").on("click", showAddForm);
+    $("#undoButton").on("click", function (event) {
+        hideAddForm(event);
+    });
+    $("#searchForm").submit(searchFormSubmitted);
 
-  //$(document).on("click", ".deleteBtn", deleteBtnClicked);
-  $("#addEsito").change(addEsitoChanged); // need to be copied for the #editEsitoS
+    performDefaultSearch();
 
-  performDefaultSearch();
-
-  function searchFormSubmitted(event) {
-    event.preventDefault();
-    var formData = $(this).serialize() + "&action=read";
-    performSearch(formData);
-  }
+    function searchFormSubmitted(event) {
+        event.preventDefault();
+        var formData = $(this).serialize() + "&action=read";
+        performSearch(formData);
+    }
 });

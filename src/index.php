@@ -31,9 +31,13 @@
             <p>Effettua queste ricerche navigando tra le pagine a lato</p>
             <p>Le modifiche delle revisioni possono essere effettuate direttamente dalla card.
                 Sia per le modifiche che per l'aggiunta vengono effettuati dei controlli sui campi.
-                Nel caso dell'edit vengono ripristinati i valori originali.
+                Se i controlli falliscono oppure si torna indietro (con il bottone in basso a sinistra della card) vengono ripristinati i valori originari.
                 Nelle pagine dettaglio-targa/veicolo il form di aggiunta revisione è già riempito
                 con la targa o targa-attiva. Form che è presente solo se il veicolo è targato con targa attiva.
+                All'aggiunta di una revisione, di un edit o di un delete la pagina viene aggiornata in maniere diverse a seconda del tipo di pagina e modifica che è stata effettuata.
+                Ad esempio in dettaglio-targa/ dettaglio-veicolo l'eliminazione di una revisione, o il cambio di targa comporta un reload della sola parte dedicata alle revisioni.
+                Invece in dettaglio-revisione la cancellazione della revisione riporta alla pagina principale.
+                L'aggiunta di una nuova revisione comporta sempre un ricaricamento di queste.
             </p>
             <p>I dati sono stati generati tramite uno script python che crea un database SQLite che ho poi convertito in uno MySQL</P>
             <p>Targhe e revisioni sono caricati in ordine di data di emissione e revisione rispettivamente</p>

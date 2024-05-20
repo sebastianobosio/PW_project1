@@ -1,14 +1,15 @@
-import { performDefaultSearch } from "./test.js";
+import { performDefaultSearch } from "./performRevisionSearch.js";
 import { loadRevisioniDiv } from "./loadRevisions.js";
-import { getTarghe} from "./dettagliVeicolo.js";
-import { getTarga} from "./dettagliTarga.js";
+import { getTarghe } from "./dettagliVeicolo.js";
+import { getTarga } from "./dettagliTarga.js";
+import { returnToMotherPage as returnToMotherPageRevisione } from "./dettagliRevisione.js";
 
 export async function handlePageReloadOnDelete() {
     var currentPage = window.location.pathname;
     if (currentPage.endsWith("revisioni.php")) {
         performDefaultSearch(); // se sono in revisioni chiamo la funzione presente nel file searchRevisione.js
     } else if (currentPage.endsWith("dettagli-revisione.php")) {
-        returnToMotherPage();
+        returnToMotherPageRevisione();
     } else if (currentPage.endsWith("dettagli-veicolo.php")) {
         loadRevisioniDiv(getTarghe());
     } else if (currentPage.endsWith("dettagli-targa.php")) {
@@ -36,9 +37,4 @@ export async function handlePageReloadOnEdit() {
     } else {
         console.error("page not supported");
     }
-}
-
-export function returnToMotherPage() {
-    var motherURL = '/'
-    window.location.href = motherURL;
 }

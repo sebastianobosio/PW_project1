@@ -7,8 +7,9 @@ export async function performDefaultSearch() {
 }
 
 export async function performSearch(data) {
+  console.log("porcamadonna puttana");
   handleAjaxRequest(
-    "../php/search_revisione.php",
+    "/php/search_revisione.php",
     "GET",
     data,
     function (response) {   

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ricerca targa</title>
+    <title>Dettagli veicolo</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Libre+Baskerville&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/dettagliStyle.css">
     <link rel="stylesheet" href="/css/genericCard.css">
@@ -22,8 +22,8 @@
     <script src="/js/renderTarga.js"></script>
     <script src="/js/renderVeicolo.js"></script>
     <script src="/js/resizeMotivazioneField.js"></script>
-    <script type="module" src="/js/renderRevisione.js"></script>
-    <script type="module" src="/js/dettagliVeicolo.js"></script>
+    <!--<script type="module" src="/js/renderRevisione.js"></script>-->
+    <script type="module" src="/js/initDettagliVeicolo.js"></script>
 
 </head>
 

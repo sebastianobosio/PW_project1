@@ -22,8 +22,8 @@
     <script src="/js/renderTarga.js"></script>
     <script src="/js/renderVeicolo.js"></script>
     <script src="/js/resizeMotivazioneField.js"></script>
-    <script type="module" src="/js/renderRevisione.js"></script>
-    <script type="module" src="/js/dettagliTarga.js"></script>
+    <!--<script type="module" src="/js/renderRevisione.js"></script>-->
+    <script type="module" src="/js/initDettagliTarga.js"></script>
 
 </head>
 
