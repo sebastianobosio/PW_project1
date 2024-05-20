@@ -1,4 +1,4 @@
-import { renderRevisioneCard } from "./renderRevisione.js";
+import { renderRevisioneCard } from "../renderComponents/renderRevisione.js";
 
 export function loadRevisioniDiv(identifier) {
     var pathname = window.location.pathname;

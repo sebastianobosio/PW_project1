@@ -1,9 +1,9 @@
-import { checkRevision } from "./checkRevisionFields.js";
+import { checkRevision } from "../modules/checkRevisionFields.js";
 import {
     handlePageReloadOnDelete,
     handlePageReloadOnEdit,
-} from "./revisionHandlers.js";
-import { handleAjaxError, handleResponse } from "./handleAjax.js";
+} from "../modules/revisionHandlers.js";
+import { handleAjaxError, handleResponse } from "../modules/handleAjax.js";
 
 export async function renderRevisioneCard(revisione) {
     const revisioneComponent = await createRevisioneCardComponent(revisione);

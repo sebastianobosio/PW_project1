@@ -4,8 +4,8 @@ import {
     showAddForm,
     hideAddForm,
     addFormSubmitted,
-} from "./addRevisionForm.js";
-import { loadRevisioniDiv } from "./loadRevisions.js";
+} from "../modules/addRevisionForm.js";
+import { loadRevisioniDiv } from "../modules/loadRevisions.js";
 
 export function initializePage() {
     $(document).ready(function () {

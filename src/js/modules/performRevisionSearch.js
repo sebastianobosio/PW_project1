@@ -1,4 +1,4 @@
-import { renderRevisioneCard } from './renderRevisione.js';
+import { renderRevisioneCard } from '../renderComponents/renderRevisione.js';
 import { handleAjaxError } from './handleAjax.js';
 
 export async function performDefaultSearch() { 

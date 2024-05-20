@@ -1,4 +1,4 @@
-import {renderRevisioneDetail} from "./renderRevisione.js";
+import {renderRevisioneDetail} from "../renderComponents/renderRevisione.js";
 
 export function initializePage() {
     $(document).ready(function () {

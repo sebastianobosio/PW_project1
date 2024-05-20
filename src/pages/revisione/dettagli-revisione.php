@@ -18,11 +18,11 @@
     <script src="/js/ajaxHelper.js"></script>
     <script src="/js/activePage.js"></script>
 
-    <script src="/js/renderTarga.js"></script>
-    <script src="/js/renderVeicolo.js"></script>
+    <script src="/js/renderComponents/renderTarga.js"></script>
+    <script src="/js/renderComponents/renderVeicolo.js"></script>
     <script src="/js/resizeMotivazioneField.js"></script>
-    <script type="module" src="/js/renderRevisione.js"></script>
-    <script type="module" src="/js/initDettagliRevisione.js"></script>
+    <script type="module" src="/js/renderComponents/renderRevisione.js"></script>
+    <script type="module" src="/js/initPages/initDettagliRevisione.js"></script>
 
 </head>
 

@@ -1,8 +1,8 @@
 import { performDefaultSearch } from "./performRevisionSearch.js";
 import { loadRevisioniDiv } from "./loadRevisions.js";
-import { getTarghe } from "./dettagliVeicolo.js";
-import { getTarga } from "./dettagliTarga.js";
-import { returnToMotherPage as returnToMotherPageRevisione } from "./dettagliRevisione.js";
+import { getTarghe } from "../dettagli/dettagliVeicolo.js";
+import { getTarga } from "../dettagli/dettagliTarga.js";
+import { returnToMotherPage as returnToMotherPageRevisione } from "../dettagli/dettagliRevisione.js";
 
 export async function handlePageReloadOnDelete() {
     var currentPage = window.location.pathname;

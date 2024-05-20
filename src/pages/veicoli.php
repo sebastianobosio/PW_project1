@@ -13,8 +13,8 @@
     
     <script src="/js/ajaxHelper.js"></script>
     <script src="/js/activePage.js"></script>
-    <script src="/js/renderVeicolo.js"></script>
-    <script src="/js/searchVeicolo.js"></script>
+    <script src="/js/renderComponents/renderVeicolo.js"></script>
+    <script src="/js/pages/veicolo.js"></script>
 </head>
 <body>
     <?php include '../includes/header.php'; ?>
