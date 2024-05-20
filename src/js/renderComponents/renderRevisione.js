@@ -364,7 +364,7 @@ async function createEditButton(
                         "&editMotivazione=" +
                         motivazione +
                         "&action=update";
-
+                    console.log(targa);
                     if (await checkRevision(targa, dataRev)) {
                         try {
                             await saveChanges(dataUpdateRequest);
