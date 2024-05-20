@@ -22,7 +22,7 @@
             <textarea class="motivazione" oninput="autoResize()" id="addMotivazione" name="addMotivazione"></textarea>
         </div>
         <div class="button-group">
-            <button type="submit" class="submit-button">Submit<i class="fa-solid fa-paper-plane"></i></button>
+            <button type="submit" class="submit-button">Invia<i class="fa-solid fa-paper-plane"></i></button>
             <button id="undoButton" class="undo-button"><i class="fa-solid fa-xmark"></i></button>
         </div>
     </form>
