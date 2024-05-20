@@ -14,6 +14,7 @@ export async function performSearch(data) {
     data,
     function (response) {   
       if (response.success === true) {
+        $('#searchForm')[0].reset();
         data = response.data;
         console.log(data);
         $("#searchResults").empty();

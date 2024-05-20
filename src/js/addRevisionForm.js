@@ -32,6 +32,7 @@ export function performAddAction(formData, callback) {
     "POST",
     formData,
     function (response) {
+      $('#addForm')[0].reset();
       handleResponse(response, "Istanza inserita correttamente", callback);
     },
     function (xhr, status, error) {

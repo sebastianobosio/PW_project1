@@ -18,6 +18,7 @@ $(document).ready(function() {
             function(response) {
                 console.log('Response:', response.message);
                 if (response.success === true) {
+                    $('#searchForm')[0].reset();
                     data = response.data;
                     $('#searchResults').empty();
                     data.forEach(targa => {

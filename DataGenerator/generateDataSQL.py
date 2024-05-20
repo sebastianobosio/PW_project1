@@ -134,7 +134,7 @@ for j in range(100):
                 revision_date = active_plate_data[1] + timedelta(
                     days=random.randint(1, (datetime.now() - active_plate_data[1]).days))
                 outcome = random.choice(['positive', 'negative'])
-                motivation = 'Some reason for negative outcome' if outcome == 'negative' else None
+                motivation = random.choice(motivation_list) if outcome == 'negative' else None
                 sql_statements.append(
                     f"INSERT INTO Revisions (plateNumber, revisionDate, outcome, motivation) VALUES ('{active_plate_data[0]}', '{revision_date.strftime('%Y-%m-%d')}', '{outcome}', {'NULL' if motivation is None else repr(motivation)});")
 
