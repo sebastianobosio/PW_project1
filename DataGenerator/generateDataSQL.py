@@ -4,8 +4,9 @@ from datetime import datetime, timedelta
 
 # Function to generate random vehicle data
 def generate_vehicle_data():
-    models = ['SUV', 'Sedan', 'Truck', 'Hatchback']
-    brands = ['Toyota', 'Ford', 'Honda', 'Chevrolet', 'BMW']
+    models = ['SUV', 'Sedan', 'Truck', 'Hatchback', 'Convertible', 'Coupe', 'Minivan', 'Crossover', 'Sports Car']
+    brands = ['Toyota', 'Ford', 'Honda', 'Chevrolet', 'BMW', 'Audi', 'Mercedes-Benz', 'Volkswagen', 'Nissan', 'Hyundai',
+              'Kia', 'Subaru', 'Mazda', 'Volvo', 'Jeep', 'Lexus', 'Tesla', 'Ferrari', 'Porsche', 'Jaguar']
     number = ''.join(random.choices('0123456789', k=7))  # Generating a random 7-digit number
     model = random.choice(models)
     brand = random.choice(brands)
@@ -25,7 +26,7 @@ def generate_inactive_plate_data(plate_data, vehicle_number, next_emission_date=
     while True:
         try:
             restitution_date = next_emission_date - timedelta(
-                days=random.randint(1, (next_emission_date - plate_data[1]).days))
+                days=random.randint(1, (next_emission_date - plate_data[1]).days - 5))
             break  # Exit the loop if no ValueError occurs
         except ValueError:
             pass  # If ValueError occurs, continue to the next iteration
@@ -33,6 +34,28 @@ def generate_inactive_plate_data(plate_data, vehicle_number, next_emission_date=
     # Random restitution date within 1-3 months before next emission date
     return (plate_data[0], vehicle_number, restitution_date)
 
+motivation_list = [
+    "Veicolo non superato il test delle emissioni",
+    "Scoperte problematiche di sicurezza durante l'ispezione",
+    "Violazione delle leggi sul traffico",
+    "Targa danneggiata o manomessa",
+    "Documentazione errata presentata",
+    "Proprietario precedente non ha rivelato problemi",
+    "Veicolo coinvolto in incidente",
+    "Non conformità alle normative",
+    "Falsificazione o contraffazione di documenti",
+    "Targa persa o rubata",
+    "Violazione delle normative ambientali",
+    "Registrazione scaduta",
+    "Modifiche improprie apportate al veicolo",
+    "Registrazione fraudolenta",
+    "Veicolo considerato non sicuro per l'uso su strada",
+    "Mancato pagamento di multe o tasse",
+    "Mancato pagamento di imposte",
+    "Modifiche illegali apportate al veicolo",
+    "Veicolo segnalato come rubato",
+    "Targa associata ad attività criminali"
+]
 
 # Generate and write SQL dump
 sql_statements = []
@@ -134,7 +157,7 @@ for j in range(100):
                         except ValueError:
                             pass
                     outcome = random.choice(['positive', 'negative'])
-                    motivation = 'Some reason for negative outcome' if outcome is 'negative' else None
+                    motivation = random.choice(motivation_list) if outcome == 'negative' else None
                     sql_statements.append(
                         f"INSERT INTO Revisions (plateNumber, revisionDate, outcome, motivation) VALUES ('{plates[i][0]}', '{revision_date.strftime('%Y-%m-%d')}', '{outcome}', {'NULL' if motivation is None else repr(motivation)});")
 
@@ -157,7 +180,7 @@ for j in range(100):
                     except ValueError:
                         pass
                 outcome = random.choice(['positive', 'negative'])
-                motivation = 'Some reason for negative outcome' if outcome is 'negative' else None
+                motivation = random.choice(motivation_list) if outcome == 'negative' else None
                 sql_statements.append(
                     f"INSERT INTO Revisions (plateNumber, revisionDate, outcome, motivation) VALUES ('{plates[i][0]}', '{revision_date.strftime('%Y-%m-%d')}', '{outcome}', {'NULL' if motivation is None else repr(motivation)});")
 
@@ -166,7 +189,7 @@ for j in range(100):
             pass  # No plates for this vehicle
 
 # Write SQL statements to a file
-with open('vehicle_database.sql', 'w') as f:
+with open('../db/vehicle_database.sql', 'w') as f:
     for statement in sql_statements:
         f.write(statement + '\n')
 
