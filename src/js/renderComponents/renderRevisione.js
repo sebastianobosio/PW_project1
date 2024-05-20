@@ -17,6 +17,17 @@ export async function renderRevisioneDetail(revisione) {
     return revisioneComponent;
 }
 
+/*  there are some complication with how i handled this component
+    The motivation field is toggled on and off based on the status of esito. But I
+    also had to take in consideration the original esito (and all the original fields values)
+    to revert back in case of errors.
+    The edit button have two stages. The first when clicked the edit button let you
+    make changes to certain fields. The edit button become the save-changes button.
+    The detail button and delete button disappear appear a discard-button.
+    If the discard-button is pressed the values are reverted back, if the save button is
+    pressed it calls the function saveChanges.
+    The hard part was handle all the cases.
+*/
 async function createRevisioneCardComponent(revisione) {
     const revisioneDiv = $("<div>").addClass("revisione card");
     const infoDiv = $("<div>").addClass("info");

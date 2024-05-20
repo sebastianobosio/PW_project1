@@ -1,3 +1,5 @@
+import { renderTargaCard } from "../renderComponents/renderTarga.js";
+
 $(document).ready(function() {
     $('#searchForm').submit(searchFormSubmitted);
 
@@ -19,10 +21,10 @@ $(document).ready(function() {
                 console.log('Response:', response.message);
                 if (response.success === true) {
                     $('#searchForm')[0].reset();
-                    data = response.data;
+                    var data = response.data;
                     $('#searchResults').empty();
                     data.forEach(targa => {
-                        targaComponent = renderTargaCard(targa);
+                        var targaComponent = renderTargaCard(targa);
                         targaComponent.appendTo($('#searchResults'));
                     });
                 } else {

@@ -1,3 +1,4 @@
+// this function check if the revions fields are correct, it responds back to the addForm and when in edit mode
 export async function checkRevision(targa, dataRev) {
     return new Promise((resolve, reject) => {
         handleAjaxRequest(

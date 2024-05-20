@@ -1,6 +1,7 @@
 import { checkRevision } from "./checkRevisionFields.js";
 import { handleAjaxError, handleResponse } from "./handleAjax.js";
 
+// this module handle the addRevisionForm that is present in dettaglio-veicolo/targa and revisione
 export function toggleFormVisibility(state, targaNumber) {
   if (state) {
     $("#addButton").show();
@@ -10,6 +11,7 @@ export function toggleFormVisibility(state, targaNumber) {
   }
 }
 
+// the targa fields is filled and blocked when the form is opened in dettaglio-veicolo/targa pages
 export function prepareForm(targaNumber) {
     console.log("ciao" + targaNumber);
   $("#addTarga").val(targaNumber);
@@ -32,6 +34,8 @@ export function performAddAction(formData, callback) {
     "POST",
     formData,
     function (response) {
+      // when the form is submitted the fields are resetted and the handleResponse is called
+      //handle response is a simple function that print the message and make the callback if a function is passed.
       $('#addForm')[0].reset();
       handleResponse(response, "Istanza inserita correttamente", callback);
     },

@@ -1,8 +1,15 @@
-import {renderRevisioneDetail} from "../renderComponents/renderRevisione.js";
+import { renderRevisioneDetail } from "../renderComponents/renderRevisione.js";
+import { renderTargaCard } from "../renderComponents/renderTarga.js";
+import { renderVeicoloCard } from "../renderComponents/renderVeicolo.js";
 
+// this function is called from the initDettagliRevisione.js once the dettagli-revisione.php page is laoded
 export function initializePage() {
     $(document).ready(function () {
-        // Function to fetch car details based on ID
+        // Function to fetch revision details based on ID (number of revision), once that get the revision
+        // use the plate to get the targa details. From the plate it use the plate.veicolo to get the telaio number
+        // and so the veicolo details.
+        // In the dettagli-pages the are the section #Revisione, #Targa and #Veicolo
+        // where this components are added.
         async function fetchRevisioneDetails(id) {
             console.log(id);
             try {

@@ -6,8 +6,15 @@ import {
     addFormSubmitted,
 } from "../modules/addRevisionForm.js";
 import { loadRevisioniDiv } from "../modules/loadRevisions.js";
+import { renderTargaCard } from "../renderComponents/renderTarga.js";
+import { renderVeicoloDetail } from "../renderComponents/renderVeicolo.js";
 
+// this function is called from the initDettagliVeicolo.js once the dettagli-veicolo.php page is laoded
 export function initializePage() {
+    // Function to fetch vehicle details based on ID (telaio's number), once that get the vehicle
+    // use the telaio to get the targhe details. From the plates it use the plates.number to get the linked revisions
+    // The revisions are loaded by loadRevisionDiv that takes plates as an input and basically calls 
+    // renderRevisionCard.js for each revision linked to each plate.
     $(document).ready(function () {
         $("#addForm").submit(function (event) {
             console.log("siìasf");
@@ -17,6 +24,7 @@ export function initializePage() {
                 "&addTarga=" +
                 targaAttiva.numero +
                 "&action=create";
+            //when the form is submitted the callback function is called, and will reload the revisionDiv
             addFormSubmitted(event, formData, () => loadRevisioniDiv(targhe));
         });
         $("#addEsito").change(addEsitoChanged); // need to be copied for the #editEsitoS
@@ -88,6 +96,7 @@ export function initializePage() {
                             "<h3>Questo veicolo non è ancora stato targato</h3>"
                         );
                     }
+                    // if there's an activePlate than the addForm is displayed and prepared
                     console.log("popii" + state);
                     toggleFormVisibility(
                         state,
@@ -123,6 +132,7 @@ function returnToMotherPage() {
     window.location.href = motherURL;
 }
 
+// used by revisionHandlers.js to handle the reloadOnEdit or reloadOnDelete that are called when editing or deleting a revions Card
 export function getTarghe() {
     return targhe;
 }

@@ -6,10 +6,17 @@ import {
     addFormSubmitted,
 } from "../modules/addRevisionForm.js";
 import { loadRevisioniDiv } from "../modules/loadRevisions.js";
+import { renderVeicoloCard } from "../renderComponents/renderVeicolo.js";
+import { renderTargaDetail } from "../renderComponents/renderTarga.js";
 
 var targa = null;
 
+// this function is called from the initDettagliVeicolo.js once the dettagli-veicolo.php page is laoded
 export function initializePage() {
+    // Function to fetch targa details based on ID (targa's number), once that get the targa
+    // use the telaio to get the vehicle details. From the targa number to the linked revisions
+    // The revisions are loaded by loadRevisionDiv that takes plate as an input and basically calls 
+    // renderRevisionCard.js for each revision linked the plate.
     $(document).ready(function () {
         $("#addForm").submit(function (event) {
             console.log("siìasf");
@@ -84,7 +91,7 @@ export function initializePage() {
                         // render niente veicolo per questa targa
                         // non dovrebbe mai accadere. Ogni targa ha almeno un veicolo per costruzione del db
                     }
-
+                    // Add form only if the plate is active
                     toggleFormVisibility(state, state ? targa.numero : null);
                     loadRevisioniDiv(targa.numero);
                 } else {
@@ -106,13 +113,12 @@ export function initializePage() {
 
 }
 
-
-
 function returnToMotherPage() {
     var motherURL = "/pages/targhe.php";
     window.location.href = motherURL;
 }
 
+// used by revisionHandlers.js to handle the reloadOnEdit or reloadOnDelete that are called when editing or deleting a revions Card
 export function getTarga() {
     console.log("ciao");
     return targa.numero;

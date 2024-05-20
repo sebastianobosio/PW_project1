@@ -1,12 +1,12 @@
 .card {
     width: 40%; /* Adjust the width as needed */
     padding: 15px;
-    border: 1px solid #8B4513; /* Brown border */
+    border: 1px solid #8b4513; /* Brown border */
     /*margin: 10px;*/
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background-color: #D2B48C; /* Light brown background */
+    background-color: #d2b48c; /* Light brown background */
     border-radius: 5px;
     color: #654321; /* Dark brown text color */
 }
@@ -21,7 +21,7 @@
 
 /* Style for the details button */
 .card button {
-    background-color: #8B4513; /* Brown background */
+    background-color: #8b4513; /* Brown background */
     color: #fff;
     border: none;
     padding: 8px 15px;
@@ -33,7 +33,7 @@
     background-color: #654321; /* Dark brown background on hover */
 }
 
-.detail-button i{
+.detail-button i {
     margin-left: 10px;
 }
 

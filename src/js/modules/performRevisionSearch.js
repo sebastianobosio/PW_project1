@@ -1,6 +1,7 @@
 import { renderRevisioneCard } from '../renderComponents/renderRevisione.js';
 import { handleAjaxError } from './handleAjax.js';
 
+// I exported this function from revisione.js because it's used also by revisionHandlers.js
 export async function performDefaultSearch() { 
   var data = "&action=read";
   performSearch(data);

@@ -19,8 +19,6 @@
     <script src="/js/ajaxHelper.js"></script>
     <script src="/js/activePage.js"></script>
 
-    <script src="/js/renderComponents/renderTarga.js"></script>
-    <script src="/js/renderComponents/renderVeicolo.js"></script>
     <script src="/js/resizeMotivazioneField.js"></script>
     <script type="module" src="/js/initPages/initDettagliVeicolo.js"></script>
 

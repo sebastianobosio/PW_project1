@@ -18,7 +18,7 @@
     <script src="/js/resizeMotivazioneField.js"></script>
     <script src="/js/ajaxHelper.js"></script>
     <script src="/js/activePage.js"></script>
-    <script type="module" src="/js/renderComponents/renderRevisione.js"></script>
+    <!--<script type="module" src="/js/renderComponents/renderRevisione.js"></script>-->
     <script type="module" src="/js/pages/revisione.js"></script>
 </head>
 

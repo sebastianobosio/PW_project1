@@ -15,8 +15,8 @@
     
     <script src="/js/ajaxHelper.js"></script>
     <script src="/js/activePage.js"></script>
-    <script src="/js/renderComponents/renderTarga.js"></script>
-    <script src="/js/pages/targa.js"></script>
+    <!--<script src="/js/renderComponents/renderTarga.js"></script>-->
+    <script type="module" src="/js/pages/targa.js"></script>
 </head>
 
 <body>

@@ -1,5 +1,9 @@
 import { renderRevisioneCard } from "../renderComponents/renderRevisione.js";
 
+// based on the page where this function is called it calls the loadRevisioniDivDV(dettagli veicolo) or 
+// loadRevisioniDivDT(dettagli targa) that differs for the parameter (array of plates or plate)
+// it's called on various situation, when loading the dettagli-veicolo/targa pages, when adding a new revision from 
+// the dettaglio pages and when handling the edit mode in revisioniHandlers.js
 export function loadRevisioniDiv(identifier) {
     var pathname = window.location.pathname;
     if (pathname.endsWith('dettagli-veicolo.php')) {

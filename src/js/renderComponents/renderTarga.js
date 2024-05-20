@@ -1,4 +1,4 @@
-function renderTargaCard(targa) {
+export function renderTargaCard(targa) {
     console.log("renderizzando la targa");
     console.log(targa);
     const targaComponent = createTargaCardComponent(targa);
@@ -6,7 +6,7 @@ function renderTargaCard(targa) {
     return targaComponent;
 }
 
-function renderTargaDetail(targa) {
+export function renderTargaDetail(targa) {
     console.log("renderizzando la targa");
     console.log(targa);
     const targaComponent = createTargaDetailComponent(targa);

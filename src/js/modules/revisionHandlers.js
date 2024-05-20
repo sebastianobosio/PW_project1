@@ -4,6 +4,8 @@ import { getTarghe } from "../dettagli/dettagliVeicolo.js";
 import { getTarga } from "../dettagli/dettagliTarga.js";
 import { returnToMotherPage as returnToMotherPageRevisione } from "../dettagli/dettagliRevisione.js";
 
+// this module is used to handle the edit or delete function that are possible from the revision Card
+// based on the modification and on the page the are different scenario.
 export async function handlePageReloadOnDelete() {
     var currentPage = window.location.pathname;
     if (currentPage.endsWith("revisioni.php")) {

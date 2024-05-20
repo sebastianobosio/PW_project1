@@ -1,7 +1,7 @@
 textarea.motivazione {
-  width: 100%;
-  min-height: 50px; /* Minimum height to start with */
-  resize: none; /* Disable resizing */
+    width: 100%;
+    min-height: 50px; /* Minimum height to start with */
+    resize: none; /* Disable resizing */
 }
 
 textarea.auto-resize {

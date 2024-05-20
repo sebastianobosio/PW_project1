@@ -1,128 +1,128 @@
 body {
-  font-family: "Inter", sans-serif;
-  font-weight: 400;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
 }
 
 header {
-  background-color: #8b4513;
-  color: white;
-  padding: 20px 0px;
-  display: flex;
-  align-items: center;
+    background-color: #8b4513;
+    color: white;
+    padding: 20px 0px;
+    display: flex;
+    align-items: center;
 }
 
 header h1 {
-  font-weight: 900;
-  font-size: 75px;
-  margin-left: 20px;
+    font-weight: 900;
+    font-size: 75px;
+    margin-left: 20px;
 }
 
 footer {
-  background-color: #8b4513;
-  color: white;
-  padding: 5px;
-  text-align: center;
-  bottom: 0;
-  width: 100%;
+    background-color: #8b4513;
+    color: white;
+    padding: 5px;
+    text-align: center;
+    bottom: 0;
+    width: 100%;
 }
 
 .logo img {
-  height: 150px;
-  width: auto;
+    height: 150px;
+    width: auto;
 }
 
 .logo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20%;
 }
 
 .site-name {
-  flex-grow: 1;
-  width: auto;
+    flex-grow: 1;
+    width: auto;
 }
 
 .container {
-  flex-grow: 1;
-  display: flex;
-  flex-wrap: wrap;
+    flex-grow: 1;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .navigation {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  width: 200px;
-  background-color: #d2b48c;
-  padding: 10px;
-  overflow-y: auto; /* Enable vertical scrolling */
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    width: 200px;
+    background-color: #d2b48c;
+    padding: 10px;
+    overflow-y: auto; /* Enable vertical scrolling */
 }
 
 .navigation-menu {
-  list-style-type: none;
-  padding: 0;
+    list-style-type: none;
+    padding: 0;
 }
 
 .navigation-menu li {
-  padding: 20px 20px;
+    padding: 20px 20px;
 }
 .navigation-menu li a.active {
-  font-weight: 700;
-  text-decoration: underline;
+    font-weight: 700;
+    text-decoration: underline;
 }
 
 .navigation-menu li a:hover {
-  font-weight: 600;
+    font-weight: 600;
 }
 
 .navigation-menu li a {
-  text-decoration: none;
-  color: black;
-  font-weight: 500;
-  transition: color 0.3s;
+    text-decoration: none;
+    color: black;
+    font-weight: 500;
+    transition: color 0.3s;
 }
 
 .navigation-menu li a:hover {
-  color: #654321;
+    color: #654321;
 }
 
 .content {
-  color: white;
-  background-color: #6c5a49;
-  flex: 1;
-  padding: 20px 50px;
+    color: white;
+    background-color: #6c5a49;
+    flex: 1;
+    padding: 20px 50px;
 }
 
 .titolo-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 2px solid white;
-  padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid white;
+    padding: 10px;
 }
 
 .addButton {
-  margin-left: auto;
+    margin-left: auto;
 }
 
 .titolo-container button {
-  background-color: #fff; /* Brown background */
-  color: #000;
-  border: none;
-  padding: 15px 15px;
-  border-radius: 5px;
-  cursor: pointer;
+    background-color: #fff; /* Brown background */
+    color: #000;
+    border: none;
+    padding: 15px 15px;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 .titolo-container button:hover {
-  background-color: #654321;
-  color: white; /* Dark brown background on hover */
+    background-color: #654321;
+    color: white; /* Dark brown background on hover */
 }
 
 #dettagli-content {
@@ -130,24 +130,24 @@ footer {
 }
 
 #veicolo {
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  gap: 15px;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 15px;
 }
 
 #revisione {
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  gap: 15px;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 15px;
 }
 
 #targa {
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  gap: 15px;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 15px;
 }
 
 #dettagli-content > div {

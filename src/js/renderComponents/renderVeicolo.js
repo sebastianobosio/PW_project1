@@ -1,9 +1,9 @@
-function renderVeicoloCard(veicolo) {
+export function renderVeicoloCard(veicolo) {
     const veicoloComponent = createVeicoloCardComponent(veicolo);
     return veicoloComponent;
 }
 
-function renderVeicoloDetail(veicolo) {
+export function renderVeicoloDetail(veicolo) {
     const veicoloComponent = createVeicoloDetailComponent(veicolo);
     return veicoloComponent;
 }
