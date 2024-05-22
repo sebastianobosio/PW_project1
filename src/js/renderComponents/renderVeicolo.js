@@ -12,8 +12,8 @@ function createVeicoloCardComponent(veicolo) {
     const vehicleDiv = $('<div>').addClass('veicolo card');
     const infoDiv = $('<div>').addClass('info');
     const veicoloNumberDiv = $('<div>').text('Telaio: ' + veicolo.telaio).appendTo(infoDiv);
-    const veicoloModelDiv = $('<div>').text('Modello: ' + veicolo.modello).appendTo(infoDiv);
     const veicoloBrandDiv = $('<div>').text('Marca: ' + veicolo.marca).appendTo(infoDiv);
+    const veicoloModelDiv = $('<div>').text('Modello: ' + veicolo.modello).appendTo(infoDiv);
     const veicoloProdDateDiv = $('<div>').text('Data di produzione: ' + veicolo.dataProd).appendTo(infoDiv);
     infoDiv.appendTo(vehicleDiv);
     const detailsBtnDiv = $('<div>').addClass('action-btn');
@@ -32,8 +32,8 @@ function createVeicoloDetailComponent(veicolo) {
     const vehicleDiv = $('<div>').addClass('veicolo card');
     const infoDiv = $('<div>').addClass('info');
     const veicoloNumberDiv = $('<div>').text('Telaio: ' + veicolo.telaio).appendTo(infoDiv);
-    const veicoloModelDiv = $('<div>').text('Modello: ' + veicolo.modello).appendTo(infoDiv);
     const veicoloBrandDiv = $('<div>').text('Marca: ' + veicolo.marca).appendTo(infoDiv);
+    const veicoloModelDiv = $('<div>').text('Modello: ' + veicolo.modello).appendTo(infoDiv);
     const veicoloProdDateDiv = $('<div>').text('Data di produzione: ' + veicolo.dataProd).appendTo(infoDiv);
     infoDiv.appendTo(vehicleDiv);
     /*const detailsBtnDiv = $('<div>').addClass('action-btn');

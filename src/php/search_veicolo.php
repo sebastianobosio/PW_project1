@@ -40,8 +40,8 @@ try {
     foreach ($stmt as $row) {
         $result = array();
         $result['telaio'] = $row['number'];
-        $result['marca'] = $row['model'];
-        $result['modello'] = $row['brand'];
+        $result['marca'] = $row['brand'];
+        $result['modello'] = $row['model'];
         $result['dataProd'] = $row['prodDate'];
         $results[] = $result;
     }
